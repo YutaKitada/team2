@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Stage
+  - Object
+  - Star
+  - Enemy
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -14,10 +19,10 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
+  - Stage
+  - Player
+  - Object
+  - ThrowObject
   - 
   - 
   - 
@@ -40,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 4151214453
     locked: 0
