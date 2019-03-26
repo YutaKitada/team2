@@ -44,13 +44,13 @@ public class ExplosionEnemy : Enemy
         Destroy(gameObject);
     }
 
-    public override void Damage()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Explosion();
-        }
-    }
+    //public override void Damage()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        Explosion();
+    //    }
+    //}
 
     public override void OnCollisionEnter(Collision other)
     {
@@ -62,6 +62,7 @@ public class ExplosionEnemy : Enemy
         if (other.transform.tag == "Star")
         {
             hp--;
+            Explosion();
             if (hp <= 0)
             {
                 Destroy(gameObject);

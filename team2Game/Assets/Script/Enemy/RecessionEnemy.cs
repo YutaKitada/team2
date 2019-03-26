@@ -48,23 +48,23 @@ public class RecessionEnemy : Enemy
         transform.rotation = rotation;
     }
 
-    public override void Damage()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Vector3 recession;
-            if (Direction_Left)
-            {
-                recession = recessionVector;
-            }
-            else
-            {
-                Vector3 reverceRecession = new Vector3(-recessionDistance, 10, 0);
-                recession = reverceRecession;
-            }
-            rigid.AddForce(recession * power, ForceMode.Acceleration);
-        }
-    }
+    //public override void Damage()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        Vector3 recession;
+    //        if (Direction_Left)
+    //        {
+    //            recession = recessionVector;
+    //        }
+    //        else
+    //        {
+    //            Vector3 reverceRecession = new Vector3(-recessionDistance, 10, 0);
+    //            recession = reverceRecession;
+    //        }
+    //        rigid.AddForce(recession * power, ForceMode.Acceleration);
+    //    }
+    //}
 
     public override void OnCollisionEnter(Collision other)
     {
@@ -76,6 +76,17 @@ public class RecessionEnemy : Enemy
         if (other.transform.tag == "Star")
         {
             hp--;
+            Vector3 recession;
+            if (Direction_Left)
+            {
+                recession = recessionVector;
+            }
+            else
+            {
+                Vector3 reverceRecession = new Vector3(-recessionDistance, 10, 0);
+                recession = reverceRecession;
+            }
+            rigid.AddForce(recession * power, ForceMode.Acceleration);
             if (hp <= 0)
             {
                 Destroy(gameObject);

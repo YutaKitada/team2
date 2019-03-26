@@ -10,31 +10,31 @@ public class PlayerManager : MonoBehaviour
 
     public static bool isStop;                             //プレイヤーの移動制限
     public static bool haveStar;                  //Starを持っているか否か
-    public static bool isWishStay;
-    public static bool isWishMode;
-    public static bool isInvincible;
-    private float invincibleTimer;
+    public static bool isWishStay;                  //願い事待機状態
+    public static bool isWishMode;                  //願い事モード用Flag
+    public static bool isInvincible;                //無敵
+    private float invincibleTimer;                  //無敵時間用タイマー
 
-    public static float starDistance;
-    public static Vector3 throwPosition;
+    public static Vector3 throwPosition;            //投げた場所用Position
 
     // Start is called before the first frame update
     void Start()
     {
 
         playerDirection = PlayerDirection.RIGHT;    //最初は右向き
-        isStop = false;
-        haveStar = true;
-        isWishStay = false;
-        isWishMode = false;
-        isInvincible = false;
-        invincibleTimer = 0;
-        starDistance = 0;
-        throwPosition = Vector3.zero;
+        isStop = false;             //移動制限なし
+        haveStar = true;            //Starを持っている
+        isWishStay = false;         //願い事待機状態ではない
+        isWishMode = false;         //願い事モードではない
+        isInvincible = false;       //無敵ではない
+        invincibleTimer = 0;        //無敵用タイマー初期化
+
+        throwPosition = Vector3.zero;   //一旦0に
     }
 
     private void Update()
     {
+        //温度が80以上ある時、Rボタンを押すと願い事待機状態切り替え
         if(UIManager.gageFillAmount >= 80)
         {
             if (Input.GetButtonDown("RButton"))
@@ -49,14 +49,18 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
+        //温度が80未満の場合、待機状態はfalseに
         else
         {
             isWishStay = false;
         }
 
+        //無敵になった際、タイマー作動
         if (isInvincible)
         {
             invincibleTimer += Time.deltaTime;
+
+            //タイマーが2秒以上カウントしたら無敵解除
             if(invincibleTimer >= 2f)
             {
                 isInvincible = false;
@@ -65,16 +69,15 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-    }
 
+    //プレイヤーがダメージを受ける処理
     public static void PlayerDamage(float damage)
     {
+        //無敵でなければ食らう
         if (!isInvincible)
         {
             UIManager.gageFillAmount -= damage;
+            //無敵状態に
             isInvincible = true;
         }
         

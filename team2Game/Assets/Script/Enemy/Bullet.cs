@@ -35,7 +35,8 @@ public class Bullet : MonoBehaviour
     {
         if(other.gameObject.tag=="Player")
         {
-            Destroy(other.gameObject);
+            PlayerManager.PlayerDamage(10);
+            //Destroy(other.gameObject);
         }
 
         Destroy(gameObject);

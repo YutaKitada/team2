@@ -5,29 +5,30 @@ using UnityEngine;
 public class StarColorManager : MonoBehaviour
 {
     [SerializeField]
-    private List<Material> materialList;
+    private List<Material> materialList;                                //色用マテリアルList
 
-    public enum StarCurrent {LOW,MEDIUMLOW,MEDIUM,MEDIUMHIGH,HIGH};
+    public enum StarCurrent {LOW,MEDIUMLOW,MEDIUM,MEDIUMHIGH,HIGH};     //星の状態
     [HideInInspector]
-    public StarCurrent starCurrent;
+    public StarCurrent starCurrent;                                     //星の状態取得用
 
-    private MeshRenderer render;
+    private MeshRenderer render;                                        //星のMeshRendere、色の変化用
 
-    private Color materialColor;
+    private Color materialColor;                                        //星の色
 
     // Start is called before the first frame update
     void Start()
     {
-        starCurrent = StarCurrent.HIGH;
+        starCurrent = StarCurrent.HIGH;             //最初は高温
 
-        render = GetComponent<MeshRenderer>();
+        render = GetComponent<MeshRenderer>();      //MeshRenderer取得
 
-        materialColor = materialList[4].color;
+        materialColor = materialList[4].color;      //高温の状態に色を変更
     }
 
     // Update is called once per frame
     void Update()
     {
+        //温度によって状態を変える
         if(UIManager.gageFillAmount < 20)
         {
             starCurrent = StarCurrent.LOW;
@@ -50,6 +51,7 @@ public class StarColorManager : MonoBehaviour
         }
 
 
+        //色の状態に応じて色の変化を開始
         switch (starCurrent)
         {
             case StarCurrent.HIGH:

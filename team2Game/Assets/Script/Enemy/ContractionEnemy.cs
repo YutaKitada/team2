@@ -81,15 +81,15 @@ public class ContractionEnemy : Enemy
         }
     }
 
-    public override void Damage()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            hp -= 1;
-        }
+    //public override void Damage()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        hp -= 1;
+    //    }
 
-        if (hp <= 0) Destroy(gameObject);
-    }
+    //    if (hp <= 0) Destroy(gameObject);
+    //}
 
     public override void OnCollisionEnter(Collision other)
     {

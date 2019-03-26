@@ -21,8 +21,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Text wishUI;
-    private string wish_one, wish_two, wish_three;
-    private bool isWish;
+    
+    public static string wishText;
 
     // Start is called before the first frame update
     void Start()
@@ -37,10 +37,8 @@ public class UIManager : MonoBehaviour
         gageStopTimer = 0;
 
         wishUI.enabled = false;
-        wish_one = "〇";
-        wish_two = "〇";
-        wish_three = "〇";
-        isWish = false;
+        
+        wishText = "〇〇〇";
     }
 
     // Update is called once per frame
@@ -102,86 +100,12 @@ public class UIManager : MonoBehaviour
     {
         if (PlayerManager.isWishMode)
         {
-            if (!wishUI.enabled)
-            {
-                wishUI.enabled = true;
-            }
-            if (Input.GetButtonDown("AButton"))
-            {
-                if(wish_one == "〇")
-                {
-                    wish_one = "A";
-                }
-                else if (wish_two == "〇")
-                {
-                    wish_two = "A";
-                }
-                else if (wish_three == "〇")
-                {
-                    wish_three = "A";
-                }
-            }
-            else if(Input.GetButtonDown("BButton"))
-            {
-                if (wish_one == "〇")
-                {
-                    wish_one = "B";
-                }
-                else if (wish_two == "〇")
-                {
-                    wish_two = "B";
-                }
-                else if (wish_three == "〇")
-                {
-                    wish_three = "B";
-                }
-            }
-            else if (Input.GetButtonDown("XButton"))
-            {
-                if (wish_one == "〇")
-                {
-                    wish_one = "X";
-                }
-                else if (wish_two == "〇")
-                {
-                    wish_two = "X";
-                }
-                else if (wish_three == "〇")
-                {
-                    wish_three = "X";
-                }
-            }
-            else if (Input.GetButtonDown("YButton"))
-            {
-                if (wish_one == "〇")
-                {
-                    wish_one = "Y";
-                }
-                else if (wish_two == "〇")
-                {
-                    wish_two = "Y";
-                }
-                else if (wish_three == "〇")
-                {
-                    wish_three = "Y";
-                }
-            }
-
-            wishUI.text = wish_one + "　" + wish_two + "　" + wish_three;
-
-            if (!PlayerManager.isStop &&!isWish && wish_one != "〇"&& wish_two != "〇" && wish_three != "〇")
-            {
-                WishManager.Wish(wishUI.text);
-                isWish = true;
-            }
+            wishUI.enabled = true;
+            wishUI.text = wishText;
         }
         else
         {
             wishUI.enabled = false;
-            isWish = false;
-            wish_one = "〇";
-            wish_two = "〇";
-            wish_three = "〇";
         }
     }
 }

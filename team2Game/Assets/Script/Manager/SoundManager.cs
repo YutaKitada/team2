@@ -26,11 +26,13 @@ public class SoundManager : MonoBehaviour
         
     }
 
+    //SEを再生
     public static void PlaySE(int seNumber)
     {
         se.PlayOneShot(soundList_SE[seNumber]);
     }
 
+    //BGMを再生
     public static void PlayBGM(int bgmNumber)
     {
         bgm.Stop();
@@ -39,11 +41,13 @@ public class SoundManager : MonoBehaviour
         bgm.Play();
     }
 
+    //BGMを止める
     public static void StopBGM()
     {
         bgm.Stop();
     }
 
+    //現在のBGMが指定したBGMと一緒か否か
     public static bool CheckBGM(int bgmNumber)
     {
         if (bgm.clip == soundList_BGM[bgmNumber])
@@ -56,16 +60,19 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    //BGMをフェードアウトさせる
     public static void FadeOut()
     {
         bgm.volume -= 0.005f;
     }
-
+    
+    //現在のBGMを取得
     public static AudioSource GetBGM()
     {
         return bgm;
     }
 
+    //BGMとSEをロードする
     public void BGM_SE_Load()
     {
         soundList_SE = seList;
