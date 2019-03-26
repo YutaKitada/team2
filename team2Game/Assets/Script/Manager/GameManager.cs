@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 
     public static bool isClear;         //ゲームクリアしたか
     public static bool isOver;          //ゲームオーバーか
+
+    public static bool isGameStop;     //ゲームの動きを止める
+
     
     void Awake()
     {
@@ -24,6 +27,8 @@ public class GameManager : MonoBehaviour
         //ゲームクリア・ゲームオーバー初期化
         isClear = false;
         isOver = false;
+
+        isGameStop = false;
     }
 
     // Update is called once per frame
@@ -44,7 +49,7 @@ public class GameManager : MonoBehaviour
         //0が押されたら体力MAX
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            UIManager.gageFillAmount = 100;
+            UIManager.hpGageFillAmount = 100;
         }
 
         //ゲームオーバーであればシーンをロードする

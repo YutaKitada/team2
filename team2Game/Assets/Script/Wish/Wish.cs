@@ -53,6 +53,7 @@ public class Wish : MonoBehaviour
                     WishEnd();
                     wishTimer = 0;
                     wishCurrent = WishCurrent.START;
+                    WishManager.isWishNow = false;
                     break;
             }
         }

@@ -112,6 +112,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &11301308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11301309}
+  - component: {fileID: 11301310}
+  m_Layer: 0
+  m_Name: Wish003
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11301309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11301308}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 653599174}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11301310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11301308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7088d04ed5775634ab9e6313681b756e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wishCommand: "\u2191\u2191\u2193\u2193\u2190\u2192\u2190\u2192BA"
+  wishTime: 5
+  startWish: 0
 --- !u!1 &31743144
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +649,8 @@ MonoBehaviour:
   comboUI: {fileID: 1083679748}
   comboTimerGageUI: {fileID: 683058967}
   gage: {fileID: 194547971}
-  gageStopTime: 3
+  hpGageStopTime: 3
+  comboGageStopTime: 3
   wishUI: {fileID: 812986413}
 --- !u!1001 &256430948
 PrefabInstance:
@@ -770,7 +817,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 317308718}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1340095488}
@@ -1313,9 +1360,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  field of view: 26.991467
+  orthographic: 1
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1388,7 +1435,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe33e1dd0abc7b4d9a347e726b0946a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wishCommand: AAA
+  wishCommand: BBABBA
+  wishTime: 5
   startWish: 0
 --- !u!1001 &581251734
 PrefabInstance:
@@ -1615,6 +1663,7 @@ Transform:
   m_Children:
   - {fileID: 568891446}
   - {fileID: 667899629}
+  - {fileID: 11301309}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1763,7 +1812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0f7142fdf7f1b41b682a654abbcf8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wishCommand: BBB
+  wishCommand: "YABA\u2192"
+  wishTime: 10
   startWish: 0
 --- !u!1 &673983516
 GameObject:
@@ -4009,6 +4059,7 @@ MonoBehaviour:
   wishList:
   - {fileID: 568891447}
   - {fileID: 667899630}
+  - {fileID: 11301310}
 --- !u!1 &1427519027
 GameObject:
   m_ObjectHideFlags: 0

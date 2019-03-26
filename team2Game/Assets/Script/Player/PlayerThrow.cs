@@ -57,9 +57,9 @@ public class PlayerThrow : MonoBehaviour
                 stopTimer = 0;
 
                 //ゲージが一定値以下の場合は増やす
-                if (UIManager.gageFillAmount <= 20)
+                if (UIManager.hpGageFillAmount <= 20)
                 {
-                    UIManager.gageFillAmount = 20;
+                    UIManager.hpGageFillAmount = 20;
                 }
 
                 //Starオブジェクトを持っていない状態に
@@ -94,7 +94,7 @@ public class PlayerThrow : MonoBehaviour
 
                 ////移動制限をかける
                 //playerManager.isStop = false;
-                UIManager.gageStopTimer = 0;
+                UIManager.hpGageStopTimer = 0;
 
                 //Starコライダー開始
                 starCollider.enabled = true;
@@ -129,7 +129,7 @@ public class PlayerThrow : MonoBehaviour
             //もし願い事待機状態であれば
             if (PlayerManager.isWishStay)
             {
-                stopTimer = -1f;        //移動制限用タイマーを1秒長くする
+                stopTimer = -2f;        //移動制限用タイマーを1秒長くする
                 PlayerManager.isWishMode = true;        //願い事モード起動
                 PlayerManager.isWishStay = false;       //待機状態をfalseに
             }

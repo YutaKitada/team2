@@ -32,7 +32,7 @@ public class PlayerAimUI : MonoBehaviour
             //                  ↓Ray  ↓Rayが当たったオブジェクト ↓距離
             if (Physics.Raycast(ray, out hit, distance))
             {
-                playerAimUI.transform.position = hit.point;
+                playerAimUI.transform.position = hit.point + new Vector3(0, 0, -5);
             }
         }
         //右を向いていれば
@@ -56,7 +56,7 @@ public class PlayerAimUI : MonoBehaviour
             //                  ↓Ray  ↓Rayが当たったオブジェクト ↓距離
             if (Physics.Raycast(ray, out hit, distance))
             {
-                playerAimUI.transform.position = hit.point;
+                playerAimUI.transform.position = hit.point + new Vector3(0,0,-5);
             }
         }
 

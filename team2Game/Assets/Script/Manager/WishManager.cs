@@ -9,12 +9,17 @@ public class WishManager : MonoBehaviour
     public static List<Wish> wishs;
 
     private string wish_one, wish_two, wish_three;
+    private string wishCommand;
 
     private bool isWishMode;
     private bool isWish;
 
+    private bool stickLock;
+
     public static GameObject player;            //Playerオブジェクト
     public static GameObject star;              //Starオブジェクト
+
+    public static bool isWishNow;               //現在願い事効果中か否か
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +30,19 @@ public class WishManager : MonoBehaviour
         wish_two = "〇";
         wish_three = "〇";
 
+        wishCommand = "";
+
         isWish = false;
         isWishMode = false;
+
+        stickLock = false;
 
         //Player取得
         player = GameObject.FindGameObjectWithTag("Player");
         //Star取得
         star = GameObject.FindGameObjectWithTag("Star");
+
+        isWishNow = false;
     }
 
     // Update is called once per frame
@@ -47,78 +58,113 @@ public class WishManager : MonoBehaviour
             if (!isWishMode)
             {
                 isWishMode = true;
+                GameManager.isGameStop = true;
             }
             else
             {
-                if (Input.GetButtonDown("AButton"))
+                if (!isWish)
                 {
-                    if (wish_one == "〇")
+                    if (Input.GetButtonDown("AButton"))
                     {
-                        wish_one = "A";
+                        //if (wish_one == "〇")
+                        //{
+                        //    wish_one = "A";
+                        //}
+                        //else if (wish_two == "〇")
+                        //{
+                        //    wish_two = "A";
+                        //}
+                        //else if (wish_three == "〇")
+                        //{
+                        //    wish_three = "A";
+                        //}
+                        wishCommand += "A";
                     }
-                    else if (wish_two == "〇")
+                    else if (Input.GetButtonDown("BButton"))
                     {
-                        wish_two = "A";
+                        //if (wish_one == "〇")
+                        //{
+                        //    wish_one = "B";
+                        //}
+                        //else if (wish_two == "〇")
+                        //{
+                        //    wish_two = "B";
+                        //}
+                        //else if (wish_three == "〇")
+                        //{
+                        //    wish_three = "B";
+                        //}
+                        wishCommand += "B";
                     }
-                    else if (wish_three == "〇")
+                    else if (Input.GetButtonDown("XButton"))
                     {
-                        wish_three = "A";
+                        //if (wish_one == "〇")
+                        //{
+                        //    wish_one = "X";
+                        //}
+                        //else if (wish_two == "〇")
+                        //{
+                        //    wish_two = "X";
+                        //}
+                        //else if (wish_three == "〇")
+                        //{
+                        //    wish_three = "X";
+                        //}
+                        wishCommand += "X";
                     }
-                }
-                else if (Input.GetButtonDown("BButton"))
-                {
-                    if (wish_one == "〇")
+                    else if (Input.GetButtonDown("YButton"))
                     {
-                        wish_one = "B";
-                    }
-                    else if (wish_two == "〇")
-                    {
-                        wish_two = "B";
-                    }
-                    else if (wish_three == "〇")
-                    {
-                        wish_three = "B";
-                    }
-                }
-                else if (Input.GetButtonDown("XButton"))
-                {
-                    if (wish_one == "〇")
-                    {
-                        wish_one = "X";
-                    }
-                    else if (wish_two == "〇")
-                    {
-                        wish_two = "X";
-                    }
-                    else if (wish_three == "〇")
-                    {
-                        wish_three = "X";
-                    }
-                }
-                else if (Input.GetButtonDown("YButton"))
-                {
-                    if (wish_one == "〇")
-                    {
-                        wish_one = "Y";
-                    }
-                    else if (wish_two == "〇")
-                    {
-                        wish_two = "Y";
-                    }
-                    else if (wish_three == "〇")
-                    {
-                        wish_three = "Y";
+                        //if (wish_one == "〇")
+                        //{
+                        //    wish_one = "Y";
+                        //}
+                        //else if (wish_two == "〇")
+                        //{
+                        //    wish_two = "Y";
+                        //}
+                        //else if (wish_three == "〇")
+                        //{
+                        //    wish_three = "Y";
 
+                        //}
+                        wishCommand += "Y";
                     }
-                }
+                    else if (Input.GetAxisRaw("Horizontal") >= 1 &&!stickLock)
+                    {
+                        wishCommand += "→";
+                        stickLock = true;
+                    }
+                    else if (Input.GetAxisRaw("Horizontal") <= -1 && !stickLock)
+                    {
+                        wishCommand += "←";
+                        stickLock = true;
+                    }
+                    else if (Input.GetAxisRaw("Vertical") <= -1 && !stickLock)
+                    {
+                        wishCommand += "↑";
+                        stickLock = true;
+                    }
+                    else if (Input.GetAxisRaw("Vertical") >= 1 && !stickLock)
+                    {
+                        wishCommand += "↓";
+                        stickLock = true;
+                    }
+                    else if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+                    {
+                        stickLock = false;
+                    }
+                    //UIManager.wishText = wish_one + wish_two + wish_three;
+                    UIManager.wishText = wishCommand;
 
-                UIManager.wishText = wish_one + wish_two + wish_three;
-
-                if (wish_one != "〇" && wish_two != "〇" && wish_three != "〇" && !isWish)
-                {
                     Wish(UIManager.wishText);
-                    isWish = true;
+
+                    //if (/*wish_one != "〇" && wish_two != "〇" && wish_three != "〇" && */!isWish)
+                    //{
+
+                    //    isWish = true;
+                    //}
                 }
+
             }
         }
         else
@@ -127,19 +173,25 @@ public class WishManager : MonoBehaviour
             wish_one = "〇";
             wish_two = "〇";
             wish_three = "〇";
+            wishCommand = "";
+            UIManager.wishText = wishCommand;
             isWishMode = false;
+            stickLock = false;
+            GameManager.isGameStop = false;
         }
         
     }
 
 
-    public static void Wish(string command)
+    private void Wish(string command)
     {
         foreach(var n in wishs)
         {
             if(n.wishCommand == command)
             {
                 n.startWish = true;
+                isWish = true;
+                isWishNow = true;
             }
         }
     }

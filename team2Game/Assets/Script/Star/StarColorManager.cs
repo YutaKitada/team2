@@ -29,19 +29,19 @@ public class StarColorManager : MonoBehaviour
     void Update()
     {
         //温度によって状態を変える
-        if(UIManager.gageFillAmount < 20)
+        if(UIManager.hpGageFillAmount < 20)
         {
             starCurrent = StarCurrent.LOW;
         }
-        else if (UIManager.gageFillAmount < 40)
+        else if (UIManager.hpGageFillAmount < 40)
         {
             starCurrent = StarCurrent.MEDIUMLOW;
         }
-        else if(UIManager.gageFillAmount < 60)
+        else if(UIManager.hpGageFillAmount < 60)
         {
             starCurrent = StarCurrent.MEDIUM;
         }
-        else if(UIManager.gageFillAmount < 80)
+        else if(UIManager.hpGageFillAmount < 80)
         {
             starCurrent = StarCurrent.MEDIUMHIGH;
         }
@@ -56,27 +56,27 @@ public class StarColorManager : MonoBehaviour
         {
             case StarCurrent.HIGH:
                 //render.material = materialList[4];
-                materialColor = Color.Lerp(materialList[4].color,materialList[3].color,(100- UIManager.gageFillAmount)/20);
+                materialColor = Color.Lerp(materialList[4].color,materialList[3].color,(100- UIManager.hpGageFillAmount)/20);
                 render.material.color = materialColor;
                 break;
             case StarCurrent.MEDIUMHIGH:
                 //render.material = materialList[3];
-                materialColor = Color.Lerp(materialList[3].color, materialList[2].color, (80 - UIManager.gageFillAmount) / 20);
+                materialColor = Color.Lerp(materialList[3].color, materialList[2].color, (80 - UIManager.hpGageFillAmount) / 20);
                 render.material.color = materialColor;
                 break;
             case StarCurrent.MEDIUM:
                 //render.material = materialList[2];
-                materialColor = Color.Lerp(materialList[2].color, materialList[1].color, (60 - UIManager.gageFillAmount) / 20);
+                materialColor = Color.Lerp(materialList[2].color, materialList[1].color, (60 - UIManager.hpGageFillAmount) / 20);
                 render.material.color = materialColor;
                 break;
             case StarCurrent.MEDIUMLOW:
                 //render.material = materialList[1];
-                materialColor = Color.Lerp(materialList[1].color, materialList[0].color, (40 - UIManager.gageFillAmount) / 20);
+                materialColor = Color.Lerp(materialList[1].color, materialList[0].color, (40 - UIManager.hpGageFillAmount) / 20);
                 render.material.color = materialColor;
                 break;
             case StarCurrent.LOW:
                 //render.material = materialList[0];
-                materialColor = Color.Lerp(materialList[0].color, materialList[5].color, (20 - UIManager.gageFillAmount) / 20);
+                materialColor = Color.Lerp(materialList[0].color, materialList[5].color, (20 - UIManager.hpGageFillAmount) / 20);
                 render.material.color = materialColor;
                 break;
         }

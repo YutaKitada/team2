@@ -9,7 +9,7 @@ public class WaterScript : MonoBehaviour
         //Starが触れている場合
         if (other.tag == "Star")
         {
-            UIManager.gageFillAmount -= 10f * Time.deltaTime;       //体力を毎秒10減らす
+            UIManager.hpGageFillAmount -= 10f * Time.deltaTime;       //体力を毎秒10減らす
         }
     }
 }

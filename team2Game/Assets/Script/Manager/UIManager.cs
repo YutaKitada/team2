@@ -13,11 +13,17 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Slider gage;                            //星の温度ゲージ
-    public static float gageFillAmount;               //星の温度ゲージの数値
+    public static float hpGageFillAmount;               //星の温度ゲージの数値
     [SerializeField]
-    private float gageStopTime = 3;                //ゲージが減少するまでの時間
-    public static float gageStopTimer;                    //ゲージが減少するまでのタイマー
+    private float hpGageStopTime = 3;                //ゲージが減少するまでの時間
+    public static float hpGageStopTimer;                    //ゲージが減少するまでのタイマー
     public static bool isCombo;
+    [SerializeField]
+    private float comboGageStopTime = 3;                //ゲージが減少するまでの時間
+    public static float comboGageStopTimer;                    //ゲージが減少するまでのタイマー
+
+    public static bool comboGageStop;
+    public static bool hpGageStop;
 
     [SerializeField]
     private Text wishUI;
@@ -32,20 +38,25 @@ public class UIManager : MonoBehaviour
         comboTimerGage = comboTimerGageUI.GetComponent<Slider>();
         comboTimerGageUI.SetActive(false);
 
-        gageFillAmount = 100;
+        hpGageFillAmount = 100;
         isCombo = false;
-        gageStopTimer = 0;
+        hpGageStopTimer = 0;
+        comboGageStopTimer = 0;
 
         wishUI.enabled = false;
         
         wishText = "〇〇〇";
+
+        comboGageStop = false;
+        hpGageStop = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ComboUI();
-        HPGageUI();
+            ComboUI();
+            HPGageUI();
+        
         WishUI();
     }
 
@@ -59,7 +70,23 @@ public class UIManager : MonoBehaviour
                 comboTimerGageUI.SetActive(true);
             }
             comboUI.text = GameManager.combo + "コンボ";
-            comboTimerGage.value = gageStopTime - gageStopTimer;
+
+            if (!comboGageStop && !GameManager.isGameStop)
+            {
+                comboGageStopTimer += Time.deltaTime;
+                comboTimerGage.value = comboGageStopTime - comboGageStopTimer;
+            }
+            
+
+            if(comboGageStopTimer >= comboGageStopTime)
+            {
+                if (isCombo)
+                {
+                    isCombo = false;
+                    GameManager.combo = 0;
+                }
+                comboGageStopTimer = 0;
+            }
         }
         else
         {
@@ -67,31 +94,30 @@ public class UIManager : MonoBehaviour
             {
                 comboUI.enabled = false;
                 comboTimerGageUI.SetActive(false);
-                comboTimerGage.value = gageStopTime;
+                comboTimerGage.value = hpGageStopTime;
             }
         }
     }
 
     private void HPGageUI()
     {
-        gage.value = gageFillAmount;                //ゲージの数値を挿入
+        gage.value = hpGageFillAmount;                //ゲージの数値を挿入
 
-        gageStopTimer += Time.deltaTime;
-
-        if (gageStopTimer >= gageStopTime)
+        if (!hpGageStop && !GameManager.isGameStop)
         {
-            if (gageFillAmount >= 0)
+            hpGageStopTimer += Time.deltaTime;
+        }
+        
+
+        if (hpGageStopTimer >= hpGageStopTime)
+        {
+            if (hpGageFillAmount >= 0)
             {
-                gageFillAmount -= 5 * Time.deltaTime;   //毎秒5ずつ減っていく
+                hpGageFillAmount -= 5 * Time.deltaTime;   //毎秒5ずつ減っていく
             }
-            else if(gageFillAmount < 0)
+            else if(hpGageFillAmount < 0)
             {
                 GameManager.isOver = true;
-            }
-            if (isCombo)
-            {
-                isCombo = false;
-                GameManager.combo = 0;
             }
         }
     }

@@ -56,25 +56,25 @@ public class StarMovement : MonoBehaviour
             if (collision.transform.tag == "Enemy")
             {
                 //温度ゲージが100以下であれば
-                if (UIManager.gageFillAmount <= 100)
+                if (UIManager.hpGageFillAmount <= 100)
                 {
                     //コンボが続いていれば
                     if (UIManager.isCombo)
                     {
                         //ゲージ回復10に加えて、コンボ数に応じて1.2倍の回復量を得る
-                        UIManager.gageFillAmount += 10f * (1 + (float)GameManager.combo * 0.2f) ;
+                        UIManager.hpGageFillAmount += 10f * (1 + (float)GameManager.combo * 0.2f) ;
                     }
                     else
                     {
                         //ゲージを10回復
-                        UIManager.gageFillAmount += 10f;
+                        UIManager.hpGageFillAmount += 10f;
                     }
                 }
                 //温度ゲージが100以上であれば
                 else
                 {
                     //ゲージを0.5回復
-                    UIManager.gageFillAmount += 0.5f;
+                    UIManager.hpGageFillAmount += 0.5f;
                 }
                 //コンボ中でなければ
                 if (!UIManager.isCombo)
@@ -87,7 +87,7 @@ public class StarMovement : MonoBehaviour
             else if (collision.transform.tag != "Player")
             {
                 //温度ゲージを5減らす
-                UIManager.gageFillAmount -= 5f;
+                UIManager.hpGageFillAmount -= 5f;
 
                 //コンボ中であれば
                 if (UIManager.isCombo)
@@ -117,7 +117,7 @@ public class StarMovement : MonoBehaviour
                 rigid.AddForce(new Vector3(returnX, 8), ForceMode.Impulse);     //Playerのいる方向に跳ねる
             }
 
-            UIManager.gageStopTimer = 0;        //温度ゲージの減少を止めるタイマーの初期化
+            UIManager.hpGageStopTimer = 0;        //温度ゲージの減少を止めるタイマーの初期化
         }
 
         //Playerに触れたら

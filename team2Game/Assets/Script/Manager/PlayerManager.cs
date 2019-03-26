@@ -35,9 +35,9 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         //温度が80以上ある時、Rボタンを押すと願い事待機状態切り替え
-        if(UIManager.gageFillAmount >= 80)
+        if(UIManager.hpGageFillAmount >= 80)
         {
-            if (Input.GetButtonDown("RButton"))
+            if (Input.GetButtonDown("RButton") && !WishManager.isWishNow)
             {
                 if (!isWishStay)
                 {
@@ -76,7 +76,7 @@ public class PlayerManager : MonoBehaviour
         //無敵でなければ食らう
         if (!isInvincible)
         {
-            UIManager.gageFillAmount -= damage;
+            UIManager.hpGageFillAmount -= damage;
             //無敵状態に
             isInvincible = true;
         }

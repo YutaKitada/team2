@@ -6,7 +6,7 @@ public class Wish_002 : Wish
 {
     public override void WishStart()
     {
-        WishManager.star.transform.localScale *= 2;
+        UIManager.comboGageStop = true;
     }
 
     public override void WishUpdate()
@@ -16,6 +16,6 @@ public class Wish_002 : Wish
 
     public override void WishEnd()
     {
-        WishManager.star.transform.localScale /= 2;
+        UIManager.comboGageStop = false;
     }
 }
