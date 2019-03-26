@@ -39,4 +39,16 @@ public class ChangeDirection : MonoBehaviour
             enemy.Direction_Left = !enemy.Direction_Left;
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (enemy.Direction_Left)
+        {
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3.down + Vector3.left));
+        }
+        else
+        {
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3.down + Vector3.right));
+        }
+    }
 }

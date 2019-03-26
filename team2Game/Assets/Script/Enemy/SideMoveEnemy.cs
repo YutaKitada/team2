@@ -69,18 +69,6 @@ public class SideMoveEnemy : Enemy
         transform.rotation = rotation;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (Direction_Left)
-        {
-            Gizmos.DrawLine(transform.position, transform.position + (Vector3.down + Vector3.left));
-        }
-        else
-        {
-            Gizmos.DrawLine(transform.position, transform.position + (Vector3.down + Vector3.right));
-        }
-    }
-
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
