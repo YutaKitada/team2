@@ -29,11 +29,11 @@ public class VerticalMoveEnemy : Enemy
     {
         if (Direction_Up)
         {
-            rigid.AddForce(transform.up * power,ForceMode.Acceleration);
+            rigid.velocity = Vector3.up;
         }
         else
         {
-            rigid.AddForce(-transform.up * power,ForceMode.Acceleration);
+            rigid.velocity = Vector3.down;
         }
     }
 

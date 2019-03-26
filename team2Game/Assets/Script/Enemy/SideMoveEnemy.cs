@@ -25,6 +25,7 @@ public class SideMoveEnemy : Enemy
     void Update()
     {
         Move();
+        Direction();
     }
 
     public override void Move()
@@ -48,20 +49,35 @@ public class SideMoveEnemy : Enemy
                     Direction_Left = false;
                 }
             }
-
-            //左側を正面にする
-            if (Direction_Left)
-            {
-                rotation = Quaternion.Euler(forward);
-            }
-            //右側を正面にする
-            else
-            {
-                rotation = Quaternion.Euler(-forward);
-            }
-            //正面を進行方向にして移動
-            transform.rotation = rotation;
             rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        }
+    }
+
+    public override void Direction()
+    {
+        //左側を正面にする
+        if (Direction_Left)
+        {
+            rotation = Quaternion.Euler(forward);
+        }
+        //右側を正面にする
+        else
+        {
+            rotation = Quaternion.Euler(-forward);
+        }
+        //正面を進行方向にして移動
+        transform.rotation = rotation;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (Direction_Left)
+        {
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3.down + Vector3.left));
+        }
+        else
+        {
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3.down + Vector3.right));
         }
     }
 
