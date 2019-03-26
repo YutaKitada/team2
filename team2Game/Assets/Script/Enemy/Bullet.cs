@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 2);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Player")
         {
