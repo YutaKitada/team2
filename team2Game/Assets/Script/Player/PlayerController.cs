@@ -18,11 +18,11 @@ public class PlayerController : MonoBehaviour
 
     private bool isJump;                        //ジャンプフラッグ
 
-    private bool inWater;
+    private bool inWater;                       //水の中にいるか否か
 
-    private float jumpTimer;
+    private float jumpTimer;                    //jumpがもういちどできるまでのタイマー
 
-    private int jumpCount;
+    private int jumpCount;                      //2段ジャンプ用カウンター
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +31,13 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         //最初は動ける
         isMoveStop = false;
-
+        //ジャンプ中ではない
         isJump = false;
 
+        //水の中ではない
         inWater = false;
+
+        //タイマー・カウントの初期化
         jumpTimer = 0;
         jumpCount = 0;
     }
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour
         //移動制限がかかっていない場合
         if (!PlayerManager.isStop)
         {
+            //水の中でなければ
             if (!inWater)
             {
                 //重力を追加
@@ -56,11 +60,15 @@ public class PlayerController : MonoBehaviour
             Jump();
         }
 
+        //ジャンプ中であれば
         if (isJump)
         {
+            //ジャンプタイマー作動
             jumpTimer += Time.deltaTime;
+            //ジャンプタイマーが3秒以上カウントしたら
             if(jumpTimer >= 3f)
             {
+                //ジャンプがまたできるように初期化
                 isJump = false;
                 jumpCount = 0;
                 jumpTimer = 0;
@@ -146,9 +154,12 @@ public class PlayerController : MonoBehaviour
                 //上方向に力を与える
                 rigid.AddForce(new Vector3(0, jumpPower), ForceMode.Impulse);
             }
+            //ジャンプカウントを1増やす
             jumpCount++;
+            //ジャンプカウントが2以上であれば
             if(jumpCount >= 2)
             {
+                //ジャンプをできなくする
                 isJump = true;
             }
         }
@@ -167,8 +178,10 @@ public class PlayerController : MonoBehaviour
             isMoveStop = false;
         }
 
+        //Enemyに当たった場合
         if (collision.transform.tag == "Enemy")
         {
+            //ダメージを10受ける
             PlayerManager.PlayerDamage(10);
 
             //Vector3 direciton = (collision.transform.position - transform.position).normalized;
@@ -186,19 +199,19 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
+        //ジャンプカウントを0に
         jumpCount = 0;
-        if (isJump)
-        {
-            isJump = false;
-        }
+        //isJumpがtrueの場合、falseに
+        if (isJump)isJump = false;
+        //水の中に入ったら
         if (other.tag == "Water")
         {
-            speed = 3;
-            jumpPower = 5f;
-            inWater = true;
+            speed = 3;          //スピードを3に
+            jumpPower = 5f;     //ジャンプのパワーを5に
+            inWater = true;     //水の中である
         }
     }
 
@@ -206,22 +219,24 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Water")
         {
-            speed = 10;
-            jumpPower = 10;
-            inWater = false;
+            speed = 10;         //スピードを10に
+            jumpPower = 10;     //ジャンプのパワーを10に
+            inWater = false;    //水の中ではない
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
+        //移動制限がかかっている場合
         if (isMoveStop && !PlayerManager.isStop)
         {
             //動けるようにする
             isMoveStop = false;
         }
+        //水の中にいる場合
         if(other.tag == "Water")
         {
-            isJump = false;
+            isJump = false;     //ジャンプの制限をなくす
         }
     }
 }

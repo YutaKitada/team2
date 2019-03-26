@@ -57,18 +57,18 @@ public class DivisionEnemy : Enemy
         GameObject obj = Instantiate(this.gameObject, transform.position, Quaternion.identity, parent);
     }
 
-    public override void Damage()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            hp -= 1;
+    //public override void Damage()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        hp -= 1;
 
-            transform.position += -transform.forward;
-            Division();
-        }
+    //        transform.position += -transform.forward;
+    //        Division();
+    //    }
 
-        if (hp <= 0) Destroy(gameObject);
-    }
+    //    if (hp <= 0) Destroy(gameObject);
+    //}
 
     public override void OnCollisionEnter(Collision other)
     {
@@ -80,6 +80,8 @@ public class DivisionEnemy : Enemy
         if (other.transform.tag == "Star")
         {
             hp--;
+            transform.position += -transform.forward;
+            Division();
             if (hp <= 0)
             {
                 Destroy(gameObject);

@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class PlayerAimUI : MonoBehaviour
 {
-    private GameObject starObject;
-    public GameObject playerAimUI;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        starObject = GameObject.FindGameObjectWithTag("Star");
-    }
+    [SerializeField]
+    private GameObject playerAimUI;      //照準用UIの取得
+    
 
     // Update is called once per frame
     void Update()
     {
+        //左を向いていれば
         if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.LEFT)
         {
             //playerAimUI.transform.localPosition = new Vector3(-2.5f, -1);
 
             //Rayの作成　　　　　　　↓Rayを飛ばす原点　　　↓Rayを飛ばす方向
-            Ray ray = new Ray(starObject.transform.position, new Vector3(-1, -1, 0));
+            Ray ray = new Ray(GameManager.star.transform.position, new Vector3(-1, -1, 0));
 
             //Rayが当たったオブジェクトの情報を入れる箱
             RaycastHit hit;
@@ -39,12 +35,13 @@ public class PlayerAimUI : MonoBehaviour
                 playerAimUI.transform.position = hit.point;
             }
         }
+        //右を向いていれば
         else if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.RIGHT)
         {
             //playerAimUI.transform.localPosition = new Vector3(2.5f, -1);
 
             //Rayの作成　　　　　　　↓Rayを飛ばす原点　　　↓Rayを飛ばす方向
-            Ray ray = new Ray(starObject.transform.position, new Vector3(1, -1, 0));
+            Ray ray = new Ray(GameManager.star.transform.position, new Vector3(1, -1, 0));
 
             //Rayが当たったオブジェクトの情報を入れる箱
             RaycastHit hit;
@@ -63,13 +60,15 @@ public class PlayerAimUI : MonoBehaviour
             }
         }
 
+        //Starを持っている状態で、AimUIがfalseであれば
         if (PlayerManager.haveStar && !playerAimUI.activeSelf)
         {
-            playerAimUI.SetActive(true);
+            playerAimUI.SetActive(true);        //activeSelfをtrueに
         }
+        //Starを持っていない状態で、AimUIがtrueであれば
         else if (!PlayerManager.haveStar && playerAimUI.activeSelf)
         {
-            playerAimUI.SetActive(false);
+            playerAimUI.SetActive(false);       //activeSelfをfalseに
         }
     }
 }
