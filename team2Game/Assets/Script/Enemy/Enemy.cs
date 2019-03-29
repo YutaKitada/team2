@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// 移動方向の設定
+    /// 方向の設定
     /// </summary>
     public virtual void Direction()
     {

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 方向転換を行うクラス
+/// </summary>
 public class ChangeDirection : MonoBehaviour
 {
     Ray ray;

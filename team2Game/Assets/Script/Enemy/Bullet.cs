@@ -12,8 +12,11 @@ public class Bullet : MonoBehaviour
     [SerializeField, Header("弾の速度")]
     float power = 2;
 
+    //プレイヤー
     Transform target;
     Vector3 targetPosition;
+
+    Vector3 initialPosition;//初期位置
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,8 @@ public class Bullet : MonoBehaviour
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
         targetPosition = target.position;
+
+        initialPosition = transform.position;
     }
 
     // Update is called once per frame
@@ -30,9 +35,12 @@ public class Bullet : MonoBehaviour
         BulletMove();
     }
 
+    /// <summary>
+    /// 弾の動き
+    /// </summary>
     void BulletMove()
     {
-        rigid.AddForce(targetPosition, ForceMode.Impulse);
+        rigid.AddForce(targetPosition - initialPosition, ForceMode.Impulse);
 
         Destroy(gameObject, 2);
     }
