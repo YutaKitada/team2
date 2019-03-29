@@ -37,6 +37,9 @@ public class ShotEnemy : Enemy
 
     public override void Shot()
     {
+        //プレイヤーがいなければ何もしない
+        if (target == null) return;
+
         elapsedTime += Time.deltaTime;
         if(elapsedTime >= shotTime)
         {
@@ -47,6 +50,7 @@ public class ShotEnemy : Enemy
 
     public override void Direction()
     {
+        //プレイヤーがいなければ何もしない
         if (target == null) return;
         else
         {
