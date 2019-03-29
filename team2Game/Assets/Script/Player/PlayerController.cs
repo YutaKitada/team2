@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isMoveStop;                    //Trueであれば動けない
 
     private bool isJump;                        //ジャンプフラッグ
-    private bool isSky;                         //空中か否か
+    //private bool isSky;                         //空中か否か
 
     private bool inWater;                       //水の中にいるか否か
 
@@ -34,8 +34,8 @@ public class PlayerController : MonoBehaviour
         isMoveStop = false;
         //ジャンプ中ではない
         isJump = false;
-        //空中ではない
-        isSky = false;
+        ////空中ではない
+        //isSky = false;
 
         //水の中ではない
         inWater = false;
@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
         UIManager.debugtext = "isJump:" + isJump
             + "\n" + "JumpCount:" + jumpCount
-            + "\n" + "isSky:" + isSky
+            //+ "\n" + "isSky:" + isSky
             + "\n" + "isMoveStop:" + isMoveStop;
     }
 
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
                 rigid.useGravity = true;
             }
             //移動ができる状態であれば
-            if (!isMoveStop && !isSky)
+            if (!isMoveStop/* && !isSky*/)
             {
                 //velocityに移動量を追加
                 rigid.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * speed, rigid.velocity.y);
@@ -130,23 +130,23 @@ public class PlayerController : MonoBehaviour
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.RIGHT;
                 }
             }
-            else if (isSky)
-            {
-                if(rigid.velocity.x >= -10 && rigid.velocity.x <= 10)
-                {
-                    rigid.AddForce(new Vector3(Input.GetAxisRaw("Horizontal") * speed, 0));
+            //else if (isSky)
+            //{
+            //    if(rigid.velocity.x >= -10 && rigid.velocity.x <= 10)
+            //    {
+            //        rigid.AddForce(new Vector3(Input.GetAxisRaw("Horizontal") * speed, 0));
                     
-                }
+            //    }
 
-                if (rigid.velocity.x < -10)
-                {
-                    rigid.velocity = new Vector3(-10, rigid.velocity.y);
-                }
-                else if (rigid.velocity.x > 10)
-                {
-                    rigid.velocity = new Vector3(10, rigid.velocity.y);
-                }
-            }
+            //    if (rigid.velocity.x < -10)
+            //    {
+            //        rigid.velocity = new Vector3(-10, rigid.velocity.y);
+            //    }
+            //    else if (rigid.velocity.x > 10)
+            //    {
+            //        rigid.velocity = new Vector3(10, rigid.velocity.y);
+            //    }
+            //}
 
         }
         //移動処理がかかっている場合
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
         //ジャンプボタンを押したら
         if (Input.GetButtonDown("Jump") && !isJump)
         {
-            isSky = true;
+            //isSky = true;
             if (Input.GetAxisRaw("Vertical") <= -0.7f)
             {
                 //上方向に力を与える
@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour
             //動けるようにする
             isMoveStop = false;
         }
-        if (isSky) isSky = false;
+        //if (isSky) isSky = false;
 
         //Enemyに当たった場合
         if (collision.transform.tag == "Enemy")
@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (!isSky) isSky = true;
+        //if (!isSky) isSky = true;
     }
 
     private void OnTriggerEnter(Collider other)

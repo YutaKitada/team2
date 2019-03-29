@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wish_001 : Wish
+public class Wish_005 : Wish
 {
     public override void WishStart()
     {
-        PlayerManager.isInvincible = true;
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (var n in enemys)
+        {
+            Destroy(n.gameObject);
+        }
     }
 
     public override void WishUpdate()
     {
-        PlayerManager.isInvincible = true;
+        
     }
 
     public override void WishEnd()
     {
-        PlayerManager.isInvincible = false;
+
     }
 }

@@ -17,6 +17,7 @@ public class WishManager : MonoBehaviour
     private bool stickLock;
 
     public static GameObject player;            //Playerオブジェクト
+    private MeshRenderer playerRender;
     public static GameObject star;              //Starオブジェクト
 
     public static bool isWishNow;               //現在願い事効果中か否か
@@ -39,6 +40,7 @@ public class WishManager : MonoBehaviour
 
         //Player取得
         player = GameObject.FindGameObjectWithTag("Player");
+        playerRender = player.GetComponent<MeshRenderer>();
         //Star取得
         star = GameObject.FindGameObjectWithTag("Star");
 
@@ -49,6 +51,15 @@ public class WishManager : MonoBehaviour
     void Update()
     {
         WishText();
+
+        if (PlayerManager.isWishStay)
+        {
+            playerRender.material.color = Color.blue;
+        }
+        else if (!PlayerManager.isWishStay)
+        {
+            playerRender.material.color = Color.red;
+        }
     }
 
     private void WishText()
@@ -59,7 +70,6 @@ public class WishManager : MonoBehaviour
             {
                 isWishMode = true;
                 GameManager.isGameStop = true;
-                Time.timeScale = 0.5f;
             }
             else
             {
@@ -179,7 +189,6 @@ public class WishManager : MonoBehaviour
             isWishMode = false;
             stickLock = false;
             GameManager.isGameStop = false;
-            Time.timeScale = 1f;
         }
         
     }

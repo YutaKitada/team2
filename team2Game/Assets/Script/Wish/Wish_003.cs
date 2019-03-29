@@ -6,13 +6,6 @@ public class Wish_003 : Wish
 {
     public override void WishStart()
     {
-        //GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
-
-        //foreach (var n in enemys)
-        //{
-        //    Destroy(n.gameObject);
-        //}
-
         UIManager.hpGageStop = true;
     }
 
@@ -23,6 +16,6 @@ public class Wish_003 : Wish
 
     public override void WishEnd()
     {
-
+        UIManager.hpGageStop = false;
     }
 }

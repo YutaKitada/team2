@@ -104,7 +104,7 @@ public class PlayerThrow : MonoBehaviour
         if (PlayerManager.haveStar)
         {
             //StarはPlayerの3マス上に
-            GameManager.star.transform.position = transform.position + new Vector3(0, 1);
+            GameManager.star.transform.position = transform.position + new Vector3(0, 1.5f);
             //Starのvelocityを0に
             starRigid.velocity = Vector3.zero;
 
