@@ -10,6 +10,9 @@ public class DivisionEnemy : Enemy
     //[SerializeField, Header("体力")]
     //int hp = 3;
 
+    Vector3 rightForce = new Vector3(10, 5, 0);
+    Vector3 leftForce = new Vector3(-10, 5, 0);
+
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
@@ -20,7 +23,7 @@ public class DivisionEnemy : Enemy
         Move();
         Direction();
         Contraction();
-        Damage();
+        //Damage();
     }
 
     public override void Move()
@@ -54,21 +57,34 @@ public class DivisionEnemy : Enemy
     public override void Division()
     {
         Transform parent = transform.parent;
-        GameObject obj = Instantiate(this.gameObject, transform.position, Quaternion.identity, parent);
+        GameObject obj;
+
+        if (Direction_Left)
+        {
+            rigid.AddForce(rightForce * power, ForceMode.Acceleration);
+            obj = Instantiate(this.gameObject, transform.position + Vector3.left, Quaternion.identity, parent);
+            obj.GetComponent<Rigidbody>().AddForce(leftForce * power, ForceMode.Acceleration);
+        }
+        else
+        {
+            rigid.AddForce(leftForce * power, ForceMode.Acceleration);
+            obj = Instantiate(this.gameObject, transform.position + Vector3.right, Quaternion.identity, parent);
+            obj.GetComponent<Rigidbody>().AddForce(rightForce * power, ForceMode.Acceleration);
+        }
+        obj.GetComponent<Enemy>().Direction_Left = !Direction_Left;
     }
 
-    //public override void Damage()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        hp -= 1;
+    public override void Damage()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            hp -= 1;
+            
+            Division();
+        }
 
-    //        transform.position += -transform.forward;
-    //        Division();
-    //    }
-
-    //    if (hp <= 0) Destroy(gameObject);
-    //}
+        if (hp <= 0) Destroy(gameObject);
+    }
 
     public override void OnCollisionEnter(Collision other)
     {
@@ -80,7 +96,6 @@ public class DivisionEnemy : Enemy
         if (other.transform.tag == "Star")
         {
             hp--;
-            transform.position += -transform.forward;
             Division();
             if (hp <= 0)
             {

@@ -10,12 +10,18 @@ public class Bullet : MonoBehaviour
 {
     Rigidbody rigid;
     [SerializeField, Header("弾の速度")]
-    float power = 3;
+    float power = 2;
+
+    Transform target;
+    Vector3 targetPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
+
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        targetPosition = target.position;
     }
 
     // Update is called once per frame
@@ -26,12 +32,12 @@ public class Bullet : MonoBehaviour
 
     void BulletMove()
     {
-        rigid.AddForce(transform.forward * power, ForceMode.Impulse);
+        rigid.AddForce(targetPosition, ForceMode.Impulse);
 
         Destroy(gameObject, 2);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Player")
         {
