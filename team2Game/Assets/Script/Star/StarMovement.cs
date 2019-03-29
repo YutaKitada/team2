@@ -30,6 +30,8 @@ public class StarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("STAR:"+returnPlayer);
+
         ////跳ねずにそのまま帰ってくる際の処理
         //if (returnPlayer)
         //{
@@ -46,7 +48,7 @@ public class StarMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //まだ地面に触れていなければ
-        if (!returnPlayer)
+        if (!returnPlayer && gameObject.layer == 12)
         {
             returnPlayer = true;                    //地面に触れ、Playerの元へ帰る
             PlayerManager.isWishMode = false;       //願い事モードを切る
@@ -82,6 +84,8 @@ public class StarMovement : MonoBehaviour
                     UIManager.isCombo = true;   //コンボを開始
                 }
                 GameManager.combo++;        //コンボ数を1増やす
+
+                //collision.gameObject.GetComponent<Enemy>().
             }
             //当たったのがEnemyでもPlayerでもなければ
             else if (collision.transform.tag != "Player")
