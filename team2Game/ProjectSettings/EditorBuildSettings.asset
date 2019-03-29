@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameClear.unity
     guid: 11e02133dbca3ef44953c2315ce891c2
+  - enabled: 1
+    path: Assets/Scenes/Imamura.unity
+    guid: 1aa6e7ae3c3da8f4b9480e2ce198fc6f
   m_configObjects: {}
