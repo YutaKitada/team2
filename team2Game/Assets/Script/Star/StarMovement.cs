@@ -85,7 +85,7 @@ public class StarMovement : MonoBehaviour
                 }
                 GameManager.combo++;        //コンボ数を1増やす
 
-                //collision.gameObject.GetComponent<Enemy>().
+                collision.gameObject.GetComponent<Enemy>().Damage();
             }
             //当たったのがEnemyでもPlayerでもなければ
             else if (collision.transform.tag != "Player")
