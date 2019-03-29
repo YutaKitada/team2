@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class DivisionEnemy : Enemy
 {
-    //[SerializeField, Header("体力")]
-    //int hp = 3;
-
     Vector3 rightForce = new Vector3(10, 5, 0);
     Vector3 leftForce = new Vector3(-10, 5, 0);
 
@@ -24,6 +21,7 @@ public class DivisionEnemy : Enemy
         Direction();
         Contraction();
         //Damage();
+        Death();
     }
 
     public override void Move()
@@ -76,14 +74,11 @@ public class DivisionEnemy : Enemy
 
     public override void Damage()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
             hp -= 1;
-            
             Division();
-        }
-
-        if (hp <= 0) Destroy(gameObject);
+        //}
     }
 
     public override void OnCollisionEnter(Collision other)
@@ -93,14 +88,14 @@ public class DivisionEnemy : Enemy
             Direction_Left = !Direction_Left;
         }
 
-        if (other.transform.tag == "Star")
-        {
-            hp--;
-            Division();
-            if (hp <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+        //if (other.transform.tag == "Star")
+        //{
+        //    hp--;
+        //    Division();
+        //    if (hp <= 0)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 }

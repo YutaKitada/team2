@@ -27,7 +27,7 @@ public class RecessionEnemy : Enemy
     {
         Move();
         Direction();
-        Damage();
+        //Damage();
     }
 
     public override void Move()
@@ -48,34 +48,10 @@ public class RecessionEnemy : Enemy
         transform.rotation = rotation;
     }
 
-    //public override void Damage()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        Vector3 recession;
-    //        if (Direction_Left)
-    //        {
-    //            recession = recessionVector;
-    //        }
-    //        else
-    //        {
-    //            Vector3 reverceRecession = new Vector3(-recessionDistance, 10, 0);
-    //            recession = reverceRecession;
-    //        }
-    //        rigid.AddForce(recession * power, ForceMode.Acceleration);
-    //    }
-    //}
-
-    public override void OnCollisionEnter(Collision other)
+    public override void Damage()
     {
-        if (other.gameObject.name.Contains("Enemy"))
-        {
-            Direction_Left = !Direction_Left;
-        }
-
-        if (other.transform.tag == "Star")
-        {
-            hp--;
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
             Vector3 recession;
             if (Direction_Left)
             {
@@ -87,10 +63,34 @@ public class RecessionEnemy : Enemy
                 recession = reverceRecession;
             }
             rigid.AddForce(recession * power, ForceMode.Acceleration);
-            if (hp <= 0)
-            {
-                Destroy(gameObject);
-            }
+        //}
+    }
+
+    public override void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.name.Contains("Enemy"))
+        {
+            Direction_Left = !Direction_Left;
         }
+
+        //if (other.transform.tag == "Star")
+        //{
+        //    hp--;
+        //    Vector3 recession;
+        //    if (Direction_Left)
+        //    {
+        //        recession = recessionVector;
+        //    }
+        //    else
+        //    {
+        //        Vector3 reverceRecession = new Vector3(-recessionDistance, 10, 0);
+        //        recession = reverceRecession;
+        //    }
+        //    rigid.AddForce(recession * power, ForceMode.Acceleration);
+        //    if (hp <= 0)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 }

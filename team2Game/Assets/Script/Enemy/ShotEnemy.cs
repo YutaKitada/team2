@@ -33,6 +33,7 @@ public class ShotEnemy : Enemy
     {
         Direction();
         Shot();
+        Death();
     }
 
     public override void Shot()
@@ -76,16 +77,16 @@ public class ShotEnemy : Enemy
 
         transform.rotation = rotation;
     }
-
+    
     public override void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag == "Star")
-        {
-            hp--;
-            if (hp <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+        //if (other.transform.tag == "Star")
+        //{
+        //    hp--;
+        //    if (hp <= 0)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 }

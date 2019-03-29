@@ -23,17 +23,18 @@ public class VerticalMoveEnemy : Enemy
     {
         Move();
         Direction();
+        Death();
     }
 
     public override void Move()
     {
         if (Direction_Up)
         {
-            rigid.velocity = Vector3.up;
+            rigid.velocity = Vector3.up * power;
         }
         else
         {
-            rigid.velocity = Vector3.down;
+            rigid.velocity = Vector3.down * power;
         }
     }
 
@@ -50,17 +51,21 @@ public class VerticalMoveEnemy : Enemy
             Direction_Up = true;
         }
     }
-
+    
     public override void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag == "Star")
+        //if (other.transform.tag == "Star")
+        //{
+        //    hp--;
+        //    if (hp <= 0)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
+
+        if(other.gameObject.tag.Contains("Stage"))
         {
-            hp--;
-            if (hp <= 0)
-            {
-                Destroy(gameObject);
-            }
+            Direction_Up = !Direction_Up;
         }
     }
-
 }

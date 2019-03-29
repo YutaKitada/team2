@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void Damage()
     {
-
+        hp--;
     }
 
     /// <summary>
@@ -103,5 +103,16 @@ public class Enemy : MonoBehaviour
     public virtual void OnCollisionEnter(Collision other)
     {
 
+    }
+
+    /// <summary>
+    /// 死亡処理
+    /// </summary>
+    protected void Death()
+    {
+        if(hp <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
