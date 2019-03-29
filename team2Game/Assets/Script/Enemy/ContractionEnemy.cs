@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class ContractionEnemy : Enemy
 {
-    //[SerializeField, Header("体力")]
-    //int hp = 3;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +21,8 @@ public class ContractionEnemy : Enemy
     {
         Move();
         Contraction();
-        Damage();
+        //Damage();
+        Death();
     }
 
     public override void Contraction()
@@ -81,16 +79,6 @@ public class ContractionEnemy : Enemy
         }
     }
 
-    //public override void Damage()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        hp -= 1;
-    //    }
-
-    //    if (hp <= 0) Destroy(gameObject);
-    //}
-
     public override void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.name.Contains("Enemy"))
@@ -98,13 +86,13 @@ public class ContractionEnemy : Enemy
             Direction_Left = !Direction_Left;
         }
 
-        if (other.transform.tag == "Star")
-        {
-            hp--;
-            if (hp <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+        //if (other.transform.tag == "Star")
+        //{
+        //    hp--;
+        //    if (hp <= 0)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 }

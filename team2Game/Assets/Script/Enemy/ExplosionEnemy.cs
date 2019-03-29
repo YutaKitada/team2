@@ -25,6 +25,7 @@ public class ExplosionEnemy : Enemy
         Move();
         Direction();
         Damage();
+        Death();
     }
 
     public override void Move()
@@ -41,16 +42,16 @@ public class ExplosionEnemy : Enemy
     {
         Transform parent = transform.parent;
         GameObject obj = Instantiate(particle, transform.position, Quaternion.identity, parent);
-        Destroy(gameObject);
     }
 
-    //public override void Damage()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        Explosion();
-    //    }
-    //}
+    public override void Damage()
+    {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        hp--;
+        Explosion();
+        //}
+    }
 
     public override void OnCollisionEnter(Collision other)
     {
@@ -59,14 +60,14 @@ public class ExplosionEnemy : Enemy
             Direction_Left = !Direction_Left;
         }
 
-        if (other.transform.tag == "Star")
-        {
-            hp--;
-            Explosion();
-            if (hp <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+        //if (other.transform.tag == "Star")
+        //{
+        //    hp--;
+        //    Explosion();
+        //    if (hp <= 0)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 }

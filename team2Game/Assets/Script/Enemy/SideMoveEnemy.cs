@@ -26,6 +26,7 @@ public class SideMoveEnemy : Enemy
     {
         Move();
         Direction();
+        Death();
     }
 
     public override void Move()
@@ -72,19 +73,19 @@ public class SideMoveEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.name.Contains("Wall")
+        if (other.gameObject.tag.Contains("Stage")
             || other.gameObject.name.Contains("Enemy"))
         {
             Direction_Left = !Direction_Left;
         }
 
-        if(other.transform.tag == "Star")
-        {
-            hp--;
-            if(hp <= 0)
-            {
-                Destroy(gameObject);
-            }
-        }
+        //if(other.transform.tag == "Star")
+        //{
+        //    hp--;
+        //    if(hp <= 0)
+        //    {
+        //        Destroy(gameObject);
+        //    }
+        //}
     }
 }
