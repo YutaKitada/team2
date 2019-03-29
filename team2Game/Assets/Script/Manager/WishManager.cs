@@ -59,6 +59,7 @@ public class WishManager : MonoBehaviour
             {
                 isWishMode = true;
                 GameManager.isGameStop = true;
+                Time.timeScale = 0.5f;
             }
             else
             {
@@ -178,6 +179,7 @@ public class WishManager : MonoBehaviour
             isWishMode = false;
             stickLock = false;
             GameManager.isGameStop = false;
+            Time.timeScale = 1f;
         }
         
     }

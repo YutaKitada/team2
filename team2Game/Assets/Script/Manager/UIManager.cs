@@ -30,6 +30,10 @@ public class UIManager : MonoBehaviour
     
     public static string wishText;
 
+    [SerializeField]
+    private Text debugUI;
+    public static string debugtext;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +62,15 @@ public class UIManager : MonoBehaviour
             HPGageUI();
         
         WishUI();
+        debugUI.text = "WishModeStay:" + PlayerManager.isWishStay
+            + "\n" + "WishModeMode:" + PlayerManager.isWishMode
+            + "\n" + "HpGageStop:" + hpGageStop
+            + "\n" + "ComboGageStop:" + comboGageStop
+            + "\n" + "isCombo:" + isCombo
+            + "\n" + "isInvincible:" + PlayerManager.isInvincible
+            + "\n" + "isStop:" + PlayerManager.isStop
+            + "\n" + "isGameStop:" + GameManager.isGameStop
+            + "\n" + debugtext;
     }
 
     private void ComboUI()

@@ -118,6 +118,7 @@ public class StarMovement : MonoBehaviour
             }
 
             UIManager.hpGageStopTimer = 0;        //温度ゲージの減少を止めるタイマーの初期化
+            PlayerThrow.dank = false;
         }
 
         //Playerに触れたら
@@ -125,7 +126,6 @@ public class StarMovement : MonoBehaviour
         {
             returnPlayer = false;       //Playerの元へ帰ってきたのでfalseに
             inWater = false;            //水の中ではない判定
-            rigid.drag = 0f;            //摩擦を0に
         }
     }
     
@@ -135,7 +135,6 @@ public class StarMovement : MonoBehaviour
         if(other.tag == "Water")
         {
             inWater = true;         //水に入った
-            rigid.drag = 1f;        //摩擦を1に
         }
     }
 
@@ -145,7 +144,6 @@ public class StarMovement : MonoBehaviour
         if (other.tag == "Water")
         {
             inWater = false;        //水から出た
-            rigid.drag = 0f;        //摩擦を0に
         }
     }
 

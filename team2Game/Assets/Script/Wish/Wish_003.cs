@@ -6,12 +6,14 @@ public class Wish_003 : Wish
 {
     public override void WishStart()
     {
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        //GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
-        foreach (var n in enemys)
-        {
-            Destroy(n.gameObject);
-        }
+        //foreach (var n in enemys)
+        //{
+        //    Destroy(n.gameObject);
+        //}
+
+        UIManager.hpGageStop = true;
     }
 
     public override void WishUpdate()

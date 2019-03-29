@@ -17,7 +17,7 @@ public class PlayerThrow : MonoBehaviour
     private float stopTime = 1;             //投げた後の停止時間
     private float stopTimer;                //停止時間用タイマー
 
-    private bool dank;                      //下投げ
+    public static bool dank;                      //下投げ
     
 
     // Start is called before the first frame update
@@ -86,7 +86,6 @@ public class PlayerThrow : MonoBehaviour
                 {
                     //真下に投げる
                     starRigid.AddForce(new Vector3(0, -throwPower), ForceMode.Impulse);
-                    dank = false;
                 }
 
                 //投げた瞬間の場所を格納
@@ -105,7 +104,7 @@ public class PlayerThrow : MonoBehaviour
         if (PlayerManager.haveStar)
         {
             //StarはPlayerの3マス上に
-            GameManager.star.transform.position = transform.position + new Vector3(0, 2);
+            GameManager.star.transform.position = transform.position + new Vector3(0, 1);
             //Starのvelocityを0に
             starRigid.velocity = Vector3.zero;
 
