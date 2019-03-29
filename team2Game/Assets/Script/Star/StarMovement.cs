@@ -85,7 +85,7 @@ public class StarMovement : MonoBehaviour
                 }
                 GameManager.combo++;        //コンボ数を1増やす
 
-                //collision.gameObject.GetComponent<Enemy>().
+                collision.gameObject.GetComponent<Enemy>().Damage();
             }
             //当たったのがEnemyでもPlayerでもなければ
             else if (collision.transform.tag != "Player")
@@ -122,6 +122,7 @@ public class StarMovement : MonoBehaviour
             }
 
             UIManager.hpGageStopTimer = 0;        //温度ゲージの減少を止めるタイマーの初期化
+            UIManager.comboGageStopTimer = 0;
             PlayerThrow.dank = false;
         }
 
