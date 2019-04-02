@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class ParticleHit : MonoBehaviour
 {
+    [SerializeField, Header("Playerへのダメージ量")]
+    int damage = 10;
+
     private void OnParticleCollision(GameObject other)
     {
         if(other.gameObject.tag=="Player")
         {
-            PlayerManager.PlayerDamage(5);
+            PlayerManager.PlayerDamage(damage);
             Debug.Log("HitPlayer");
         }
     }
