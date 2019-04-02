@@ -30,6 +30,7 @@ public class RecessionEnemy : Enemy
     {
         Move();
         Direction();
+        SetTarget();
         //Damage();
     }
 
@@ -57,7 +58,7 @@ public class RecessionEnemy : Enemy
                     {
                         Direction_Left = false;
                     }
-                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    rigid.AddForce(transform.forward * power * 5, ForceMode.Acceleration);
                     break;
             }
         }

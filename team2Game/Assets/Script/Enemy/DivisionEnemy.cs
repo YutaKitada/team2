@@ -10,6 +10,10 @@ public class DivisionEnemy : Enemy
     Vector3 rightForce = new Vector3(10, 5, 0);
     Vector3 leftForce = new Vector3(-10, 5, 0);
 
+    [SerializeField]
+    bool isAttack = false;//攻撃中か
+    float elapsedTime = 0;
+
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
@@ -26,8 +30,19 @@ public class DivisionEnemy : Enemy
         Move();
         Direction();
         Contraction();
+        SetTarget();
         //Damage();
         Death();
+
+        if (isAttack)
+        {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= 2)
+            {
+                isAttack = false;
+                elapsedTime = 0;
+            }
+        }
     }
 
     public override void Move()
@@ -55,6 +70,10 @@ public class DivisionEnemy : Enemy
                         Direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+
+                    if (distance.x <= Mathf.Abs(1))
+                        Attack();
+
                     break;
             }
         }
@@ -131,6 +150,14 @@ public class DivisionEnemy : Enemy
         {
             state = State.NORMAL;
         }
+    }
+
+    void Attack()
+    {
+        if (isAttack) return;
+
+        rigid.AddForce(target.position - transform.position, ForceMode.Impulse);
+        isAttack = true;
     }
 
     public override void OnCollisionEnter(Collision other)

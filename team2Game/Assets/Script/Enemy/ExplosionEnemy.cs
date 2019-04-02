@@ -27,6 +27,7 @@ public class ExplosionEnemy : Enemy
     {
         Move();
         Direction();
+        SetTarget();
         //Damage();
         Death();
     }
