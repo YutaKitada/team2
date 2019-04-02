@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class VerticalMoveEnemy : Enemy
 {
+    [SerializeField, Header("目的地"), Range(1, 5)]
+    float destinationPosition;
+    float startPosition;//初期位置
+
     private void Awake()
     {
         startPosition = transform.position.y;

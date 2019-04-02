@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8026250643135568040}
   - component: {fileID: 8026250643135568043}
   - component: {fileID: 8026250643135568042}
+  - component: {fileID: 6599571872444814410}
   m_Layer: 0
   m_Name: ExplosionEnemy
   m_TagString: Enemy
@@ -108,6 +109,7 @@ MonoBehaviour:
   power: 10
   target: {fileID: 0}
   destinationPosition: 0
+  hp: 1
   particle: {fileID: 8617915487889382187, guid: 08093c228d9ed994290c2d55a77c0bd4,
     type: 3}
 --- !u!54 &8026250643135568042
@@ -126,3 +128,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &6599571872444814410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026250643135568044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19843e9eee7cca48ad5b1de704ba845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 1

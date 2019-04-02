@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 体力を持ったEnemyクラス
+/// 体力に応じてスケールが変わるEnemyクラス
 /// </summary>
 public class ContractionEnemy : Enemy
 {
@@ -13,6 +13,9 @@ public class ContractionEnemy : Enemy
         rigid = GetComponent<Rigidbody>();
         rotation = Quaternion.identity;
 
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        state = State.NORMAL;
+
         maxSpeed = power / 10f;
     }
 
@@ -20,6 +23,7 @@ public class ContractionEnemy : Enemy
     void Update()
     {
         Move();
+        Direction();
         Contraction();
         //Damage();
         Death();
@@ -49,33 +53,53 @@ public class ContractionEnemy : Enemy
         //最大の移動スピードを超えていないとき
         if (nowSpeed < maxSpeed)
         {
-            //ターゲットがいるとき
-            if (target != null)
+            switch (state)
             {
-                distance.x = target.position.x - transform.position.x;
-                if (distance.x < 0)
-                {
-                    Direction_Left = true;
-                }
-                else if (distance.x > 0)
-                {
-                    Direction_Left = false;
-                }
-            }
+                case State.NORMAL:
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
 
-            //左側を正面にする
-            if (Direction_Left)
-            {
-                rotation = Quaternion.Euler(forward);
+                case State.CHASE:
+                    distance.x = target.position.x - transform.position.x;
+                    if (distance.x < 0)
+                    {
+                        Direction_Left = true;
+                    }
+                    else if (distance.x > 0)
+                    {
+                        Direction_Left = false;
+                    }
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
             }
-            //右側を正面にする
-            else
-            {
-                rotation = Quaternion.Euler(-forward);
-            }
-            //正面を進行方向にして移動
-            transform.rotation = rotation;
-            rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        }
+    }
+
+    public override void Direction()
+    {
+        //左側を正面にする
+        if (Direction_Left)
+        {
+            rotation = Quaternion.Euler(forward);
+        }
+        //右側を正面にする
+        else
+        {
+            rotation = Quaternion.Euler(-forward);
+        }
+        //正面を進行方向にして移動
+        transform.rotation = rotation;
+    }
+
+    public override void SetTarget()
+    {
+        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        {
+            state = State.CHASE;
+        }
+        else
+        {
+            state = State.NORMAL;
         }
     }
 

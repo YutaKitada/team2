@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum State
+{
+    NORMAL,
+    CHASE
+}
+
 /// <summary>
 /// Enemyの大元
 /// </summary>
-
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
@@ -15,13 +20,8 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("移動量")]
     protected float power = 10f;
     protected float maxSpeed = 0f;//最大移動スピード(Startメソッドで決定)
-
-    [SerializeField]
+    
     protected Transform target;
-
-    [SerializeField, Header("目的地（設定しない場合は0）"), Range(0, 5)]
-    protected float destinationPosition;
-    protected float startPosition;//初期位置
 
     protected Vector3 distance;//targetとの距離
 
@@ -29,6 +29,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     protected int hp = 1;
+
+    protected State state;
 
     //左右移動用のbool
     public bool Direction_Left
@@ -96,6 +98,14 @@ public class Enemy : MonoBehaviour
     /// 爆発する処理
     /// </summary>
     public virtual void Explosion()
+    {
+
+    }
+
+    /// <summary>
+    /// ターゲット設定
+    /// </summary>
+    public virtual void SetTarget()
     {
 
     }

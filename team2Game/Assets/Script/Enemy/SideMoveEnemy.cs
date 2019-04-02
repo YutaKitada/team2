@@ -7,16 +7,14 @@ using UnityEngine;
 /// </summary>
 public class SideMoveEnemy : Enemy
 {
-    private void Awake()
-    {
-        startPosition = transform.position.x;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         rotation = Quaternion.identity;
+
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        state = State.NORMAL;
 
         maxSpeed = power / 10f;
     }
@@ -26,6 +24,7 @@ public class SideMoveEnemy : Enemy
     {
         Move();
         Direction();
+        SetTarget();
         Death();
     }
 
@@ -37,20 +36,25 @@ public class SideMoveEnemy : Enemy
         //最大の移動スピードを超えていないとき
         if (nowSpeed < maxSpeed)
         {
-            //ターゲットがいるとき
-            if (target != null)
+            switch (state)
             {
-                distance.x = target.position.x - transform.position.x;
-                if (distance.x < 0)
-                {
-                    Direction_Left = true;
-                }
-                else if (distance.x > 0)
-                {
-                    Direction_Left = false;
-                }
+                case State.NORMAL:
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
+
+                case State.CHASE:
+                    distance.x = target.position.x - transform.position.x;
+                    if (distance.x < 0)
+                    {
+                        Direction_Left = true;
+                    }
+                    else if (distance.x > 0)
+                    {
+                        Direction_Left = false;
+                    }
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
             }
-            rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
         }
     }
 
@@ -68,6 +72,18 @@ public class SideMoveEnemy : Enemy
         }
         //正面を進行方向にして移動
         transform.rotation = rotation;
+    }
+
+    public override void SetTarget()
+    {
+        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        {
+            state = State.CHASE;
+        }
+        else
+        {
+            state = State.NORMAL;
+        }
     }
 
     public override void OnCollisionEnter(Collision other)
