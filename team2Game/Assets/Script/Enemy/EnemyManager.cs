@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     {
         get;
         set;
-    } = 4;
+    }
     
     void Awake()
     {
