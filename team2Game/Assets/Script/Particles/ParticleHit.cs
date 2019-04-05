@@ -12,7 +12,6 @@ public class ParticleHit : MonoBehaviour
         if(other.gameObject.tag=="Player")
         {
             PlayerManager.PlayerDamage(damage);
-            Debug.Log("HitPlayer");
         }
     }
 }

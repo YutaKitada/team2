@@ -118,10 +118,12 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 死亡処理
     /// </summary>
-    protected void Death()
+    public virtual void Death()
     {
         if(hp <= 0)
         {
+            EnemyManager.DefeatedCount++;
+            Debug.Log(EnemyManager.DefeatedCount);
             Destroy(gameObject);
         }
     }

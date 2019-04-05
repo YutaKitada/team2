@@ -39,9 +39,9 @@ public class ContractionEnemy : Enemy
     {
         float scale;
 
-        if (hp == 3) scale = 2;
-        else if (hp == 2) scale = 1;
-        else scale = 0.5f;
+        if (hp == 3) scale = 2.5f;
+        else if (hp == 2) scale = 2f;
+        else scale = 1.5f;
 
         return scale;
     }

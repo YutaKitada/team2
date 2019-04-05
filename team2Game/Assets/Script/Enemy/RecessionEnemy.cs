@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ダメージを受けると後退するEnemyクラス
+/// 星を当てると後退するEnemyクラス
 /// </summary>
 public class RecessionEnemy : Enemy
 {

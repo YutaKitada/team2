@@ -9,6 +9,11 @@ public class ExplosionEnemy : Enemy
 {
     [SerializeField]
     GameObject particle;
+    Transform parent;
+
+    [SerializeField, Header("爆発までの間隔")]
+    float interval = 2;
+    float elapedTime = 0;//経過時間
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +25,8 @@ public class ExplosionEnemy : Enemy
         state = State.NORMAL;
 
         maxSpeed = power / 10f;
+
+        parent = transform.parent;
     }
 
     // Update is called once per frame
@@ -80,8 +87,12 @@ public class ExplosionEnemy : Enemy
 
     public override void Explosion()
     {
-        Transform parent = transform.parent;
-        GameObject obj = Instantiate(particle, transform.position, Quaternion.identity, parent);
+        elapedTime += Time.deltaTime;
+        if (elapedTime >= interval)
+        {
+            GameObject obj = Instantiate(particle, transform.position, Quaternion.identity, parent);
+            Destroy(gameObject);
+        }
     }
 
     public override void Damage()
@@ -89,7 +100,7 @@ public class ExplosionEnemy : Enemy
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
         hp--;
-        Explosion();
+        //Explosion();
         //}
     }
 
@@ -102,6 +113,15 @@ public class ExplosionEnemy : Enemy
         else
         {
             state = State.NORMAL;
+        }
+    }
+
+    public override void Death()
+    {
+        if (hp <= 0)
+        {
+            rigid.velocity = Vector3.zero;
+            Explosion();
         }
     }
 
