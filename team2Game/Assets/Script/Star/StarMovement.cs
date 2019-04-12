@@ -94,7 +94,7 @@ public class StarMovement : MonoBehaviour
                 UIManager.hpGageFillAmount -= 5f;
 
                 //コンボ中であれば
-                if (UIManager.isCombo)
+                if (UIManager.isCombo && !WishManager.isEverCombo)
                 {
                     GameManager.combo = 0;          //コンボ数を0に
                     UIManager.isCombo = false;      //コンボ中ではなくなる

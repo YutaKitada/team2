@@ -62,7 +62,8 @@ public class UIManager : MonoBehaviour
             HPGageUI();
         
         WishUI();
-        debugUI.text = "WishModeStay:" + PlayerManager.isWishStay
+        debugUI.text = "FPS;" + FPS.fps
+            + "\n" + "WishModeStay:" + PlayerManager.isWishStay
             + "\n" + "WishModeMode:" + PlayerManager.isWishMode
             + "\n" + "HpGageStop:" + hpGageStop
             + "\n" + "ComboGageStop:" + comboGageStop
