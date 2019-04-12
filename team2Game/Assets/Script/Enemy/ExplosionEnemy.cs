@@ -91,6 +91,7 @@ public class ExplosionEnemy : Enemy
         if (elapedTime >= interval)
         {
             GameObject obj = Instantiate(particle, transform.position, Quaternion.identity, parent);
+            EnemyManager.DefeatedCount++;
             Destroy(gameObject);
         }
     }
@@ -122,6 +123,7 @@ public class ExplosionEnemy : Enemy
         if (hp <= 0)
         {
             rigid.velocity = Vector3.zero;
+            Defeat = true;
             Explosion();
         }
     }

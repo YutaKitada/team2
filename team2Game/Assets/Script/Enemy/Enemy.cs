@@ -47,6 +47,15 @@ public class Enemy : MonoBehaviour
     } = true;
 
     /// <summary>
+    /// 倒したかどうか
+    /// </summary>
+    public bool Defeat
+    {
+        protected set;
+        get;
+    } = false;
+
+    /// <summary>
     /// 移動処理
     /// </summary>
     public virtual void Move()
@@ -124,6 +133,7 @@ public class Enemy : MonoBehaviour
         {
             EnemyManager.DefeatedCount++;
             Debug.Log(EnemyManager.DefeatedCount);
+            Defeat = true;
             Destroy(gameObject);
         }
     }

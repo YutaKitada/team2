@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// バウンドさせるクラス
+/// バウンドさせるクラス（モチーフ：魚座）
 /// </summary>
 public class Bound : MonoBehaviour
 {

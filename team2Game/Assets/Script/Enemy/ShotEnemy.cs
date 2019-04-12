@@ -90,15 +90,15 @@ public class ShotEnemy : Enemy
         }
     }
 
-    public override void OnCollisionEnter(Collision other)
-    {
-        //if (other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    if (hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
-    }
+    //public override void OnCollisionEnter(Collision other)
+    //{
+    //    if (other.transform.tag == "Star")
+    //    {
+    //        hp--;
+    //        if (hp <= 0)
+    //        {
+    //            Destroy(gameObject);
+    //        }
+    //    }
+    //}
 }
