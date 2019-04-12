@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 縦移動のEnemyクラス
+/// 縦移動のEnemyクラス（モチーフ：牡羊座）
 /// </summary>
 public class VerticalMoveEnemy : Enemy
 {

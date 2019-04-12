@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 体力に応じてスケールが変わるEnemyクラス
+/// 体力に応じてスケールが変わるEnemyクラス（モチーフ：山羊座）
 /// </summary>
 public class ContractionEnemy : Enemy
 {
@@ -94,7 +94,8 @@ public class ContractionEnemy : Enemy
 
     public override void SetTarget()
     {
-        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        if (target.position.x - transform.position.x <= 5f
+            && target.position.x - transform.position.x >= -5f)
         {
             state = State.CHASE;
         }

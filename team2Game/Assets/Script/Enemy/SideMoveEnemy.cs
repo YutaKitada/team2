@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 横移動のEnemyクラス
+/// 横移動のEnemyクラス（モチーフ：蟹座）
 /// </summary>
 public class SideMoveEnemy : Enemy
 {
@@ -23,7 +23,7 @@ public class SideMoveEnemy : Enemy
     void Update()
     {
         Move();
-        Direction();
+        //Direction();
         SetTarget();
         Death();
     }
@@ -39,7 +39,14 @@ public class SideMoveEnemy : Enemy
             switch (state)
             {
                 case State.NORMAL:
-                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    if (Direction_Left)
+                    {
+                        rigid.AddForce(-transform.right * power, ForceMode.Acceleration);
+                    }
+                    else
+                    {
+                        rigid.AddForce(transform.right * power, ForceMode.Acceleration);
+                    }
                     break;
 
                 case State.CHASE:
@@ -47,12 +54,14 @@ public class SideMoveEnemy : Enemy
                     if (distance.x < 0)
                     {
                         Direction_Left = true;
+                        rigid.AddForce(-transform.right * power, ForceMode.Acceleration);
                     }
                     else if (distance.x > 0)
                     {
                         Direction_Left = false;
+                        rigid.AddForce(transform.right * power, ForceMode.Acceleration);
                     }
-                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    //rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
             }
         }
@@ -76,7 +85,8 @@ public class SideMoveEnemy : Enemy
 
     public override void SetTarget()
     {
-        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        if (target.position.x - transform.position.x <= 5f
+            && target.position.x - transform.position.x >= -5f)
         {
             state = State.CHASE;
         }
@@ -84,6 +94,7 @@ public class SideMoveEnemy : Enemy
         {
             state = State.NORMAL;
         }
+
     }
 
     public override void OnCollisionEnter(Collision other)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 分裂するEnemy
+/// 分裂するEnemy（モチーフ：双子座）
 /// </summary>
 public class DivisionEnemy : Enemy
 {
@@ -126,13 +126,22 @@ public class DivisionEnemy : Enemy
 
     public override void SetTarget()
     {
-        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        if (target.position.x - transform.position.x <= 5f
+            && target.position.x - transform.position.x >= -5f)
         {
             state = State.CHASE;
         }
         else
         {
             state = State.NORMAL;
+        }
+    }
+
+    public override void Death()
+    {
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 

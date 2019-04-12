@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 弾を撃つEnemyクラス
+/// 弾を撃つEnemyクラス（モチーフ：射手座）
 /// </summary>
 public class ShotEnemy : Enemy
 {

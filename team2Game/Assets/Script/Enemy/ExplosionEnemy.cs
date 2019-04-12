@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 爆発するEnemyクラス
+/// 爆発するEnemyクラス（モチーフ：水瓶座）
 /// </summary>
 public class ExplosionEnemy : Enemy
 {
@@ -106,7 +106,8 @@ public class ExplosionEnemy : Enemy
 
     public override void SetTarget()
     {
-        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        if (target.position.x - transform.position.x <= 5f
+            && target.position.x - transform.position.x >= -5f)
         {
             state = State.CHASE;
         }

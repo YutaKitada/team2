@@ -97,7 +97,8 @@ public class RecessionEnemy : Enemy
 
     public override void SetTarget()
     {
-        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        if (target.position.x - transform.position.x <= 5f
+            && target.position.x - transform.position.x >= -5f)
         {
             state = State.CHASE;
         }

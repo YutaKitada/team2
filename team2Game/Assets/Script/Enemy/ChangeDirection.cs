@@ -50,9 +50,14 @@ public class ChangeDirection : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// レイの長さ設定
+    /// </summary>
+    /// <returns></returns>
     float GetDistance()
     {
         float distance;
+
         if (transform.localScale.x <= 2) distance = 3;
         else distance = 1;
 

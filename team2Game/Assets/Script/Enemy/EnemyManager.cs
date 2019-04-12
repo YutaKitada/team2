@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public static int DefeatedCount//倒された敵のカウントプロパティ
+    public static int DefeatedCount//倒した敵のカウントプロパティ
     {
         get;
         set;
