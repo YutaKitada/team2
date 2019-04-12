@@ -132,7 +132,7 @@ public class Enemy : MonoBehaviour
         if(hp <= 0)
         {
             EnemyManager.DefeatedCount++;
-            Debug.Log(EnemyManager.DefeatedCount);
+            Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
             Defeat = true;
             Destroy(gameObject);
         }

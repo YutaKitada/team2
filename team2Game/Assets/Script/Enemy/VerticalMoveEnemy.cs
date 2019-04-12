@@ -52,8 +52,6 @@ public class VerticalMoveEnemy : Enemy
             if (rigid.velocity.y <= -1)
                 rigid.velocity = new Vector3(0, -1, 0);
         }
-
-        Debug.Log(rigid.velocity);
     }
 
     public override void Direction()
