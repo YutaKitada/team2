@@ -145,6 +145,13 @@ public class PlayerThrow : MonoBehaviour
             SoundManager.PlaySE(1);
             //下投げをtrueに
             dank = true;
+            //もし願い事待機状態であれば
+            if (PlayerManager.isWishStay)
+            {
+                stopTimer = -2f;        //移動制限用タイマーを1秒長くする
+                PlayerManager.isWishMode = true;        //願い事モード起動
+                PlayerManager.isWishStay = false;       //待機状態をfalseに
+            }
             //Playerに触れられなくする
             GameManager.star.layer = 12;
         }
