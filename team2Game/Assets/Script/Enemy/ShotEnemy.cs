@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 弾を撃つEnemyクラス
+/// 弾を撃つEnemyクラス（モチーフ：射手座）
 /// </summary>
 public class ShotEnemy : Enemy
 {
@@ -77,16 +77,28 @@ public class ShotEnemy : Enemy
 
         transform.rotation = rotation;
     }
-    
-    public override void OnCollisionEnter(Collision other)
+
+    public override void SetTarget()
     {
-        //if (other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    if (hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
+        if (target.position.x - transform.position.x <= Mathf.Abs(5))
+        {
+            state = State.CHASE;
+        }
+        else
+        {
+            state = State.NORMAL;
+        }
     }
+
+    //public override void OnCollisionEnter(Collision other)
+    //{
+    //    if (other.transform.tag == "Star")
+    //    {
+    //        hp--;
+    //        if (hp <= 0)
+    //        {
+    //            Destroy(gameObject);
+    //        }
+    //    }
+    //}
 }

@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum State
+{
+    NORMAL,
+    CHASE
+}
+
 /// <summary>
 /// Enemyの大元
 /// </summary>
-
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
@@ -15,13 +20,8 @@ public class Enemy : MonoBehaviour
     [SerializeField, Header("移動量")]
     protected float power = 10f;
     protected float maxSpeed = 0f;//最大移動スピード(Startメソッドで決定)
-
-    [SerializeField]
+    
     protected Transform target;
-
-    [SerializeField, Header("目的地（設定しない場合は0）"), Range(0, 5)]
-    protected float destinationPosition;
-    protected float startPosition;//初期位置
 
     protected Vector3 distance;//targetとの距離
 
@@ -29,6 +29,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     protected int hp = 1;
+
+    protected State state;
 
     //左右移動用のbool
     public bool Direction_Left
@@ -43,6 +45,15 @@ public class Enemy : MonoBehaviour
         get;
         set;
     } = true;
+
+    /// <summary>
+    /// 倒したかどうか
+    /// </summary>
+    public bool Defeat
+    {
+        protected set;
+        get;
+    } = false;
 
     /// <summary>
     /// 移動処理
@@ -99,6 +110,14 @@ public class Enemy : MonoBehaviour
     {
 
     }
+
+    /// <summary>
+    /// ターゲット設定
+    /// </summary>
+    public virtual void SetTarget()
+    {
+
+    }
     
     public virtual void OnCollisionEnter(Collision other)
     {
@@ -108,10 +127,13 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 死亡処理
     /// </summary>
-    protected void Death()
+    public virtual void Death()
     {
         if(hp <= 0)
         {
+            EnemyManager.DefeatedCount++;
+            Debug.Log(EnemyManager.DefeatedCount);
+            Defeat = true;
             Destroy(gameObject);
         }
     }

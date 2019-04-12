@@ -41,6 +41,7 @@ public class Bullet : MonoBehaviour
     void BulletMove()
     {
         rigid.AddForce(targetPosition - initialPosition, ForceMode.Impulse);
+        rigid.velocity /= 2f;
 
         Destroy(gameObject, 2);
     }

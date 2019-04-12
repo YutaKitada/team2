@@ -10,7 +10,7 @@ public class ChangeDirection : MonoBehaviour
     Ray ray;
     RaycastHit hit;
     bool isChange;
-    [SerializeField, Header("レイの距離")]
+    //[SerializeField, Header("レイの距離")]
     float maxDistance = 1;
 
     Enemy enemy;
@@ -24,6 +24,14 @@ public class ChangeDirection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ReverseDirection();
+    }
+
+    /// <summary>
+    /// 方向反転
+    /// </summary>
+    void ReverseDirection()
+    {
         if (enemy.Direction_Left)
         {
             ray = new Ray(transform.position, Vector3.down + Vector3.left);
@@ -34,12 +42,25 @@ public class ChangeDirection : MonoBehaviour
         }
 
         //レイがオブジェクトに当たらなくなったら方向反転
-        isChange = !Physics.Raycast(ray, out hit, maxDistance);
-        Debug.Log(isChange);
+        isChange = !Physics.Raycast(ray, out hit, maxDistance * GetDistance());
 
         if (isChange)
         {
             enemy.Direction_Left = !enemy.Direction_Left;
         }
+    }
+
+    /// <summary>
+    /// レイの長さ設定
+    /// </summary>
+    /// <returns></returns>
+    float GetDistance()
+    {
+        float distance;
+
+        if (transform.localScale.x <= 2) distance = 3;
+        else distance = 1;
+
+        return distance;
     }
 }
