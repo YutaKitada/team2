@@ -108,6 +108,7 @@ public class ExplosionEnemy : Enemy
         if (hp <= 0)
         {
             rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
             Defeat = true;
             Explosion();
         }

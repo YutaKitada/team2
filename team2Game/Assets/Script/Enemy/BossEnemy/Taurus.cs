@@ -2,32 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Mode
-{
-    NORMAL,
-    RUSH,
-    STAN,
-    INVINCIBLE
-}
-
-public class BossEnemy1 : Enemy
+public class Taurus : BossEnemy
 {
     [SerializeField, Header("突進までの待機時間")]
     float interval = 5;
     float intervalElapsedTime;
 
-    [SerializeField, Header("スタンの持続時間")]
-    float stanTime = 3;
-    float stanElapsedTime;//スタン中の経過時間
+    public enum Mode
+    {
+        NORMAL,
+        RUSH,
+        STAN,
+        INVINCIBLE
+    }
 
     [HideInInspector]
     public Mode mode;
-
-    [HideInInspector]
-    public bool isHit = true;//プレイヤーの攻撃が当たるかどうか
-    [SerializeField, Header("無敵時間")]
-    float invincibleTime = 3;
-    float invincibleElapsedTime;//無敵時間の経過時間
 
     Vector3 targetPosition;//突進開始時のプレイヤーの位置
     Vector3 startPosition;//突進開始地点
@@ -141,15 +131,6 @@ public class BossEnemy1 : Enemy
 
             intervalElapsedTime = 0;
         }
-    }
-
-    /// <summary>
-    /// 停止処理
-    /// </summary>
-    public void Stop()
-    {
-        rigid.velocity = Vector3.zero;
-        rigid.angularVelocity = Vector3.zero;
     }
 
     public override void OnCollisionEnter(Collision other)

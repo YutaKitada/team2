@@ -51,8 +51,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public bool Defeat
     {
-        protected set;
         get;
+        protected set;
     } = false;
 
     /// <summary>
