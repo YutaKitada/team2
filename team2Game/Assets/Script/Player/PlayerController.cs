@@ -211,6 +211,7 @@ public class PlayerController : MonoBehaviour
                 SoundManager.PlaySE(5);
                 isDamage = true;
 
+                rigid.velocity = new Vector3(0, 0);
                 Vector3 hitVector = (collision.transform.position - transform.position).normalized;
                 if (hitVector.x >= 0)
                 {
