@@ -19,9 +19,11 @@ public class PlayerController : MonoBehaviour
     private bool isJump;                        //ジャンプフラッグ
 
     private bool inWater;                       //水の中にいるか否か
-
+    private bool isDamage;
 
     private int jumpCount;                      //2段ジャンプ用カウンター
+
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +38,12 @@ public class PlayerController : MonoBehaviour
         //水の中ではない
         inWater = false;
 
+        isDamage = false;
+
         //タイマー・カウントの初期化
         jumpCount = 0;
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -62,6 +68,37 @@ public class PlayerController : MonoBehaviour
         UIManager.debugtext = "isJump:" + isJump
             + "\n" + "JumpCount:" + jumpCount
             + "\n" + "isMoveStop:" + isMoveStop;
+
+        Animation();
+    }
+
+    private void Animation()
+    {
+        if(Input.GetAxisRaw("Horizontal") >= 0.6f || Input.GetAxisRaw("Horizontal") <= -0.6f)
+        {
+            animator.SetBool("Run", true);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
+        }
+
+        if (Input.GetAxisRaw("Vertical") <= -0.7f)
+        {
+            if (!animator.GetBool("Squat"))
+            {
+                animator.SetBool("Squat", true);
+            }
+        }
+        else
+        {
+            animator.SetBool("Squat", false);
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetTrigger("Jump");
+        }
     }
 
     //移動処理メソッド
@@ -89,7 +126,7 @@ public class PlayerController : MonoBehaviour
                 rigid.useGravity = true;
             }
             //移動ができる状態であれば
-            if (!isMoveStop)
+            if (!isMoveStop &&!isDamage)
             {
                 //velocityに移動量を追加
                 rigid.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * speed, rigid.velocity.y);
@@ -99,12 +136,14 @@ public class PlayerController : MonoBehaviour
                 {
                     //Playerの向きを左に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.LEFT;
+                    transform.LookAt(transform.position + new Vector3(-1,0));
                 }
                 //右に移動していれば
                 if (rigid.velocity.x > 0)
                 {
                     //Playerの向きを右に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.RIGHT;
+                    transform.LookAt(transform.position + new Vector3(1, 0));
                 }
             }
 
@@ -132,12 +171,14 @@ public class PlayerController : MonoBehaviour
             {
                 //上方向に力を与える
                 rigid.AddForce(new Vector3(0, jumpPower * 1.5f), ForceMode.Impulse);
+                SoundManager.PlaySE(4);
 
             }
             else
             {
                 //上方向に力を与える
                 rigid.AddForce(new Vector3(0, jumpPower), ForceMode.Impulse);
+                SoundManager.PlaySE(6);
             }
             //ジャンプカウントを1増やす
             jumpCount++;
@@ -163,8 +204,24 @@ public class PlayerController : MonoBehaviour
         //Enemyに当たった場合
         if (collision.transform.tag == "Enemy")
         {
-            //ダメージを10受ける
-            PlayerManager.PlayerDamage(10);
+            if (!PlayerManager.isInvincible)
+            {
+                //ダメージを10受ける
+                PlayerManager.PlayerDamage(10);
+                SoundManager.PlaySE(5);
+                isDamage = true;
+
+                Vector3 hitVector = (collision.transform.position - transform.position).normalized;
+                if (hitVector.x >= 0)
+                {
+                    rigid.AddForce(new Vector3(-10, 10), ForceMode.Impulse);
+                }
+                else
+                {
+                    rigid.AddForce(new Vector3(10, 10), ForceMode.Impulse);
+                }
+            }
+            
         }
     }
 
@@ -173,10 +230,11 @@ public class PlayerController : MonoBehaviour
         
         if(other.tag == "Stage")
         {
-            Debug.Log("HIUAWHIDWAW");
             //ジャンプカウントを0に
             jumpCount = 0;
             isJump = false;
+            animator.SetTrigger("Landing");
+            isDamage = false;
         }
             
         
@@ -187,6 +245,7 @@ public class PlayerController : MonoBehaviour
             speed = 3;          //スピードを3に
             jumpPower = 5f;     //ジャンプのパワーを5に
             inWater = true;     //水の中である
+            SoundManager.PlaySE(9);
         }
     }
 
@@ -197,6 +256,7 @@ public class PlayerController : MonoBehaviour
             speed = 10;         //スピードを10に
             jumpPower = 10;     //ジャンプのパワーを10に
             inWater = false;    //水の中ではない
+            SoundManager.PlaySE(9);
         }
     }
 

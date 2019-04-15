@@ -30,7 +30,6 @@ public class StarMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("STAR:"+returnPlayer);
 
         ////跳ねずにそのまま帰ってくる際の処理
         //if (returnPlayer)
@@ -51,12 +50,12 @@ public class StarMovement : MonoBehaviour
         if (!returnPlayer && gameObject.layer == 12)
         {
             returnPlayer = true;                    //地面に触れ、Playerの元へ帰る
-            PlayerManager.isWishMode = false;       //願い事モードを切る
             gameObject.layer = 11;                  //星のLayerを変更(Playerでも触れられるものへ)
 
             //当たったのがEnemyであれば
             if (collision.transform.tag == "Enemy")
             {
+                SoundManager.PlaySE(5);
                 //温度ゲージが100以下であれば
                 if (UIManager.hpGageFillAmount <= 100)
                 {
@@ -140,6 +139,7 @@ public class StarMovement : MonoBehaviour
         if(other.tag == "Water")
         {
             inWater = true;         //水に入った
+            SoundManager.PlaySE(9);
         }
     }
 
@@ -149,6 +149,7 @@ public class StarMovement : MonoBehaviour
         if (other.tag == "Water")
         {
             inWater = false;        //水から出た
+            SoundManager.PlaySE(9);
         }
     }
 
@@ -157,7 +158,11 @@ public class StarMovement : MonoBehaviour
         //水に触れていたら
         if(other.tag == "Water")
         {
+            returnPlayer = true;
+            PlayerThrow.dank = false;
+            gameObject.layer = 11;                  //星のLayerを変更(Playerでも触れられるものへ)
             rigid.AddForce(new Vector3(0, 15));     //上方向に力をいれる
+            rigid.velocity = new Vector3(rigid.velocity.x, Mathf.Clamp(rigid.velocity.y, -15, 5),rigid.velocity.z);
         }
     }
 }

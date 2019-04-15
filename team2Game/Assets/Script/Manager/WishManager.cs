@@ -23,6 +23,7 @@ public class WishManager : MonoBehaviour
     private float wishTime;
     private float wishTimer;
     private int wishNumber;
+    private bool commandSuccess;
 
     [SerializeField]
     private TextAsset csvFile;
@@ -37,6 +38,8 @@ public class WishManager : MonoBehaviour
         isWish = false;
         isWishMode = false;
         isEverCombo = false;
+
+        commandSuccess = false;
 
         stickLock = false;
 
@@ -71,7 +74,7 @@ public class WishManager : MonoBehaviour
         // ログに読み込んだデータを表示する
         foreach (var data in wishDatas)
         {
-            Debug.Log("DATA:" + data[0] + " / " + data[1] + " / " + data[2]+ " / " + data[3]);
+            Debug.Log("DATA:" + data[0] + " / " + data[1] + " / " + data[2]+ " / " + data[3] + " / " + data[4]);
         }
         //Debug.Log("DATA:" + addressDatas[0] + " / " + addressDatas[1] + " / " + addressDatas[2]);
 
@@ -85,14 +88,14 @@ public class WishManager : MonoBehaviour
     {
         WishText();
 
-        if (PlayerManager.isWishStay)
-        {
-            playerRender.material.color = Color.blue;
-        }
-        else if (!PlayerManager.isWishStay)
-        {
-            playerRender.material.color = Color.red;
-        }
+        //if (PlayerManager.isWishStay)
+        //{
+        //    playerRender.material.color = Color.blue;
+        //}
+        //else if (!PlayerManager.isWishStay)
+        //{
+        //    playerRender.material.color = Color.red;
+        //}
     }
 
     private void WishText()
@@ -103,6 +106,7 @@ public class WishManager : MonoBehaviour
             {
                 isWishMode = true;
                 GameManager.isGameStop = true;
+                UIManager.answerText = wishDatas[0][1];
             }
             else
             {
@@ -111,18 +115,22 @@ public class WishManager : MonoBehaviour
                     if (Input.GetButtonDown("AButton"))
                     {
                         wishCommand += "A";
+                        SoundManager.PlaySE(1);
                     }
                     else if (Input.GetButtonDown("BButton"))
                     {
                         wishCommand += "B";
+                        SoundManager.PlaySE(1);
                     }
                     else if (Input.GetButtonDown("XButton"))
                     {
                         wishCommand += "X";
+                        SoundManager.PlaySE(1);
                     }
                     else if (Input.GetButtonDown("YButton"))
                     {
                         wishCommand += "Y";
+                        SoundManager.PlaySE(1);
                     }
                     //else if (Input.GetAxisRaw("Horizontal") >= 1 &&!stickLock)
                     //{
@@ -149,6 +157,17 @@ public class WishManager : MonoBehaviour
                     //    stickLock = false;
                     //}
                     UIManager.wishText = wishCommand;
+                    if (wishCommand != "")
+                    {
+                        if (wishCommand.Substring(wishCommand.Length -1, 1) != UIManager.answerText.Substring(wishCommand.Length-1, 1))
+                        {
+                            UIManager.wishText = "だめです";
+                            isWish = true;
+                        SoundManager.PlaySE(3);
+                    }
+                    }
+                    
+                    
 
                     Wish(wishCommand);
                 }
@@ -163,6 +182,11 @@ public class WishManager : MonoBehaviour
             isWishMode = false;
             stickLock = false;
             GameManager.isGameStop = false;
+            if (commandSuccess)
+            {
+                commandSuccess = false;
+                isWishNow = true;
+            }
         }
 
         if (isWishNow)
@@ -183,17 +207,17 @@ public class WishManager : MonoBehaviour
     {
         for(int i = 0; i < wishDatas.Count; i++)
         {
-            if (wishDatas[i][0] == command)
+            if (wishDatas[i][1] == command)
             {
-                wishTime = float.Parse(wishDatas[i][1]);
-                PlayerManager.PlayerDamage(float.Parse(wishDatas[i][2]));
+                wishTime = float.Parse(wishDatas[i][2]);
+                PlayerManager.PlayerDamage(float.Parse(wishDatas[i][3]));
                 isWish = true;
-                isWishNow = true;
+                commandSuccess = true;
                 wishTimer = 0;
-                wishCommand = wishDatas[i][3];
+                wishCommand = wishDatas[i][4];
                 UIManager.wishText = wishCommand;
                 wishNumber = i;
-
+                SoundManager.PlaySE(10);
             }
         }
     }
