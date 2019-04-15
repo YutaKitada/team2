@@ -18,6 +18,8 @@ public class PlayerThrow : MonoBehaviour
     private float stopTimer;                //停止時間用タイマー
 
     public static bool dank;                      //下投げ
+
+    private Animator animator;
     
 
     // Start is called before the first frame update
@@ -36,6 +38,8 @@ public class PlayerThrow : MonoBehaviour
 
         //下投げ初期化
         dank = false;
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -53,6 +57,8 @@ public class PlayerThrow : MonoBehaviour
                 //移動制限解除
                 PlayerManager.isStop = false;
 
+                
+
                 //タイマー初期化
                 stopTimer = 0;
 
@@ -62,41 +68,49 @@ public class PlayerThrow : MonoBehaviour
                     UIManager.hpGageFillAmount = 20;
                 }
 
-                //Starオブジェクトを持っていない状態に
-                PlayerManager.haveStar = false;
 
-                //下投げでなければ
-                if (!dank)
+                if (PlayerManager.isWishMode)
                 {
-                    //Playerの向いている方向に応じて投げる方向を変える
-                    switch (PlayerManager.playerDirection)
-                    {
-                        //左を向いている場合
-                        case PlayerManager.PlayerDirection.LEFT:
-                            starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
-                            break;
-                        //右を向いている場合
-                        case PlayerManager.PlayerDirection.RIGHT:
-                            starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
-                            break;
-                    }
+                    PlayerManager.isWishMode = false;       //願い事モードを切る
                 }
-                //下投げの場合
                 else
                 {
-                    //真下に投げる
-                    starRigid.AddForce(new Vector3(0, -throwPower), ForceMode.Impulse);
+                    //Starオブジェクトを持っていない状態に
+                    PlayerManager.haveStar = false;
+
+                    //下投げでなければ
+                    if (!dank)
+                    {
+                        //Playerの向いている方向に応じて投げる方向を変える
+                        switch (PlayerManager.playerDirection)
+                        {
+                            //左を向いている場合
+                            case PlayerManager.PlayerDirection.LEFT:
+                                starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
+                                break;
+                            //右を向いている場合
+                            case PlayerManager.PlayerDirection.RIGHT:
+                                starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
+                                break;
+                        }
+                    }
+                    //下投げの場合
+                    else
+                    {
+                        //真下に投げる
+                        starRigid.AddForce(new Vector3(0, -throwPower), ForceMode.Impulse);
+                    }
+
+                    //投げた瞬間の場所を格納
+                    PlayerManager.throwPosition = GameManager.star.transform.position;
+
+                    ////移動制限をかける
+                    //playerManager.isStop = false;
+                    UIManager.hpGageStopTimer = 0;
+
+                    //Starコライダー開始
+                    starCollider.enabled = true;
                 }
-
-                //投げた瞬間の場所を格納
-                PlayerManager.throwPosition = GameManager.star.transform.position;
-
-                ////移動制限をかける
-                //playerManager.isStop = false;
-                UIManager.hpGageStopTimer = 0;
-
-                //Starコライダー開始
-                starCollider.enabled = true;
             }
         }
 
@@ -104,7 +118,7 @@ public class PlayerThrow : MonoBehaviour
         if (PlayerManager.haveStar)
         {
             //StarはPlayerの3マス上に
-            GameManager.star.transform.position = transform.position + new Vector3(0, 1.5f);
+            GameManager.star.transform.position = transform.position + new Vector3(0, 2.5f);
             //Starのvelocityを0に
             starRigid.velocity = Vector3.zero;
 
@@ -120,11 +134,6 @@ public class PlayerThrow : MonoBehaviour
         //投げるボタンを押された場合
         if (Input.GetButtonDown("Fire1") && !PlayerManager.isStop)
         {
-            //移動制限を開始
-            PlayerManager.isStop = true;
-            //移動制限用タイマー初期化
-            stopTimer = 0;
-            SoundManager.PlaySE(1);
             //もし願い事待機状態であれば
             if (PlayerManager.isWishStay)
             {
@@ -132,19 +141,22 @@ public class PlayerThrow : MonoBehaviour
                 PlayerManager.isWishMode = true;        //願い事モード起動
                 PlayerManager.isWishStay = false;       //待機状態をfalseに
             }
-            //Playerに触れられなくする
-            GameManager.star.layer = 12;
+            else
+            {
+                //移動制限用タイマー初期化
+                stopTimer = 0;
+                SoundManager.PlaySE(11);
+
+                //Playerに触れられなくする
+                GameManager.star.layer = 12;
+                animator.SetTrigger("Throw");
+            }
+            //移動制限を開始
+            PlayerManager.isStop = true;
         }
         //下投ボタンを押された場合
         if (Input.GetButtonDown("Fire2") && !PlayerManager.isStop)
         {
-            //移動制限を開始
-            PlayerManager.isStop = true;
-            //移動制限用タイマー初期化
-            stopTimer = 0;
-            SoundManager.PlaySE(1);
-            //下投げをtrueに
-            dank = true;
             //もし願い事待機状態であれば
             if (PlayerManager.isWishStay)
             {
@@ -152,8 +164,21 @@ public class PlayerThrow : MonoBehaviour
                 PlayerManager.isWishMode = true;        //願い事モード起動
                 PlayerManager.isWishStay = false;       //待機状態をfalseに
             }
-            //Playerに触れられなくする
-            GameManager.star.layer = 12;
+            else
+            {
+                //移動制限用タイマー初期化
+                stopTimer = 0;
+                SoundManager.PlaySE(11);
+                //下投げをtrueに
+                dank = true;
+
+                //Playerに触れられなくする
+                GameManager.star.layer = 12;
+                animator.SetTrigger("Throw");
+            }
+            //移動制限を開始
+            PlayerManager.isStop = true;
+
         }
     }
 
@@ -166,7 +191,7 @@ public class PlayerThrow : MonoBehaviour
             PlayerManager.haveStar = true;
             starCollider.enabled = false;
 
-            SoundManager.PlaySE(0);
+            SoundManager.PlaySE(2);
         }
     }
 }
