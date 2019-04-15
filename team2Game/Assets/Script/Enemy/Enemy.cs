@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     protected Rigidbody rigid;
     protected Quaternion rotation;
 
-    [SerializeField, Header("移動量")]
+    [SerializeField, Header("移動力")]
     protected float power = 10f;
     protected float maxSpeed = 0f;//最大移動スピード(Startメソッドで決定)
     

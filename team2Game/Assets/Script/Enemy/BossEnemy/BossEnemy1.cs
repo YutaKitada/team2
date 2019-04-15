@@ -5,14 +5,16 @@ using UnityEngine;
 public enum Mode
 {
     NORMAL,
+    RUSH,
     STAN,
     INVINCIBLE
 }
 
 public class BossEnemy1 : Enemy
 {
-    [SerializeField, Header("待機時間")]
-    float interval = 5f;
+    [SerializeField, Header("突進までの待機時間")]
+    float interval = 5;
+    float intervalElapsedTime;
 
     [SerializeField, Header("スタンの持続時間")]
     float stanTime = 3;
@@ -26,7 +28,6 @@ public class BossEnemy1 : Enemy
     [SerializeField, Header("無敵時間")]
     float invincibleTime = 3;
     float invincibleElapsedTime;//無敵時間の経過時間
-    bool rushing = false;//突進中かどうか
 
     Vector3 targetPosition;//突進開始時のプレイヤーの位置
     Vector3 startPosition;//突進開始地点
@@ -50,10 +51,11 @@ public class BossEnemy1 : Enemy
         switch (mode)
         {
             case Mode.NORMAL:
-                if (!rushing)
-                {
-                    Direction();
-                }
+                Direction();
+                RushPrepare();
+                break;
+
+            case Mode.RUSH:
                 RushAttack();
                 break;
 
@@ -87,27 +89,28 @@ public class BossEnemy1 : Enemy
     }
 
     /// <summary>
+    /// 突進準備
+    /// </summary>
+    void RushPrepare()
+    {
+        intervalElapsedTime += Time.deltaTime;
+        if (intervalElapsedTime < interval) return;
+        else
+        {
+            startPosition = transform.position;
+            targetPosition = target.position;
+            intervalElapsedTime = 0;
+            mode = Mode.RUSH;
+        }
+    }
+
+    /// <summary>
     /// 突進攻撃
     /// </summary>
     void RushAttack()
     {
-        if (!rushing)
-        {
-            interval -= Time.deltaTime;
-            if (interval > 0) return;
-            else
-            {
-                startPosition = transform.position;
-                targetPosition = target.position;
-                interval = 5;
-                rushing = true;
-            }
-        }
-        else
-        {
-            rigid.AddForce(targetPosition - startPosition, ForceMode.Acceleration);
-            //rigid.velocity /= 2f;
-        }
+        rigid.AddForce(targetPosition - startPosition, ForceMode.Acceleration);
+        //rigid.velocity /= 2f;
     }
 
     /// <summary>
@@ -135,9 +138,14 @@ public class BossEnemy1 : Enemy
             invincibleElapsedTime = 0;
             mode = Mode.NORMAL;
             isHit = true;
+
+            intervalElapsedTime = 0;
         }
     }
 
+    /// <summary>
+    /// 停止処理
+    /// </summary>
     public void Stop()
     {
         rigid.velocity = Vector3.zero;
@@ -146,16 +154,17 @@ public class BossEnemy1 : Enemy
 
     public override void OnCollisionEnter(Collision other)
     {
+        //Playerに当たったらPlayerにダメージ
         if (other.gameObject.tag.Contains("Player"))
         {
-            rushing = false;
             Stop();
             PlayerManager.PlayerDamage(10);
+            mode = Mode.NORMAL;
         }
 
+        //壁に当たったらスタン状態に移行
         if (other.gameObject.name.Contains("Wall"))
         {
-            rushing = false;
             Stop();
             mode = Mode.STAN;
         }
