@@ -63,22 +63,6 @@ public class DivisionEnemy : Enemy
         }
     }
 
-    public override void Direction()
-    {
-        //左側を正面にする
-        if (Direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        //右側を正面にする
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        //正面を進行方向にして移動
-        transform.rotation = rotation;
-    }
-
     public override void Contraction()
     {
         transform.localScale = new Vector3(1, 1, 1) * GetScale();

@@ -68,7 +68,18 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void Direction()
     {
-
+        //左側を正面にする
+        if (Direction_Left)
+        {
+            rotation = Quaternion.Euler(forward);
+        }
+        //右側を正面にする
+        else
+        {
+            rotation = Quaternion.Euler(-forward);
+        }
+        //正面を進行方向にして移動
+        transform.rotation = rotation;
     }
 
     /// <summary>

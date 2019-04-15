@@ -64,19 +64,6 @@ public class RecessionEnemy : Enemy
         }
     }
 
-    public override void Direction()
-    {
-        if(Direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        transform.rotation = rotation;
-    }
-
     public override void Damage()
     {
         //if (Input.GetKeyDown(KeyCode.Space))

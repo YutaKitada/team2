@@ -67,22 +67,6 @@ public class SideMoveEnemy : Enemy
         }
     }
 
-    public override void Direction()
-    {
-        //左側を正面にする
-        if (Direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        //右側を正面にする
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        //正面を進行方向にして移動
-        transform.rotation = rotation;
-    }
-
     public override void SetTarget()
     {
         if (target.position.x - transform.position.x <= 5f
