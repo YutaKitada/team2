@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ボス（モチーフ：天秤座）
+/// </summary>
 public class Libra : BossEnemy
 {
     public enum Mode
@@ -24,7 +27,7 @@ public class Libra : BossEnemy
         switch (mode)
         {
             case Mode.NORMAL:
-
+                Attack();
                 break;
 
             case Mode.INVINCIBLE:
@@ -36,6 +39,14 @@ public class Libra : BossEnemy
         }
 
         Death();
+    }
+
+    /// <summary>
+    /// 攻撃処理
+    /// </summary>
+    void Attack()
+    {
+
     }
 
     /// <summary>

@@ -23,7 +23,15 @@ public class BossEnemy : MonoBehaviour
 
     protected Transform target;
 
+    protected Animator anim;
+
     protected Vector3 forward = new Vector3(0, -90, 0);//正面
+
+    public bool IsDead
+    {
+        get;
+        protected set;
+    } = false;
 
     /// <summary>
     /// 向き
@@ -54,7 +62,8 @@ public class BossEnemy : MonoBehaviour
     {
         if (hp <= 0)
         {
-            Destroy(gameObject);
+            IsDead = true;
+            anim.SetBool("isDead", true);
         }
     }
 

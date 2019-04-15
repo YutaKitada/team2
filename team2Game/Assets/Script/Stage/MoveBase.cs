@@ -10,7 +10,7 @@ public enum Direction
 
 public class MoveBase : MonoBehaviour
 {
-    [SerializeField, Header("最初の移動方向")]
+    [SerializeField, Header("移動方向")]
     Direction direction = Direction.UP;
 
     [SerializeField, Header("移動上限値")]

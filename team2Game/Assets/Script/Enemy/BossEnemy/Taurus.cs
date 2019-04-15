@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ボス（モチーフ：牡牛座）
+/// </summary>
 public class Taurus : BossEnemy
 {
+    [SerializeField, Header("移動力")]
+    float power = 20;
+
     [SerializeField, Header("突進までの待機時間")]
     float interval = 5;
     float intervalElapsedTime;
+
+    float elapsedTime;
 
     public enum Mode
     {
@@ -33,16 +41,26 @@ public class Taurus : BossEnemy
 
         stanElapsedTime = 0;
         invincibleElapsedTime = 0;
+
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (IsDead)
+        {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= 2) Destroy(gameObject);
+            return;
+        }
+
         switch (mode)
         {
             case Mode.NORMAL:
                 Direction();
                 RushPrepare();
+                anim.speed = 1;
                 break;
 
             case Mode.RUSH:
@@ -51,6 +69,7 @@ public class Taurus : BossEnemy
 
             case Mode.STAN:
                 NowStan();
+                anim.speed = 0;
                 break;
 
             case Mode.INVINCIBLE:
@@ -99,7 +118,7 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushAttack()
     {
-        rigid.AddForce(targetPosition - startPosition, ForceMode.Acceleration);
+        rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
         //rigid.velocity /= 2f;
     }
 
