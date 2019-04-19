@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonName: AButton
-  nextSceneName: SampleScene
+  nextSceneName: Imamura
 --- !u!4 &1535553341
 Transform:
   m_ObjectHideFlags: 0

@@ -31,6 +31,10 @@ public class UIManager : MonoBehaviour
     public static string wishText;
 
     [SerializeField]
+    private Text answerUI;
+    public static string answerText;
+
+    [SerializeField]
     private Text debugUI;
     public static string debugtext;
 
@@ -48,8 +52,11 @@ public class UIManager : MonoBehaviour
         comboGageStopTimer = 0;
 
         wishUI.enabled = false;
-        
+        answerUI.enabled = false;
+
         wishText = "〇〇〇";
+
+        answerText = "〇〇〇";
 
         comboGageStop = false;
         hpGageStop = false;
@@ -62,7 +69,9 @@ public class UIManager : MonoBehaviour
             HPGageUI();
         
         WishUI();
-        debugUI.text = "WishModeStay:" + PlayerManager.isWishStay
+        debugUI.text = "FPS;" + FPS.fps
+            + "\n" + "isWishNow:" + WishManager.isWishNow
+            + "\n" + "WishModeStay:" + PlayerManager.isWishStay
             + "\n" + "WishModeMode:" + PlayerManager.isWishMode
             + "\n" + "HpGageStop:" + hpGageStop
             + "\n" + "ComboGageStop:" + comboGageStop
@@ -91,7 +100,7 @@ public class UIManager : MonoBehaviour
             }
             
 
-            if(comboGageStopTimer >= comboGageStopTime)
+            if(comboGageStopTimer >= comboGageStopTime && !PlayerManager.isWishMode)
             {
                 if (isCombo)
                 {
@@ -122,7 +131,7 @@ public class UIManager : MonoBehaviour
         }
         
 
-        if (hpGageStopTimer >= hpGageStopTime)
+        if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode)
         {
             if (hpGageFillAmount >= 0)
             {
@@ -133,6 +142,15 @@ public class UIManager : MonoBehaviour
                 GameManager.isOver = true;
             }
         }
+        
+        if(hpGageFillAmount >= 80)
+        {
+            gage.targetGraphic.color = Color.blue;
+        }
+        else
+        {
+            gage.targetGraphic.color = Color.red;
+        }
     }
 
     private void WishUI()
@@ -141,10 +159,13 @@ public class UIManager : MonoBehaviour
         {
             wishUI.enabled = true;
             wishUI.text = wishText;
+            answerUI.enabled = true;
+            answerUI.text = answerText;
         }
         else
         {
             wishUI.enabled = false;
+            answerUI.enabled = false;
         }
     }
 }

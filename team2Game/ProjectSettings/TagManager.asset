@@ -9,6 +9,7 @@ TagManager:
   - Star
   - Enemy
   - Water
+  - Kcube
   layers:
   - Default
   - TransparentFX

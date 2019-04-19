@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 体力を持ったEnemyクラス
+/// 体力に応じてスケールが変わるEnemyクラス（モチーフ：山羊座）
 /// </summary>
 public class ContractionEnemy : Enemy
 {
@@ -13,15 +13,18 @@ public class ContractionEnemy : Enemy
         rigid = GetComponent<Rigidbody>();
         rotation = Quaternion.identity;
 
-        maxSpeed = power / 10f;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        state = State.NORMAL;
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
+        Direction();
         Contraction();
         //Damage();
+        SetTarget();
         Death();
     }
 
@@ -34,11 +37,22 @@ public class ContractionEnemy : Enemy
     {
         float scale;
 
-        if (hp == 3) scale = 2;
-        else if (hp == 2) scale = 1;
-        else scale = 0.5f;
+        if (hp == 3) scale = 2.5f;
+        else if (hp == 2) scale = 2f;
+        else scale = 1.5f;
 
         return scale;
+    }
+
+    float GetPower()
+    {
+        if (hp == 3) power = 50f;
+        else if (hp == 2) power = 35f;
+        else power = 20f;
+
+        maxSpeed = power / 10f;
+
+        return power;
     }
 
     public override void Move()
@@ -49,39 +63,47 @@ public class ContractionEnemy : Enemy
         //最大の移動スピードを超えていないとき
         if (nowSpeed < maxSpeed)
         {
-            //ターゲットがいるとき
-            if (target != null)
+            switch (state)
             {
-                distance.x = target.position.x - transform.position.x;
-                if (distance.x < 0)
-                {
-                    Direction_Left = true;
-                }
-                else if (distance.x > 0)
-                {
-                    Direction_Left = false;
-                }
-            }
+                case State.NORMAL:
+                    rigid.AddForce(transform.forward * GetPower(), ForceMode.Acceleration);
+                    break;
 
-            //左側を正面にする
-            if (Direction_Left)
-            {
-                rotation = Quaternion.Euler(forward);
+                case State.CHASE:
+                    distance.x = target.position.x - transform.position.x;
+                    if (distance.x < 0)
+                    {
+                        Direction_Left = true;
+                    }
+                    else if (distance.x > 0)
+                    {
+                        Direction_Left = false;
+                    }
+                    rigid.AddForce(transform.forward * GetPower(), ForceMode.Acceleration);
+                    break;
             }
-            //右側を正面にする
-            else
-            {
-                rotation = Quaternion.Euler(-forward);
-            }
-            //正面を進行方向にして移動
-            transform.rotation = rotation;
-            rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        }
+    }
+
+    public override void SetTarget()
+    {
+        if (!isChase) return;
+
+        if (target.position.x - transform.position.x <= 5f
+            && target.position.x - transform.position.x >= -5f)
+        {
+            state = State.CHASE;
+        }
+        else
+        {
+            state = State.NORMAL;
         }
     }
 
     public override void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.name.Contains("Enemy"))
+        if (other.gameObject.name.Contains("Enemy")
+            || other.gameObject.tag.Contains("Stage"))
         {
             Direction_Left = !Direction_Left;
         }
