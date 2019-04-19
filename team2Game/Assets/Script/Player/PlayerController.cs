@@ -74,21 +74,21 @@ public class PlayerController : MonoBehaviour
 
             //ジャンプ処理
             Jump();
-        }
+        //}
 
-        //ジャンプ中であれば
-        if (isJump)
-        {
-            //ジャンプタイマー作動
-            jumpTimer += Time.deltaTime;
-            //ジャンプタイマーが3秒以上カウントしたら
-            if(jumpTimer >= 3f)
-            {
-                //ジャンプがまたできるように初期化
-                isJump = false;
-                jumpCount = 0;
-                jumpTimer = 0;
-            }
+        ////ジャンプ中であれば
+        //if (isJump)
+        //{
+        //    //ジャンプタイマー作動
+        //    jumpTimer += Time.deltaTime;
+        //    //ジャンプタイマーが3秒以上カウントしたら
+        //    if(jumpTimer >= 3f)
+        //    {
+        //        //ジャンプがまたできるように初期化
+        //        isJump = false;
+        //        jumpCount = 0;
+        //        jumpTimer = 0;
+        //    }
         }
 
         Animation();
