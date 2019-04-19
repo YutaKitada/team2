@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     private float jumpTimer;                    //jumpがもういちどできるまでのタイマー
 
+    private Animator animator;
+
     private int jumpCount;                      //2段ジャンプ用カウンター
 
     private bool isIce;                         //Iceに当たっているかどうか//追加丹下
@@ -45,6 +47,8 @@ public class PlayerController : MonoBehaviour
 
         //Iceに当たっていない//追加丹下
         isIce = false;
+
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
@@ -86,6 +90,8 @@ public class PlayerController : MonoBehaviour
                 jumpTimer = 0;
             }
         }
+
+        Animation();
 
         //移動処理
         Move();
@@ -133,12 +139,16 @@ public class PlayerController : MonoBehaviour
                 {
                     //Playerの向きを左に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.LEFT;
+                    transform.LookAt(transform.position + new Vector3(-1, 0));
+
                 }
                 //右に移動していれば
                 if (rigid.velocity.x > 0)
                 {
                     //Playerの向きを右に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.RIGHT;
+                    transform.LookAt(transform.position + new Vector3(1, 0));
+
                 }
             }
 
@@ -188,7 +198,36 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Animation()
+    {
+        if (Input.GetAxisRaw("Horizontal") >= 0.6f || Input.GetAxisRaw("Horizontal") <= -0.6f)
+        {
+            animator.SetBool("Run", true);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
+        }
+
+        if (Input.GetAxisRaw("Vertical") <= -0.7f)
+        {
+            if (!animator.GetBool("Squat"))
+            {
+                animator.SetBool("Squat", true);
+            }
+        }
+        else
+        {
+            animator.SetBool("Squat", false);
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetTrigger("Jump");
+        }
+    }
+
+        private void OnCollisionEnter(Collision collision)
     {
         ////ステージに当たった場合
         //if(collision.transform.tag == "Stage")
@@ -240,6 +279,8 @@ public class PlayerController : MonoBehaviour
         {
             isIce = true;//Iceに触れている
         }
+
+        animator.SetTrigger("Landing");
     }
 
     private void OnTriggerExit(Collider other)
