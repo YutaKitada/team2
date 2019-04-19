@@ -102,8 +102,7 @@ public class ContractionEnemy : Enemy
 
     public override void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.name.Contains("Enemy")
-            || other.gameObject.tag.Contains("Stage"))
+        if (other.gameObject.tag.Contains("Stage"))
         {
             Direction_Left = !Direction_Left;
         }
