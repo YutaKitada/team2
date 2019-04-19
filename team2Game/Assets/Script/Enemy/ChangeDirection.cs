@@ -58,7 +58,8 @@ public class ChangeDirection : MonoBehaviour
     {
         float distance;
 
-        if (transform.localScale.x <= 2) distance = 3;
+        if (transform.localScale.x >= 2.5f) distance = 4;
+        else if (transform.localScale.x >= 1.5f) distance = 3;
         else distance = 1;
 
         return distance;

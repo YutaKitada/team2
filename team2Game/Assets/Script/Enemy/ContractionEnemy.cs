@@ -15,6 +15,8 @@ public class ContractionEnemy : Enemy
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
         state = State.NORMAL;
+
+        maxSpeed = power / 10f;
     }
 
     // Update is called once per frame
@@ -44,17 +46,6 @@ public class ContractionEnemy : Enemy
         return scale;
     }
 
-    float GetPower()
-    {
-        if (hp == 3) power = 50f;
-        else if (hp == 2) power = 35f;
-        else power = 20f;
-
-        maxSpeed = power / 10f;
-
-        return power;
-    }
-
     public override void Move()
     {
         //今のスピードを計算
@@ -66,7 +57,7 @@ public class ContractionEnemy : Enemy
             switch (state)
             {
                 case State.NORMAL:
-                    rigid.AddForce(transform.forward * GetPower(), ForceMode.Acceleration);
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
 
                 case State.CHASE:
@@ -79,7 +70,7 @@ public class ContractionEnemy : Enemy
                     {
                         Direction_Left = false;
                     }
-                    rigid.AddForce(transform.forward * GetPower(), ForceMode.Acceleration);
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
             }
         }
@@ -102,7 +93,7 @@ public class ContractionEnemy : Enemy
 
     public override void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag.Contains("Stage"))
+        if (other.gameObject.tag.Contains("Enemy"))
         {
             Direction_Left = !Direction_Left;
         }
