@@ -30,6 +30,8 @@ public class Taurus : BossEnemy
     Vector3 targetPosition;//突進開始時のプレイヤーの位置
     Vector3 startPosition;//突進開始地点
 
+    bool isChange = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,7 +60,8 @@ public class Taurus : BossEnemy
         switch (mode)
         {
             case Mode.NORMAL:
-                Direction();
+                //Direction();
+                StartCoroutine(DirectionCoroutine());
                 RushPrepare();
                 anim.speed = 1;
                 break;
@@ -81,7 +84,6 @@ public class Taurus : BossEnemy
         }
 
         Death();
-        Debug.Log(mode);
     }
 
     public override void Direction()
@@ -106,6 +108,8 @@ public class Taurus : BossEnemy
         if (intervalElapsedTime < interval) return;
         else
         {
+            if (isChange) return;
+
             startPosition = transform.position;
             targetPosition = target.position;
             intervalElapsedTime = 0;
@@ -168,5 +172,37 @@ public class Taurus : BossEnemy
             Stop();
             mode = Mode.STAN;
         }
+    }
+
+    /// <summary>
+    /// 時間をかけて回転させる
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator DirectionCoroutine()
+    {
+        float rate = 0;
+
+        while (true)
+        {
+            rate += Time.deltaTime * 3;
+            if (transform.position.x > target.position.x)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
+            }
+            if (transform.position.x < target.position.x)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
+            }
+            isChange = true;
+            break;
+        }
+
+        if (transform.rotation == Quaternion.Euler(forward) ||
+            transform.rotation == Quaternion.Euler(-forward))
+        {
+            isChange = false;
+        }
+
+        yield return null;
     }
 }
