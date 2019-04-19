@@ -25,18 +25,34 @@ public class UIManager : MonoBehaviour
     public static bool comboGageStop;
     public static bool hpGageStop;
 
-    [SerializeField]
-    private Text wishUI;
-    
+
     public static string wishText;
 
-    [SerializeField]
-    private Text answerUI;
     public static string answerText;
+
+    [SerializeField]
+    private List<Sprite> buttonSprites;
 
     [SerializeField]
     private Text debugUI;
     public static string debugtext;
+
+    [SerializeField]
+    private int maxWishButton = 7;
+    private int wishButtonArrayNum;
+    [SerializeField]
+    private GameObject buttonObject;
+    [SerializeField]
+    private GameObject mistakeObject;
+    private List<GameObject> answerButtonList;
+    private List<GameObject> wishButtonList;
+    [SerializeField]
+    private GameObject buttonParent;
+
+
+    [SerializeField]
+    private Slider wishTimer;
+    public static float wishTimerFillamount = -3;
 
     // Start is called before the first frame update
     void Start()
@@ -51,24 +67,39 @@ public class UIManager : MonoBehaviour
         hpGageStopTimer = 0;
         comboGageStopTimer = 0;
 
-        wishUI.enabled = false;
-        answerUI.enabled = false;
+        wishText = "";
 
-        wishText = "〇〇〇";
-
-        answerText = "〇〇〇";
+        answerText = "";
+        
 
         comboGageStop = false;
         hpGageStop = false;
+
+        wishButtonArrayNum = maxWishButton * 2 - 1;
+
+        float buttonPositionX = -30 * maxWishButton;
+
+        answerButtonList = new List<GameObject>();
+        wishButtonList = new List<GameObject>();
+
+        for (int i = 0;i < wishButtonArrayNum; i++)
+        {
+            answerButtonList.Add(Instantiate(buttonObject, buttonParent.transform));
+            wishButtonList.Add(Instantiate(buttonObject, buttonParent.transform));
+            answerButtonList[i].transform.localPosition = new Vector3(buttonPositionX, 0);
+            wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, -60);
+            buttonPositionX += 30;
+        }
+        wishTimer.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-            ComboUI();
-            HPGageUI();
-        
+        AnswerUI();
         WishUI();
+        ComboUI();
+        HPGageUI();
         debugUI.text = "FPS;" + FPS.fps
             + "\n" + "isWishNow:" + WishManager.isWishNow
             + "\n" + "WishModeStay:" + PlayerManager.isWishStay
@@ -98,9 +129,9 @@ public class UIManager : MonoBehaviour
                 comboGageStopTimer += Time.deltaTime;
                 comboTimerGage.value = comboGageStopTime - comboGageStopTimer;
             }
-            
 
-            if(comboGageStopTimer >= comboGageStopTime && !PlayerManager.isWishMode)
+
+            if (comboGageStopTimer >= comboGageStopTime && !PlayerManager.isWishMode)
             {
                 if (isCombo)
                 {
@@ -129,7 +160,7 @@ public class UIManager : MonoBehaviour
         {
             hpGageStopTimer += Time.deltaTime;
         }
-        
+
 
         if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode)
         {
@@ -137,19 +168,62 @@ public class UIManager : MonoBehaviour
             {
                 hpGageFillAmount -= 5 * Time.deltaTime;   //毎秒5ずつ減っていく
             }
-            else if(hpGageFillAmount < 0)
+            else if (hpGageFillAmount < 0)
             {
                 GameManager.isOver = true;
             }
         }
-        
-        if(hpGageFillAmount >= 80)
+    }
+
+    private void AnswerUI()
+    {
+        if (PlayerManager.isWishMode)
         {
-            gage.targetGraphic.color = Color.blue;
+            wishTimer.gameObject.SetActive(true);
+            wishTimer.value = wishTimerFillamount;
+
+            int wishButtonNumber = answerText.Length;
+
+            bool space = false;
+
+            int answerTextNumber = 0;
+
+            for (int i = maxWishButton - wishButtonNumber; i < answerText.Length + 6; i++)
+            {
+                if (space)
+                {
+                    space = false;
+                }
+                else if (!space)
+                {
+                    switch (answerText.Substring(answerTextNumber, 1))
+                    {
+                        case "A":
+                            answerButtonList[i].GetComponent<Image>().sprite = buttonSprites[0];
+                            break;
+                        case "B":
+                            answerButtonList[i].GetComponent<Image>().sprite = buttonSprites[1];
+                            break;
+                        case "X":
+                            answerButtonList[i].GetComponent<Image>().sprite = buttonSprites[2];
+                            break;
+                        case "Y":
+                            answerButtonList[i].GetComponent<Image>().sprite = buttonSprites[3];
+                            break;
+                    }
+                    answerTextNumber++;
+                    space = true;
+                }
+            }
         }
         else
         {
-            gage.targetGraphic.color = Color.red;
+            wishTimer.gameObject.SetActive(false);
+            wishTimerFillamount = -3;
+            for (int i = 0; i < answerButtonList.Count; i++)
+            {
+                answerButtonList[i].GetComponent<Image>().sprite = buttonSprites[4];
+            }
         }
     }
 
@@ -157,15 +231,57 @@ public class UIManager : MonoBehaviour
     {
         if (PlayerManager.isWishMode)
         {
-            wishUI.enabled = true;
-            wishUI.text = wishText;
-            answerUI.enabled = true;
-            answerUI.text = answerText;
+            int wishButtonNumber = answerText.Length;
+
+            bool space = false;
+
+            int wishTextNumber = 0;
+
+            for (int i = maxWishButton - wishButtonNumber; i < answerText.Length + 6; i++)
+            {
+                if (space)
+                {
+                    space = false;
+                }
+                else if (!space)
+                {
+                    if(wishText.Length-1 >= wishTextNumber)
+                    {
+                        switch (wishText.Substring(wishTextNumber, 1))
+                        {
+                            case "A":
+                                wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[0];
+                                break;
+                            case "B":
+                                wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[1];
+                                break;
+                            case "X":
+                                wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[2];
+                                break;
+                            case "Y":
+                                wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[3];
+                                break;
+                        }
+                        if(wishButtonList[i].GetComponent<Image>().sprite != answerButtonList[i].GetComponent<Image>().sprite)
+                        {
+                            mistakeObject.SetActive(true);
+                            mistakeObject.transform.position = wishButtonList[i].transform.position;
+                        }
+                        wishTextNumber++;
+                        space = true;
+                    }
+                    
+                }
+            }
         }
         else
         {
-            wishUI.enabled = false;
-            answerUI.enabled = false;
+            for (int i = 0; i < answerButtonList.Count; i++)
+            {
+                wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[4];
+
+                mistakeObject.SetActive(false);
+            }
         }
     }
 }

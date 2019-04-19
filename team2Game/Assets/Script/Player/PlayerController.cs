@@ -48,8 +48,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Joystick1Button4) && Input.GetButtonDown("Jump"))
+        {
+            //上方向に力を与える
+            rigid.AddForce(new Vector3(0, 5), ForceMode.Impulse);
+            SoundManager.PlaySE(4);
+        }
+
         //移動制限がかかっていない場合
-        if (!PlayerManager.isStop)
+        if (!PlayerManager.isStop && !isMoveStop)
         {
             //水の中でなければ
             if (!inWater)
@@ -110,18 +117,18 @@ public class PlayerController : MonoBehaviour
             //useGravityがFalseであれば
             if (!rigid.useGravity)
             {
-                //Playerの向きに応じて跳ね返る方向を変える
-                switch (PlayerManager.playerDirection)
-                {
-                    //左を向いている場合
-                    case PlayerManager.PlayerDirection.LEFT:
-                        rigid.AddForce(new Vector3(5, 5), ForceMode.Impulse);
-                        break;
-                    //右を向いている場合
-                    case PlayerManager.PlayerDirection.RIGHT:
-                        rigid.AddForce(new Vector3(-5, 5), ForceMode.Impulse);
-                        break;
-                }
+                ////Playerの向きに応じて跳ね返る方向を変える
+                //switch (PlayerManager.playerDirection)
+                //{
+                //    //左を向いている場合
+                //    case PlayerManager.PlayerDirection.LEFT:
+                //        rigid.AddForce(new Vector3(5, 5), ForceMode.Impulse);
+                //        break;
+                //    //右を向いている場合
+                //    case PlayerManager.PlayerDirection.RIGHT:
+                //        rigid.AddForce(new Vector3(-5, 5), ForceMode.Impulse);
+                //        break;
+                //}
                 //Rigidbodyの重力処理を開始
                 rigid.useGravity = true;
             }
@@ -167,28 +174,29 @@ public class PlayerController : MonoBehaviour
         //ジャンプボタンを押したら
         if (Input.GetButtonDown("Jump") && !isJump)
         {
-            if (Input.GetAxisRaw("Vertical") <= -0.7f)
-            {
-                //上方向に力を与える
-                rigid.AddForce(new Vector3(0, jumpPower * 1.5f), ForceMode.Impulse);
-                SoundManager.PlaySE(4);
+                if (Input.GetAxisRaw("Vertical") <= -0.7f)
+                {
+                    //上方向に力を与える
+                    rigid.AddForce(new Vector3(0, jumpPower * 1.5f), ForceMode.Impulse);
+                    SoundManager.PlaySE(4);
 
-            }
-            else
-            {
-                //上方向に力を与える
-                rigid.AddForce(new Vector3(0, jumpPower), ForceMode.Impulse);
-                SoundManager.PlaySE(6);
-            }
-            //ジャンプカウントを1増やす
-            jumpCount++;
-            //ジャンプカウントが2以上であれば
-            if (jumpCount >= 2)
-            {
-                //ジャンプをできなくする
-                isJump = true;
-            }
+                }
+                else
+                {
+                    //上方向に力を与える
+                    rigid.AddForce(new Vector3(0, jumpPower), ForceMode.Impulse);
+                    SoundManager.PlaySE(6);
+                }
+                //ジャンプカウントを1増やす
+                jumpCount++;
+                //ジャンプカウントが2以上であれば
+                if (jumpCount >= 2)
+                {
+                    //ジャンプをできなくする
+                    isJump = true;
+                }
         }
+        
 
     }
 
@@ -215,11 +223,11 @@ public class PlayerController : MonoBehaviour
                 Vector3 hitVector = (collision.transform.position - transform.position).normalized;
                 if (hitVector.x >= 0)
                 {
-                    rigid.AddForce(new Vector3(-10, 10), ForceMode.Impulse);
+                    rigid.AddForce(new Vector3(-5, 5), ForceMode.Impulse);
                 }
                 else
                 {
-                    rigid.AddForce(new Vector3(10, 10), ForceMode.Impulse);
+                    rigid.AddForce(new Vector3(5, 5), ForceMode.Impulse);
                 }
             }
             

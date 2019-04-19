@@ -45,6 +45,8 @@ public class PlayerThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UIManager.wishTimerFillamount = stopTimer;
+
         //移動制限がかかった場合
         if (PlayerManager.isStop)
         {
@@ -137,7 +139,7 @@ public class PlayerThrow : MonoBehaviour
             //もし願い事待機状態であれば
             if (PlayerManager.isWishStay)
             {
-                stopTimer = -2f;        //移動制限用タイマーを1秒長くする
+                stopTimer = -3f;        //移動制限用タイマーを1秒長くする
                 PlayerManager.isWishMode = true;        //願い事モード起動
                 PlayerManager.isWishStay = false;       //待機状態をfalseに
             }
@@ -160,7 +162,7 @@ public class PlayerThrow : MonoBehaviour
             //もし願い事待機状態であれば
             if (PlayerManager.isWishStay)
             {
-                stopTimer = -2f;        //移動制限用タイマーを1秒長くする
+                stopTimer = -3f;        //移動制限用タイマーを1秒長くする
                 PlayerManager.isWishMode = true;        //願い事モード起動
                 PlayerManager.isWishStay = false;       //待機状態をfalseに
             }
@@ -178,7 +180,6 @@ public class PlayerThrow : MonoBehaviour
             }
             //移動制限を開始
             PlayerManager.isStop = true;
-
         }
     }
 

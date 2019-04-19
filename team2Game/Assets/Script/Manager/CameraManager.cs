@@ -9,6 +9,10 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private Vector3 cameraPosition = new Vector3(0, 4, -8);
 
+    enum CameraMoveStop {NONE,X,Y}
+    [SerializeField]
+    private CameraMoveStop cameraMoveStop;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +22,15 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + cameraPosition;
+        if(cameraMoveStop == CameraMoveStop.Y)
+        {
+            transform.position = player.transform.position + cameraPosition;
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
+        else if(cameraMoveStop == CameraMoveStop.X)
+        {
+            transform.position = player.transform.position + cameraPosition;
+            transform.position = new Vector3(0, transform.position.y, transform.position.z);
+        }
     }
 }
