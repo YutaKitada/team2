@@ -64,11 +64,11 @@ public class ContractionEnemy : Enemy
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
@@ -95,7 +95,7 @@ public class ContractionEnemy : Enemy
     {
         if (other.gameObject.tag.Contains("Enemy"))
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if (other.transform.tag == "Star")

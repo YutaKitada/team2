@@ -36,19 +36,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject downParticle;
 
-    //左右移動用のbool
-    public bool Direction_Left
-    {
-        get;
-        set;
-    } = true;
-
-    //上下移動用のbool
-    public bool Direction_Up
-    {
-        get;
-        set;
-    } = true;
+    public bool direction_Left = true;
+    
+    public bool direction_Up = true;
 
     /// <summary>
     /// 倒したかどうか
@@ -73,7 +63,7 @@ public class Enemy : MonoBehaviour
     public virtual void Direction()
     {
         //左側を正面にする
-        if (Direction_Left)
+        if (direction_Left)
         {
             rotation = Quaternion.Euler(forward);
         }

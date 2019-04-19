@@ -55,11 +55,11 @@ public class ExplosionEnemy : Enemy
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
@@ -119,7 +119,7 @@ public class ExplosionEnemy : Enemy
         //壁か別の敵に当たったとき進行方向を逆にする
         if (other.gameObject.name.Contains("Enemy"))
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if (other.transform.tag == "Star")
