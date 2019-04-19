@@ -9,7 +9,7 @@ public class ChangeDirection : MonoBehaviour
 {
     Ray ray;
     RaycastHit hit;
-    bool isChange;
+    bool isChange = false;
     //[SerializeField, Header("レイの距離")]
     float maxDistance = 1;
 
@@ -58,9 +58,16 @@ public class ChangeDirection : MonoBehaviour
     {
         float distance;
 
-        if (transform.localScale.x <= 2) distance = 3;
+        if (transform.localScale.x >= 2.5f) distance = 4;
+        else if (transform.localScale.x >= 1.5f) distance = 3;
         else distance = 1;
 
         return distance;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(ray);
     }
 }

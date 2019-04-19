@@ -78,18 +78,6 @@ public class ShotEnemy : Enemy
         transform.rotation = rotation;
     }
 
-    public override void SetTarget()
-    {
-        if (target.position.x - transform.position.x <= Mathf.Abs(5))
-        {
-            state = State.CHASE;
-        }
-        else
-        {
-            state = State.NORMAL;
-        }
-    }
-
     //public override void OnCollisionEnter(Collision other)
     //{
     //    if (other.transform.tag == "Star")

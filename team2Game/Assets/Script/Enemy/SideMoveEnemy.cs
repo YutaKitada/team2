@@ -67,24 +67,10 @@ public class SideMoveEnemy : Enemy
         }
     }
 
-    public override void Direction()
-    {
-        //左側を正面にする
-        if (Direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        //右側を正面にする
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        //正面を進行方向にして移動
-        transform.rotation = rotation;
-    }
-
     public override void SetTarget()
     {
+        if (!isChase) return;
+
         if (target.position.x - transform.position.x <= 5f
             && target.position.x - transform.position.x >= -5f)
         {
@@ -100,8 +86,7 @@ public class SideMoveEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.tag.Contains("Stage")
-            || other.gameObject.name.Contains("Enemy"))
+        if (other.gameObject.name.Contains("Enemy"))
         {
             Direction_Left = !Direction_Left;
         }

@@ -14,12 +14,4 @@ public class EnemyManager : MonoBehaviour
     {
         DefeatedCount = 0;
     }
-
-    private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.Log("倒した数:" + DefeatedCount);
-        }
-    }
 }

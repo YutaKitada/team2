@@ -18,7 +18,7 @@ public class Bound : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.name.Contains("Floor"))
+        if(other.gameObject.tag.Contains("Stage"))
         {
             rigid.AddForce(Vector3.up * boundPower, ForceMode.Impulse);
         }
