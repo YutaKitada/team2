@@ -38,7 +38,7 @@ public class VerticalMoveEnemy : Enemy
 
     public override void Move()
     {
-        if (Direction_Up)
+        if (direction_Up)
         {
             //rigid.velocity = Vector3.up * power;
             rigid.AddForce(Vector3.up, ForceMode.Acceleration);
@@ -59,12 +59,12 @@ public class VerticalMoveEnemy : Enemy
         //今のポジションが上目的地以上なら下移動に変更
         if (transform.position.y >= destinationPosition1.y)
         {
-            Direction_Up = false;
+            direction_Up = false;
         }
         //今のポジションが下目的地以下なら上移動に変更
         if (transform.position.y <= destinationPosition2.y)
         {
-            Direction_Up = true;
+            direction_Up = true;
         }
     }
     
@@ -81,7 +81,7 @@ public class VerticalMoveEnemy : Enemy
 
         if(other.gameObject.tag.Contains("Stage"))
         {
-            Direction_Up = !Direction_Up;
+            direction_Up = !direction_Up;
         }
     }
 }

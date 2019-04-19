@@ -15,6 +15,8 @@ public class ContractionEnemy : Enemy
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
         state = State.NORMAL;
+
+        maxSpeed = power / 10f;
     }
 
     // Update is called once per frame
@@ -44,17 +46,6 @@ public class ContractionEnemy : Enemy
         return scale;
     }
 
-    float GetPower()
-    {
-        if (hp == 3) power = 50f;
-        else if (hp == 2) power = 35f;
-        else power = 20f;
-
-        maxSpeed = power / 10f;
-
-        return power;
-    }
-
     public override void Move()
     {
         //今のスピードを計算
@@ -66,43 +57,29 @@ public class ContractionEnemy : Enemy
             switch (state)
             {
                 case State.NORMAL:
-                    rigid.AddForce(transform.forward * GetPower(), ForceMode.Acceleration);
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
 
                 case State.CHASE:
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                     }
-                    rigid.AddForce(transform.forward * GetPower(), ForceMode.Acceleration);
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
             }
         }
     }
 
-    public override void Direction()
-    {
-        //左側を正面にする
-        if (Direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        //右側を正面にする
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        //正面を進行方向にして移動
-        transform.rotation = rotation;
-    }
-
     public override void SetTarget()
     {
+        if (!isChase) return;
+
         if (target.position.x - transform.position.x <= 5f
             && target.position.x - transform.position.x >= -5f)
         {
@@ -116,10 +93,9 @@ public class ContractionEnemy : Enemy
 
     public override void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.name.Contains("Enemy")
-            || other.gameObject.tag.Contains("Stage"))
+        if (other.gameObject.tag.Contains("Enemy"))
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if (other.transform.tag == "Star")

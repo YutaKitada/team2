@@ -17,13 +17,14 @@ public class Enemy : MonoBehaviour
     protected Rigidbody rigid;
     protected Quaternion rotation;
 
-    [SerializeField, Header("移動量")]
+    [SerializeField, Header("移動力")]
     protected float power = 10f;
     protected float maxSpeed = 0f;//最大移動スピード(Startメソッドで決定)
     
     protected Transform target;
-
     protected Vector3 distance;//targetとの距離
+    [SerializeField, Header("Playerを追いかけるか")]
+    protected bool isChase = false;
 
     protected Vector3 forward = new Vector3(0, -90, 0);//正面
 
@@ -32,27 +33,20 @@ public class Enemy : MonoBehaviour
 
     protected State state;
 
-    //左右移動用のbool
-    public bool Direction_Left
-    {
-        get;
-        set;
-    } = true;
+    [SerializeField]
+    protected GameObject downParticle;
 
-    //上下移動用のbool
-    public bool Direction_Up
-    {
-        get;
-        set;
-    } = true;
+    public bool direction_Left = true;
+    
+    public bool direction_Up = true;
 
     /// <summary>
     /// 倒したかどうか
     /// </summary>
     public bool Defeat
     {
-        protected set;
         get;
+        protected set;
     } = false;
 
     /// <summary>
@@ -68,7 +62,18 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void Direction()
     {
-
+        //左側を正面にする
+        if (direction_Left)
+        {
+            rotation = Quaternion.Euler(forward);
+        }
+        //右側を正面にする
+        else
+        {
+            rotation = Quaternion.Euler(-forward);
+        }
+        //正面を進行方向にして移動
+        transform.rotation = rotation;
     }
 
     /// <summary>
@@ -134,7 +139,18 @@ public class Enemy : MonoBehaviour
             EnemyManager.DefeatedCount++;
             Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
             Defeat = true;
+            ParticleGenerate();
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// パーティクル生成
+    /// </summary>
+    void ParticleGenerate()
+    {
+        if (downParticle == null) return;
+
+        Instantiate(downParticle, transform.position, Quaternion.identity);
     }
 }

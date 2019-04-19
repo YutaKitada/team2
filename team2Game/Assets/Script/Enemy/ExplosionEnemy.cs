@@ -7,8 +7,6 @@ using UnityEngine;
 /// </summary>
 public class ExplosionEnemy : Enemy
 {
-    [SerializeField]
-    GameObject particle;
     Transform parent;
 
     [SerializeField, Header("爆発までの間隔")]
@@ -57,11 +55,11 @@ public class ExplosionEnemy : Enemy
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
@@ -69,28 +67,12 @@ public class ExplosionEnemy : Enemy
         }
     }
 
-    public override void Direction()
-    {
-        //左側を正面にする
-        if (Direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        //右側を正面にする
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        //正面を進行方向にして移動
-        transform.rotation = rotation;
-    }
-
     public override void Explosion()
     {
         elapedTime += Time.deltaTime;
         if (elapedTime >= interval)
         {
-            GameObject obj = Instantiate(particle, transform.position, Quaternion.identity, parent);
+            Instantiate(downParticle, transform.position, Quaternion.identity, parent);
             EnemyManager.DefeatedCount++;
             Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
             Destroy(gameObject);
@@ -108,6 +90,8 @@ public class ExplosionEnemy : Enemy
 
     public override void SetTarget()
     {
+        if (!isChase) return;
+
         if (target.position.x - transform.position.x <= 5f
             && target.position.x - transform.position.x >= -5f)
         {
@@ -124,6 +108,7 @@ public class ExplosionEnemy : Enemy
         if (hp <= 0)
         {
             rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
             Defeat = true;
             Explosion();
         }
@@ -132,10 +117,9 @@ public class ExplosionEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.tag.Contains("Stage")
-            || other.gameObject.name.Contains("Enemy"))
+        if (other.gameObject.name.Contains("Enemy"))
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if (other.transform.tag == "Star")

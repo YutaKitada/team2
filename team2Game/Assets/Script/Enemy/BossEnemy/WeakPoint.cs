@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WeakPoint : MonoBehaviour
 {
-    BossEnemy1 parent;
+    Taurus parent;
 
     // Start is called before the first frame update
     void Start()
     {
-        parent = transform.GetComponentInParent<BossEnemy1>();
+        parent = transform.GetComponentInParent<Taurus>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -20,7 +20,7 @@ public class WeakPoint : MonoBehaviour
 
             parent.Damage();
             parent.Stop();
-            parent.mode = Mode.INVINCIBLE;
+            parent.mode = Taurus.Mode.INVINCIBLE;
             parent.isHit = false;
         }
     }

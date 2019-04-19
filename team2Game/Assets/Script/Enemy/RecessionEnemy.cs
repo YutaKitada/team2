@@ -52,11 +52,11 @@ public class RecessionEnemy : Enemy
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power * 5, ForceMode.Acceleration);
                     break;
@@ -64,25 +64,12 @@ public class RecessionEnemy : Enemy
         }
     }
 
-    public override void Direction()
-    {
-        if(Direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        transform.rotation = rotation;
-    }
-
     public override void Damage()
     {
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
             Vector3 recession;
-            if (Direction_Left)
+            if (direction_Left)
             {
                 recession = recessionVector;
             }
@@ -97,6 +84,8 @@ public class RecessionEnemy : Enemy
 
     public override void SetTarget()
     {
+        if (!isChase) return;
+
         if (target.position.x - transform.position.x <= 5f
             && target.position.x - transform.position.x >= -5f)
         {
@@ -111,10 +100,9 @@ public class RecessionEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.tag.Contains("Stage")
-            || other.gameObject.name.Contains("Enemy"))
+        if (other.gameObject.name.Contains("Enemy"))
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if (other.transform.tag == "Star")

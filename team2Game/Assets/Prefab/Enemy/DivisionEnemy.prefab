@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6282146639483624607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.20999992, y: -1.845, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -107,9 +107,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 10
-  target: {fileID: 0}
-  destinationPosition: 0
+  isChase: 0
   hp: 3
+  downParticle: {fileID: 1639172340994352, guid: d6b24f7075ddc214386b55682843cecf,
+    type: 3}
 --- !u!54 &6282146639483624602
 Rigidbody:
   m_ObjectHideFlags: 0
