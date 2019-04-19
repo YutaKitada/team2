@@ -108,9 +108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 10
-  target: {fileID: 0}
-  destinationPosition: 0
   hp: 3
+  downParticle: {fileID: 1639172340994352, guid: d6b24f7075ddc214386b55682843cecf,
+    type: 3}
 --- !u!54 &2149678409605222101
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -139,4 +139,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19843e9eee7cca48ad5b1de704ba845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 1

@@ -107,9 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 10
-  target: {fileID: 0}
-  destinationPosition: 0
   hp: 3
+  downParticle: {fileID: 1639172340994352, guid: d6b24f7075ddc214386b55682843cecf,
+    type: 3}
 --- !u!54 &6282146639483624602
 Rigidbody:
   m_ObjectHideFlags: 0

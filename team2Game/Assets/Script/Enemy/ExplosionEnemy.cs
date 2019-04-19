@@ -7,8 +7,6 @@ using UnityEngine;
 /// </summary>
 public class ExplosionEnemy : Enemy
 {
-    [SerializeField]
-    GameObject particle;
     Transform parent;
 
     [SerializeField, Header("爆発までの間隔")]
@@ -74,7 +72,7 @@ public class ExplosionEnemy : Enemy
         elapedTime += Time.deltaTime;
         if (elapedTime >= interval)
         {
-            GameObject obj = Instantiate(particle, transform.position, Quaternion.identity, parent);
+            Instantiate(downParticle, transform.position, Quaternion.identity, parent);
             EnemyManager.DefeatedCount++;
             Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
             Destroy(gameObject);
@@ -92,6 +90,8 @@ public class ExplosionEnemy : Enemy
 
     public override void SetTarget()
     {
+        if (!isChase) return;
+
         if (target.position.x - transform.position.x <= 5f
             && target.position.x - transform.position.x >= -5f)
         {

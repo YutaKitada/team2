@@ -87,6 +87,8 @@ public class ContractionEnemy : Enemy
 
     public override void SetTarget()
     {
+        if (!isChase) return;
+
         if (target.position.x - transform.position.x <= 5f
             && target.position.x - transform.position.x >= -5f)
         {

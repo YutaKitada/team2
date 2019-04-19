@@ -122,5 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 2
-  target: {fileID: 0}
-  destinationPosition: 1
+  hp: 1
+  downParticle: {fileID: 1639172340994352, guid: d6b24f7075ddc214386b55682843cecf,
+    type: 3}
+  targetPosition: {x: 0, y: 0, z: 0}

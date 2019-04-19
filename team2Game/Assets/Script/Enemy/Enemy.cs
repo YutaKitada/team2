@@ -22,8 +22,9 @@ public class Enemy : MonoBehaviour
     protected float maxSpeed = 0f;//最大移動スピード(Startメソッドで決定)
     
     protected Transform target;
-
     protected Vector3 distance;//targetとの距離
+    [SerializeField, Header("Playerを追いかけるか")]
+    protected bool isChase = false;
 
     protected Vector3 forward = new Vector3(0, -90, 0);//正面
 
@@ -31,6 +32,9 @@ public class Enemy : MonoBehaviour
     protected int hp = 1;
 
     protected State state;
+
+    [SerializeField]
+    protected GameObject downParticle;
 
     //左右移動用のbool
     public bool Direction_Left
@@ -145,7 +149,18 @@ public class Enemy : MonoBehaviour
             EnemyManager.DefeatedCount++;
             Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
             Defeat = true;
+            ParticleGenerate();
             Destroy(gameObject);
         }
+    }
+
+    /// <summary>
+    /// パーティクル生成
+    /// </summary>
+    void ParticleGenerate()
+    {
+        if (downParticle == null) return;
+
+        Instantiate(downParticle, transform.position, Quaternion.identity);
     }
 }
