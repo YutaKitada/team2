@@ -5,7 +5,7 @@ using System.IO;
 
 public class WishManager : MonoBehaviour
 {
-    
+
     private string wishCommand;
 
     private bool isWishMode;
@@ -74,7 +74,7 @@ public class WishManager : MonoBehaviour
         // ログに読み込んだデータを表示する
         foreach (var data in wishDatas)
         {
-            Debug.Log("DATA:" + data[0] + " / " + data[1] + " / " + data[2]+ " / " + data[3] + " / " + data[4]);
+            Debug.Log("DATA:" + data[0] + " / " + data[1] + " / " + data[2] + " / " + data[3] + " / " + data[4]);
         }
         //Debug.Log("DATA:" + addressDatas[0] + " / " + addressDatas[1] + " / " + addressDatas[2]);
 
@@ -112,6 +112,17 @@ public class WishManager : MonoBehaviour
             {
                 if (!isWish)
                 {
+                    if (wishCommand != "")
+                    {
+                        if (wishCommand.Substring(wishCommand.Length - 1, 1) != UIManager.answerText.Substring(wishCommand.Length - 1, 1))
+                        {
+                            UIManager.wishText = "だめです";
+                            isWish = true;
+                            SoundManager.PlaySE(3);
+                        }
+                    }
+                    Wish(wishCommand);
+
                     if (Input.GetButtonDown("AButton"))
                     {
                         wishCommand += "A";
@@ -157,19 +168,7 @@ public class WishManager : MonoBehaviour
                     //    stickLock = false;
                     //}
                     UIManager.wishText = wishCommand;
-                    if (wishCommand != "")
-                    {
-                        if (wishCommand.Substring(wishCommand.Length -1, 1) != UIManager.answerText.Substring(wishCommand.Length-1, 1))
-                        {
-                            UIManager.wishText = "だめです";
-                            isWish = true;
-                        SoundManager.PlaySE(3);
-                    }
-                    }
                     
-                    
-
-                    Wish(wishCommand);
                 }
 
             }
@@ -193,7 +192,7 @@ public class WishManager : MonoBehaviour
         {
             wishTimer += Time.deltaTime;
             Wish(wishNumber);
-            if(wishTimer >= wishTime)
+            if (wishTimer >= wishTime)
             {
                 isWishNow = false;
                 wishNumber = 0;
@@ -205,7 +204,7 @@ public class WishManager : MonoBehaviour
 
     private void Wish(string command)
     {
-        for(int i = 0; i < wishDatas.Count; i++)
+        for (int i = 0; i < wishDatas.Count; i++)
         {
             if (wishDatas[i][1] == command)
             {

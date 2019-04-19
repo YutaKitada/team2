@@ -100,8 +100,7 @@ public class RecessionEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.tag.Contains("Stage")
-            || other.gameObject.name.Contains("Enemy"))
+        if (other.gameObject.name.Contains("Enemy"))
         {
             Direction_Left = !Direction_Left;
         }

@@ -31,17 +31,17 @@ public class StarMovement : MonoBehaviour
     void Update()
     {
 
-        ////跳ねずにそのまま帰ってくる際の処理
-        //if (returnPlayer)
-        //{
-        //    Vector3 returnVector = GameManager.player.transform.position - transform.position;
+        //跳ねずにそのまま帰ってくる際の処理
+        if (returnPlayer)
+        {
+            Vector3 returnVector = (GameManager.player.transform.position + new Vector3(0,2)) - transform.position;
 
-        //    returnVector = returnVector.normalized;
+            returnVector = returnVector.normalized;
 
-        //    //rigid.AddForce(returnVector * returnPower);
-        //    //rigid.velocity = returnVector * returnPower;
-        //}
-        
+            //rigid.AddForce(returnVector * returnPower);
+            rigid.velocity = returnVector * returnPower;
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)

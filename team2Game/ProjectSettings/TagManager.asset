@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Water
   - Kcube
+  - Ice
   layers:
   - Default
   - TransparentFX
