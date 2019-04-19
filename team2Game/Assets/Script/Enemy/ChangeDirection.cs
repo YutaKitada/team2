@@ -15,39 +15,13 @@ public class ChangeDirection : MonoBehaviour
 
     Enemy enemy;
 
+    [SerializeField]
+    Vector3 centerPosition = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        ReverseDirection();
-    }
-
-    /// <summary>
-    /// 方向反転
-    /// </summary>
-    void ReverseDirection()
-    {
-        if (enemy.Direction_Left)
-        {
-            ray = new Ray(transform.position, Vector3.down + Vector3.left);
-        }
-        else
-        {
-            ray = new Ray(transform.position, Vector3.down + Vector3.right);
-        }
-
-        //レイがオブジェクトに当たらなくなったら方向反転
-        isChange = !Physics.Raycast(ray, out hit, maxDistance * GetDistance());
-
-        if (isChange)
-        {
-            enemy.Direction_Left = !enemy.Direction_Left;
-        }
     }
 
     /// <summary>
@@ -68,6 +42,29 @@ public class ChangeDirection : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(ray);
+        Gizmos.DrawLine(transform.position+centerPosition, transform.position+(Vector3.down+Vector3.left)*GetDistance());
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag.Contains("Stage"))
+        {
+            if (enemy.direction_Left)
+            {
+                ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+            }
+            else
+            {
+                ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+            }
+
+            //レイがオブジェクトに当たらなくなったら方向反転
+            isChange = !Physics.Raycast(ray, out hit, maxDistance * GetDistance());
+
+            if (isChange)
+            {
+                enemy.direction_Left = !enemy.direction_Left;
+            }
+        }
     }
 }

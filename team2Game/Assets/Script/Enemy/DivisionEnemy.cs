@@ -51,11 +51,11 @@ public class DivisionEnemy : Enemy
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
@@ -84,7 +84,7 @@ public class DivisionEnemy : Enemy
         Transform parent = transform.parent;
         GameObject obj;
 
-        if (Direction_Left)
+        if (direction_Left)
         {
             rigid.AddForce(rightForce * power, ForceMode.Acceleration);
             obj = Instantiate(this.gameObject, transform.position + Vector3.left, Quaternion.identity, parent);
@@ -96,7 +96,7 @@ public class DivisionEnemy : Enemy
             obj = Instantiate(this.gameObject, transform.position + Vector3.right, Quaternion.identity, parent);
             obj.GetComponent<Rigidbody>().AddForce(rightForce * power, ForceMode.Acceleration);
         }
-        obj.GetComponent<Enemy>().Direction_Left = !Direction_Left;
+        obj.GetComponent<Enemy>().direction_Left = !direction_Left;
     }
 
     public override void Damage()
@@ -136,7 +136,7 @@ public class DivisionEnemy : Enemy
         //壁か別の敵に当たったとき進行方向を逆にする
         if (other.gameObject.name.Contains("Enemy"))
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if (other.transform.tag == "Star")

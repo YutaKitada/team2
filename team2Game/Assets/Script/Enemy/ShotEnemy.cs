@@ -58,15 +58,15 @@ public class ShotEnemy : Enemy
             distance.x = target.position.x - transform.position.x;
             if (distance.x < 0)
             {
-                Direction_Left = true;
+                direction_Left = true;
             }
             else if (distance.x >= 0)
             {
-                Direction_Left = false;
+                direction_Left = false;
             }
         }
 
-        if(Direction_Left)
+        if(direction_Left)
         {
             rotation = Quaternion.Euler(forward);
         }
