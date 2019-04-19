@@ -53,7 +53,11 @@ public class Taurus : BossEnemy
         if (IsDead)
         {
             elapsedTime += Time.deltaTime;
-            if (elapsedTime >= 2) Destroy(gameObject);
+            if (elapsedTime >= 2)
+            {
+                Instantiate(downParticle, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
             return;
         }
 

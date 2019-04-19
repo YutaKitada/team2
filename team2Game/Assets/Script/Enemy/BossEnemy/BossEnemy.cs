@@ -27,6 +27,9 @@ public class BossEnemy : MonoBehaviour
 
     protected Vector3 forward = new Vector3(0, -90, 0);//正面
 
+    [SerializeField]
+    protected GameObject downParticle;
+
     public bool IsDead
     {
         get;
