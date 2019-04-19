@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         //ゲームオーバーであればシーンをロードする
         if (isOver)
         {
-           // SceneManager.LoadScene("GameOver");
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
