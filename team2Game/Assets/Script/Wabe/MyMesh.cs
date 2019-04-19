@@ -12,16 +12,22 @@ public class MyMesh : MonoBehaviour
     private List<Vector2> uvList = new List<Vector2>();
     private List<int> indexList = new List<int>();
     private float cnt = 0;
-    public float sin = 20.0f;
-    public float smoothness = 1;
+    public float sin = 20.0f;//波の高さ(大きくなるほど高低差がある)
+    public float smoothness = 1;//波の滑らかさ(大きいほど滑らか)
 
     public float x_cnt = 100;
+
+    public float y_up = 1;//y軸上
+    public float y_down = -1;//y軸下
+
+    public bool isPlayer = false;//Playerに触れているかどうか
+
 
     void Start()
     {
         mesh = CreatePlaneMesh();
         meshFilter.mesh = mesh;
-
+        isPlayer = false;//Playerに触れていない
     }
     private Mesh CreatePlaneMesh()
     {
@@ -33,8 +39,8 @@ public class MyMesh : MonoBehaviour
         //vertextList.Add(new Vector3(1, 1, 0));  //3番頂点
         for (float i = 0; i < x_cnt * 10; i += 0.1f)
         {
-            vertextList.Add(new Vector3(i - 0.1f, 1, 0));
-            vertextList.Add(new Vector3(i - 0.1f, -1, 0));
+            vertextList.Add(new Vector3(i , y_up, 0));
+            vertextList.Add(new Vector3(i , y_down, 0));
         }
 
 
@@ -57,14 +63,61 @@ public class MyMesh : MonoBehaviour
 
     void Update()
     {
+        
         for (var i = 0; i < vertextList.Count; i += 2)
         {
             var v = vertextList[i];
-            v.y = Mathf.Sin((i + cnt) / sin) / smoothness;
+            if (!isPlayer)
+            {
+                v.y = Mathf.Sin((i + cnt) / sin) / smoothness;
+            }
+            else
+            {
+                v.y = Mathf.Sin((i + cnt) / 4f) / (4f);//v.y = Mathf.Sin((i + cnt) / sin - 9) / (smoothness - 7)
+            }
             vertextList[i] = v;
         }
         cnt += 1f;
         mesh.SetVertices(vertextList);
 
+    }
+
+    private void OnCollisionEnter(Collision collision)//あたったとき
+    {
+        
+    }
+
+    private void OnCollisionExit(Collision collision)//離れたとき
+    {
+        
+    }
+
+    private void OnCollisionStay(Collision collision)//あたっているとき
+    {
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            isPlayer = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            isPlayer = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            isPlayer = false;
+        }
     }
 }

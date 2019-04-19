@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     private int jumpCount;                      //2段ジャンプ用カウンター
 
+    private bool isIce;                         //Iceに当たっているかどうか//追加丹下
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,9 @@ public class PlayerController : MonoBehaviour
         //タイマー・カウントの初期化
         jumpTimer = 0;
         jumpCount = 0;
+
+        //Iceに当たっていない//追加丹下
+        isIce = false;
     }
 
     void FixedUpdate()
@@ -106,9 +111,16 @@ public class PlayerController : MonoBehaviour
             //移動ができる状態であれば
             if (!isMoveStop)
             {
-                //velocityに移動量を追加
-                rigid.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * speed, rigid.velocity.y);
-
+                //Iceに触れていれば//追加丹下
+                if  (isIce)
+                {
+                    rigid.AddForce(Input.GetAxisRaw("Horizontal") * speed, rigid.velocity.y, 0);
+                }
+                else
+                {
+                    //velocityに移動量を追加
+                    rigid.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * speed, rigid.velocity.y);
+                }
                 //左に移動していれば
                 if (rigid.velocity.x < 0)
                 {
@@ -213,6 +225,12 @@ public class PlayerController : MonoBehaviour
             jumpPower = 5f;     //ジャンプのパワーを5に
             inWater = true;     //水の中である
         }
+
+        //Iceに触れていたら//追加丹下
+        if (other.tag == "Ice")
+        {
+            isIce = true;//Iceに触れている
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -222,6 +240,11 @@ public class PlayerController : MonoBehaviour
             speed = 10;         //スピードを10に
             jumpPower = 10;     //ジャンプのパワーを10に
             inWater = false;    //水の中ではない
+        }
+        //追加丹下
+        if (other.tag == "Ice")
+        {
+            isIce = false;//Iceに触れていない
         }
     }
 
