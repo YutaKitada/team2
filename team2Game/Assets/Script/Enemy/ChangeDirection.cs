@@ -25,7 +25,7 @@ public class ChangeDirection : MonoBehaviour
     void Start()
     {
         enemy = GetComponent<Enemy>();
-        if (transform.rotation.y == 1)
+        if (transform.name.Contains("Cancer"))
         {
             isReverse = true;
         }
