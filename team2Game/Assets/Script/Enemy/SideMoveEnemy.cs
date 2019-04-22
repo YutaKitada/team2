@@ -87,7 +87,7 @@ public class SideMoveEnemy : Enemy
     {
         //壁か別の敵に当たったとき進行方向を逆にする
         if (other.gameObject.tag.Contains("Enemy")
-            || other.gameObject.name.Contains("Wall"))
+            /*|| other.gameObject.name.Contains("Wall")*/)
         {
             direction_Left = !direction_Left;
         }
