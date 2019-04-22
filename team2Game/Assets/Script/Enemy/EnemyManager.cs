@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviour
         set;
     }
 
-    public GameObject[] enemys;//Enemy用の配列
+    GameObject[] enemys;//Enemy用の配列
     public static int EnemyCount//Enemyの総数
     {
         get;
