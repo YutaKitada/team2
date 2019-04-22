@@ -8,11 +8,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text comboUI;
     [SerializeField]
+    private GameObject combo;
+    [SerializeField]
     private GameObject comboTimerGageUI;
     private Slider comboTimerGage;
 
     [SerializeField]
-    private Slider gage;                            //星の温度ゲージ
+    private Image hpGage;                            //星の温度ゲージ
     public static float hpGageFillAmount;               //星の温度ゲージの数値
     [SerializeField]
     private float hpGageStopTime = 3;                //ゲージが減少するまでの時間
@@ -98,7 +100,7 @@ public class UIManager : MonoBehaviour
     {
         AnswerUI();
         WishUI();
-        ComboUI();
+        //ComboUI();
         HPGageUI();
         debugUI.text = "FPS;" + FPS.fps
             + "\n" + "isWishNow:" + WishManager.isWishNow
@@ -154,7 +156,7 @@ public class UIManager : MonoBehaviour
 
     private void HPGageUI()
     {
-        gage.value = hpGageFillAmount;                //ゲージの数値を挿入
+        hpGage.fillAmount = hpGageFillAmount/100;                //ゲージの数値を挿入
 
         if (!hpGageStop && !GameManager.isGameStop)
         {

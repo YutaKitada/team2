@@ -35,7 +35,7 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         //温度が80以上ある時、Rボタンを押すと願い事待機状態切り替え
-        if(UIManager.hpGageFillAmount >= 80)
+        if(UIManager.hpGageFillAmount >= 75)
         {
             if (Input.GetButtonDown("YButton") && !WishManager.isWishNow)
             {
