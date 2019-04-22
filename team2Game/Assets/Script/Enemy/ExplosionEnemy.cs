@@ -33,7 +33,6 @@ public class ExplosionEnemy : Enemy
         Move();
         Direction();
         SetTarget();
-        //Damage();
         Death();
     }
 
@@ -81,11 +80,7 @@ public class ExplosionEnemy : Enemy
 
     public override void Damage()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
         hp--;
-        //Explosion();
-        //}
     }
 
     public override void SetTarget()
