@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isIce;                         //Iceに当たっているかどうか//追加丹下
 
+    private bool isDamage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,20 +50,22 @@ public class PlayerController : MonoBehaviour
         //Iceに当たっていない//追加丹下
         isIce = false;
 
+        isDamage = false;
+
         animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Joystick1Button4) && Input.GetButtonDown("Jump"))
-        {
-            //上方向に力を与える
-            rigid.AddForce(new Vector3(0, 5), ForceMode.Impulse);
-            SoundManager.PlaySE(4);
-        }
+        //if (Input.GetKey(KeyCode.Joystick1Button4) && Input.GetButtonDown("Jump"))
+        //{
+        //    //上方向に力を与える
+        //    rigid.AddForce(new Vector3(0, 5), ForceMode.Impulse);
+        //    SoundManager.PlaySE(4);
+        //}
 
         //移動制限がかかっていない場合
-        if (!PlayerManager.isStop && !isMoveStop)
+        if (!PlayerManager.isStop && !isMoveStop && !isDamage)
         {
             //水の中でなければ
             if (!inWater)
@@ -122,7 +126,7 @@ public class PlayerController : MonoBehaviour
                 rigid.useGravity = true;
             }
             //移動ができる状態であれば
-            if (!isMoveStop)
+            if (!isMoveStop && !isDamage)
             {
                 //Iceに触れていれば//追加丹下
                 if  (isIce)
@@ -257,6 +261,22 @@ public class PlayerController : MonoBehaviour
             //    rigid.AddForce(new Vector3(10, 5), ForceMode.Impulse);
             //    isMoveStop = true;
             //}
+            if (!isDamage)
+            {
+                SoundManager.PlaySE(5);
+                isDamage = true;
+
+                Vector3 hitVector = (collision.transform.position - transform.position).normalized;
+                if (hitVector.x >= 0)
+                {
+                    rigid.AddForce(new Vector3(-10, 5), ForceMode.Impulse);
+                }
+                else
+                {
+                    rigid.AddForce(new Vector3(10, 5), ForceMode.Impulse);
+                }
+            }
+
         }
     }
     
@@ -281,6 +301,12 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetTrigger("Landing");
+
+        if(other.tag == "Stage")
+        {
+            isDamage = false;
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
