@@ -12,7 +12,7 @@ public class ShotEnemy : Enemy
     float shotTime = 3;
 
     [SerializeField]
-    GameObject bullet;
+    GameObject bullet;//弾のprefab
 
     private void Awake()
     {
@@ -44,6 +44,7 @@ public class ShotEnemy : Enemy
         elapsedTime += Time.deltaTime;
         if(elapsedTime >= shotTime)
         {
+            //子オブジェクトの位置に弾を生成
             Instantiate(bullet, transform.GetChild(0).position, transform.rotation);
             elapsedTime = 0;
         }
@@ -58,15 +59,15 @@ public class ShotEnemy : Enemy
             distance.x = target.position.x - transform.position.x;
             if (distance.x < 0)
             {
-                Direction_Left = true;
+                direction_Left = true;
             }
             else if (distance.x >= 0)
             {
-                Direction_Left = false;
+                direction_Left = false;
             }
         }
 
-        if(Direction_Left)
+        if(direction_Left)
         {
             rotation = Quaternion.Euler(forward);
         }

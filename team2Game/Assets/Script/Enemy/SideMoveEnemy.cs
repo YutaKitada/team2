@@ -39,7 +39,7 @@ public class SideMoveEnemy : Enemy
             switch (state)
             {
                 case State.NORMAL:
-                    if (Direction_Left)
+                    if (direction_Left)
                     {
                         rigid.AddForce(-transform.right * power, ForceMode.Acceleration);
                     }
@@ -53,12 +53,12 @@ public class SideMoveEnemy : Enemy
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                         rigid.AddForce(-transform.right * power, ForceMode.Acceleration);
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                         rigid.AddForce(transform.right * power, ForceMode.Acceleration);
                     }
                     //rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
@@ -86,9 +86,10 @@ public class SideMoveEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.name.Contains("Enemy"))
+        if (other.gameObject.tag.Contains("Enemy")
+            /*|| other.gameObject.name.Contains("Wall")*/)
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if(other.transform.tag == "Star")

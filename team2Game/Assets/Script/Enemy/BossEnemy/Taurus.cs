@@ -12,25 +12,25 @@ public class Taurus : BossEnemy
 
     [SerializeField, Header("突進までの待機時間")]
     float interval = 5;
-    float intervalElapsedTime;
+    float intervalElapsedTime;//待機中の経過時間
 
-    float elapsedTime;
+    float deadElapsedTime;//死亡からの経過時間
 
+    //全ての状態
     public enum Mode
     {
-        NORMAL,
+        WAIT,
         RUSH,
         STAN,
         INVINCIBLE
     }
-
     [HideInInspector]
-    public Mode mode;
+    public Mode mode;//現在の状態
 
     Vector3 targetPosition;//突進開始時のプレイヤーの位置
     Vector3 startPosition;//突進開始地点
 
-    bool isChange = false;
+    bool isChange = false;//方向転換中か
 
     // Start is called before the first frame update
     void Start()
@@ -39,8 +39,9 @@ public class Taurus : BossEnemy
         rotation = Quaternion.identity;
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        mode = Mode.NORMAL;
+        mode = Mode.WAIT;//待機状態に設定
 
+        //全ての経過時間を0
         stanElapsedTime = 0;
         invincibleElapsedTime = 0;
 
@@ -52,8 +53,10 @@ public class Taurus : BossEnemy
     {
         if (IsDead)
         {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= 2)
+            //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
+            //かつ、return以下の処理を行わない
+            deadElapsedTime += Time.deltaTime;
+            if (deadElapsedTime >= 2)
             {
                 Instantiate(downParticle, transform.position, Quaternion.identity);
                 Destroy(gameObject);
@@ -61,9 +64,9 @@ public class Taurus : BossEnemy
             return;
         }
 
-        switch (mode)
+        switch (mode)//状態に応じた処理を実行
         {
-            case Mode.NORMAL:
+            case Mode.WAIT:
                 //Direction();
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
@@ -109,11 +112,13 @@ public class Taurus : BossEnemy
     void RushPrepare()
     {
         intervalElapsedTime += Time.deltaTime;
+        //待機中の経過時間が規定時間まで過ぎたら突進状態へ移行
         if (intervalElapsedTime < interval) return;
         else
         {
             if (isChange) return;
 
+            //突進に必要な情報を得る
             startPosition = transform.position;
             targetPosition = target.position;
             intervalElapsedTime = 0;
@@ -139,7 +144,7 @@ public class Taurus : BossEnemy
         if (stanElapsedTime >= stanTime)
         {
             stanElapsedTime = 0;
-            mode = Mode.NORMAL;
+            mode = Mode.WAIT;
         }
     }
 
@@ -153,7 +158,7 @@ public class Taurus : BossEnemy
         if(invincibleElapsedTime >= invincibleTime)
         {
             invincibleElapsedTime = 0;
-            mode = Mode.NORMAL;
+            mode = Mode.WAIT;
             isHit = true;
 
             intervalElapsedTime = 0;
@@ -165,9 +170,10 @@ public class Taurus : BossEnemy
         //Playerに当たったらPlayerにダメージ
         if (other.gameObject.tag.Contains("Player"))
         {
+            //その場にとどまり、待機状態に移行
             Stop();
             PlayerManager.PlayerDamage(10);
-            mode = Mode.NORMAL;
+            mode = Mode.WAIT;
         }
 
         //壁に当たったらスタン状態に移行
@@ -201,6 +207,7 @@ public class Taurus : BossEnemy
             break;
         }
 
+        //Playerの方向に向き終わるまでは方向転換中に設定
         if (transform.rotation == Quaternion.Euler(forward) ||
             transform.rotation == Quaternion.Euler(-forward))
         {

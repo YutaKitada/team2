@@ -25,7 +25,6 @@ public class ContractionEnemy : Enemy
         Move();
         Direction();
         Contraction();
-        //Damage();
         SetTarget();
         Death();
     }
@@ -64,11 +63,11 @@ public class ContractionEnemy : Enemy
                     distance.x = target.position.x - transform.position.x;
                     if (distance.x < 0)
                     {
-                        Direction_Left = true;
+                        direction_Left = true;
                     }
                     else if (distance.x > 0)
                     {
-                        Direction_Left = false;
+                        direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
@@ -93,9 +92,10 @@ public class ContractionEnemy : Enemy
 
     public override void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag.Contains("Enemy"))
+        if (other.gameObject.tag.Contains("Enemy")
+            || other.gameObject.name.Contains("Wall"))
         {
-            Direction_Left = !Direction_Left;
+            direction_Left = !direction_Left;
         }
 
         //if (other.transform.tag == "Star")

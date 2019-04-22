@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 /// <summary>
 /// 方向転換を行うクラス
@@ -15,38 +16,18 @@ public class ChangeDirection : MonoBehaviour
 
     Enemy enemy;
 
+    [SerializeField]
+    Vector3 centerPosition = Vector3.zero;
+
+    bool isReverse = false;
+
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        ReverseDirection();
-    }
-
-    /// <summary>
-    /// 方向反転
-    /// </summary>
-    void ReverseDirection()
-    {
-        if (enemy.Direction_Left)
+        if (transform.name.Contains("Cancer"))
         {
-            ray = new Ray(transform.position, Vector3.down + Vector3.left);
-        }
-        else
-        {
-            ray = new Ray(transform.position, Vector3.down + Vector3.right);
-        }
-
-        //レイがオブジェクトに当たらなくなったら方向反転
-        isChange = !Physics.Raycast(ray, out hit, maxDistance * GetDistance());
-
-        if (isChange)
-        {
-            enemy.Direction_Left = !enemy.Direction_Left;
+            isReverse = true;
         }
     }
 
@@ -67,7 +48,52 @@ public class ChangeDirection : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(ray);
+        if (EditorApplication.isPlaying)
+        {
+            Gizmos.color = Color.red;
+            if (enemy.direction_Left)
+            {
+                if(!isReverse)
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
+                else
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
+            }
+            else
+            {
+                if(!isReverse)
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
+                else
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag.Contains("Stage"))
+        {
+            if (enemy.direction_Left)
+            {
+                if(!isReverse)
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+                else
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+            }
+            else
+            {
+                if(!isReverse)
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+                else
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+            }
+
+            //レイがオブジェクトに当たらなくなったら方向反転
+            isChange = !Physics.Raycast(ray, out hit, maxDistance * GetDistance());
+
+            if (isChange)
+            {
+                enemy.direction_Left = !enemy.direction_Left;
+            }
+        }
     }
 }
