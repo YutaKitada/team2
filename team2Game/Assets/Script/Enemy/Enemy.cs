@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum State
-{
-    NORMAL,
-    CHASE
-}
-
 /// <summary>
 /// Enemyの大元
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
+    public enum State
+    {
+        NORMAL,
+        CHASE
+    }
+
     protected Rigidbody rigid;
     protected Quaternion rotation;
 
@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// パーティクル生成
     /// </summary>
-    void ParticleGenerate()
+    public void ParticleGenerate()
     {
         if (downParticle == null) return;
 

@@ -86,7 +86,8 @@ public class SideMoveEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.tag.Contains("Enemy"))
+        if (other.gameObject.tag.Contains("Enemy")
+            || other.gameObject.name.Contains("Wall"))
         {
             direction_Left = !direction_Left;
         }

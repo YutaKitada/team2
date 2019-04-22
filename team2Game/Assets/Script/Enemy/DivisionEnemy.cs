@@ -12,10 +12,14 @@ public class DivisionEnemy : Enemy
 
     float elapsedTime = 0;
 
+    Bound bound;
+
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
         rotation = Quaternion.identity;
+
+        bound = GetComponent<Bound>();
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
         state = State.NORMAL;
@@ -31,6 +35,11 @@ public class DivisionEnemy : Enemy
         SetTarget();
         //Damage();
         Death();
+    }
+
+    private void FixedUpdate()
+    {
+        SetBoundPower();
     }
 
     public override void Move()
@@ -68,6 +77,10 @@ public class DivisionEnemy : Enemy
         transform.localScale = new Vector3(1, 1, 1) * GetScale();
     }
 
+    /// <summary>
+    /// scale設定
+    /// </summary>
+    /// <returns></returns>
     float GetScale()
     {
         float scale;
@@ -77,6 +90,16 @@ public class DivisionEnemy : Enemy
         else scale = 0.5f;
 
         return scale;
+    }
+
+    /// <summary>
+    /// boundPower設定
+    /// </summary>
+    void SetBoundPower()
+    {
+        if (hp == 3) bound.BoundPower = 0.5f;
+        else if (hp == 2) bound.BoundPower = 1f;
+        else bound.BoundPower = 3f;
     }
 
     public override void Division()
@@ -127,6 +150,7 @@ public class DivisionEnemy : Enemy
     {
         if (hp <= 0)
         {
+            ParticleGenerate();
             Destroy(gameObject);
         }
     }
@@ -134,7 +158,8 @@ public class DivisionEnemy : Enemy
     public override void OnCollisionEnter(Collision other)
     {
         //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.name.Contains("Enemy"))
+        if (other.gameObject.tag.Contains("Enemy")
+            || other.gameObject.name.Contains("Wall"))
         {
             direction_Left = !direction_Left;
         }

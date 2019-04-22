@@ -14,6 +14,7 @@ public class WeakPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //弱点に星が当たったら、ボスを無敵状態に移行
         if (other.gameObject.tag.Contains("Star"))
         {
             if (!parent.isHit) return;
