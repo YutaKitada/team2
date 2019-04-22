@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 /// <summary>
 /// 方向転換を行うクラス
@@ -18,10 +19,16 @@ public class ChangeDirection : MonoBehaviour
     [SerializeField]
     Vector3 centerPosition = Vector3.zero;
 
+    bool isReverse = false;
+
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
+        if (transform.rotation.y == 1)
+        {
+            isReverse = true;
+        }
     }
 
     /// <summary>
@@ -41,8 +48,24 @@ public class ChangeDirection : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position+centerPosition, transform.position+(Vector3.down+Vector3.left)*GetDistance());
+        if (EditorApplication.isPlaying)
+        {
+            Gizmos.color = Color.red;
+            if (enemy.direction_Left)
+            {
+                if(!isReverse)
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
+                else
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
+            }
+            else
+            {
+                if(!isReverse)
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
+                else
+                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
+            }
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -51,11 +74,17 @@ public class ChangeDirection : MonoBehaviour
         {
             if (enemy.direction_Left)
             {
-                ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+                if(!isReverse)
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+                else
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
             }
             else
             {
-                ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+                if(!isReverse)
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+                else
+                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
             }
 
             //レイがオブジェクトに当たらなくなったら方向反転
