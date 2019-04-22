@@ -33,7 +33,6 @@ public class DivisionEnemy : Enemy
         Direction();
         Contraction();
         SetTarget();
-        //Damage();
         Death();
     }
 
@@ -124,11 +123,8 @@ public class DivisionEnemy : Enemy
 
     public override void Damage()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-            hp -= 1;
-            Division();
-        //}
+        hp -= 1;
+        Division();
     }
 
     public override void SetTarget()

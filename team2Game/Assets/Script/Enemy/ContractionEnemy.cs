@@ -25,7 +25,6 @@ public class ContractionEnemy : Enemy
         Move();
         Direction();
         Contraction();
-        //Damage();
         SetTarget();
         Death();
     }
