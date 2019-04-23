@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static int combo;            //コンボ数
+    public static int maxCombo;
     public static GameObject player;    //Player
     public static GameObject star;      //Star
 
@@ -17,12 +18,17 @@ public class GameManager : MonoBehaviour
     
     void Awake()
     {
-        //コンボ数を0に
-        combo = 0;
         //Player取得
         player = GameObject.FindGameObjectWithTag("Player");
         //Star取得
         star = GameObject.FindGameObjectWithTag("Star");
+    }
+
+    void Start()
+    {
+        //コンボ数を0に
+        combo = 0;
+        maxCombo = 0;
 
         //ゲームクリア・ゲームオーバー初期化
         isClear = false;
@@ -56,6 +62,11 @@ public class GameManager : MonoBehaviour
         if (isOver)
         {
             SceneManager.LoadScene("GameOver");
+        }
+
+        if (maxCombo < combo)
+        {
+            maxCombo = combo;
         }
     }
 }
