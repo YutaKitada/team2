@@ -48,24 +48,24 @@ public class ChangeDirection : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (EditorApplication.isPlaying)
-        {
-            Gizmos.color = Color.red;
-            if (enemy.direction_Left)
-            {
-                if(!isReverse)
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
-                else
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
-            }
-            else
-            {
-                if(!isReverse)
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
-                else
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
-            }
-        }
+        //if (EditorApplication.isPlaying)
+        //{
+        //    Gizmos.color = Color.red;
+        //    if (enemy.direction_Left)
+        //    {
+        //        if(!isReverse)
+        //            Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
+        //        else
+        //            Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
+        //    }
+        //    else
+        //    {
+        //        if(!isReverse)
+        //            Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
+        //        else
+        //            Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
+        //    }
+        //}
     }
 
     private void OnCollisionStay(Collision collision)
