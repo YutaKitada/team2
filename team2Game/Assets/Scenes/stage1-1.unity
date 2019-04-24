@@ -1840,6 +1840,11 @@ PrefabInstance:
       propertyPath: answerUI
       value: 
       objectReference: {fileID: 1719674567}
+    - target: {fileID: 8876861116862013547, guid: 794521008e6b53e40bebcc279aa97a2b,
+        type: 3}
+      propertyPath: maxWishButton
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8876861115621477045, guid: 794521008e6b53e40bebcc279aa97a2b,
         type: 3}
       propertyPath: wishCSV
@@ -1850,6 +1855,11 @@ PrefabInstance:
       propertyPath: csvFile
       value: 
       objectReference: {fileID: 4900000, guid: 764bd0fcbfedc8e4386d1d033c9736d1, type: 3}
+    - target: {fileID: 8876861115621477045, guid: 794521008e6b53e40bebcc279aa97a2b,
+        type: 3}
+      propertyPath: wishNumber_Debug
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8876861116158673917, guid: 794521008e6b53e40bebcc279aa97a2b,
         type: 3}
       propertyPath: seList.Array.size
@@ -1951,6 +1961,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 16745267, guid: 794521008e6b53e40bebcc279aa97a2b, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876861115599123766, guid: 794521008e6b53e40bebcc279aa97a2b,
+        type: 3}
+      propertyPath: DEBUG
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

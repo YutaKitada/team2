@@ -28,6 +28,9 @@ public class WishManager : MonoBehaviour
     [SerializeField]
     private TextAsset csvFile;
     private List<string[]> wishDatas = new List<string[]>();
+    
+    [SerializeField]
+    private int wishNumber_Debug = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -106,7 +109,15 @@ public class WishManager : MonoBehaviour
             {
                 isWishMode = true;
                 GameManager.isGameStop = true;
-                UIManager.answerText = wishDatas[0][1];
+                if (GameManager.debug)
+                {
+                    UIManager.answerText = wishDatas[wishNumber_Debug][1];
+                }
+                else
+                {
+                    UIManager.answerText = wishDatas[0][1];
+                }
+                
             }
             else
             {
@@ -226,13 +237,14 @@ public class WishManager : MonoBehaviour
     {
         switch (wishNum)
         {
-            case 0:
+            case 1:
                 ReturnStar();
                 break;
-            case 1:
-                StopCombo();
-                break;
             case 2:
+                StopCombo();
+                EternalCombo();
+                break;
+            case 3:
                 EverCombo();
                 break;
         }
@@ -242,6 +254,7 @@ public class WishManager : MonoBehaviour
     {
         UIManager.comboGageStop = false;
         isEverCombo = false;
+        ComboUI.comboTimerStop = false;
     }
 
     private void ReturnStar()
@@ -255,11 +268,16 @@ public class WishManager : MonoBehaviour
 
     private void StopCombo()
     {
-        UIManager.comboGageStop = true;
+        ComboUI.comboTimerStop = true;
     }
 
     private void EverCombo()
     {
         isEverCombo = true;
+    }
+
+    private void EternalCombo()
+    {
+        GameManager.combo++;
     }
 }

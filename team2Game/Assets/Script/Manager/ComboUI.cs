@@ -12,6 +12,12 @@ public class ComboUI : MonoBehaviour
     [SerializeField]
     private Image numberPosition_tenPlace;
     [SerializeField]
+    private Image numberPosition_hundredPlace;
+    [SerializeField]
+    private Image numberPosition_thousandPlace;
+    [SerializeField]
+    private Image numberPosition_tenthousandPlace;
+    [SerializeField]
     private Image comboText;
 
     [SerializeField]
@@ -21,14 +27,21 @@ public class ComboUI : MonoBehaviour
     [SerializeField]
     private bool clearScene = false;
 
+    public static bool comboTimerStop;
+
     // Start is called before the first frame update
     void Start()
     {
         numberPosition_onePlace.enabled = false;
         numberPosition_tenPlace.enabled = false;
+        numberPosition_hundredPlace.enabled = false;
+        numberPosition_thousandPlace.enabled = false;
+        numberPosition_tenthousandPlace.enabled = false;
         comboText.enabled = false;
 
         comboTimer = 0;
+
+        comboTimerStop = false;
     }
 
     // Update is called once per frame
@@ -38,20 +51,49 @@ public class ComboUI : MonoBehaviour
         {
             if (UIManager.isCombo)
             {
+                if (GameManager.combo > 99999)
+                {
+                    GameManager.combo = 99999;
+                }
+
                 numberPosition_onePlace.enabled = true;
                 if (GameManager.combo >= 10)
                 {
                     numberPosition_tenPlace.enabled = true;
+                }
+                if (GameManager.combo >= 100)
+                {
+                    numberPosition_hundredPlace.enabled = true;
+                }
+                if (GameManager.combo >= 1000)
+                {
+                    numberPosition_thousandPlace.enabled = true;
+                }
+                if (GameManager.combo >= 10000)
+                {
+                    numberPosition_tenthousandPlace.enabled = true;
                 }
                 comboText.enabled = true;
 
                 numberPosition_onePlace.sprite = comboNumberSprites[GameManager.combo % 10];
                 if (numberPosition_tenPlace.enabled)
                 {
-                    numberPosition_tenPlace.sprite = comboNumberSprites[(GameManager.combo - GameManager.combo % 10) / 10];
+                    numberPosition_tenPlace.sprite = comboNumberSprites[(GameManager.combo / 10) % 10];
+                }
+                if (numberPosition_hundredPlace.enabled)
+                {
+                    numberPosition_hundredPlace.sprite = comboNumberSprites[(GameManager.combo / 100) % 10];
+                }
+                if (numberPosition_thousandPlace.enabled)
+                {
+                    numberPosition_thousandPlace.sprite = comboNumberSprites[(GameManager.combo / 1000) % 10];
+                }
+                if (numberPosition_tenthousandPlace.enabled)
+                {
+                    numberPosition_tenthousandPlace.sprite = comboNumberSprites[( GameManager.combo / 10000) % 10];
                 }
 
-                if (!PlayerManager.isWishMode)
+                if (!PlayerManager.isWishMode && !comboTimerStop)
                 {
                     comboTimer += Time.deltaTime;
                 }
@@ -67,6 +109,9 @@ public class ComboUI : MonoBehaviour
             {
                 numberPosition_onePlace.enabled = false;
                 numberPosition_tenPlace.enabled = false;
+                numberPosition_hundredPlace.enabled = false;
+                numberPosition_thousandPlace.enabled = false;
+                numberPosition_tenthousandPlace.enabled = false;
                 comboText.enabled = false;
                 comboTimer = 0;
                 GameManager.combo = 0;
@@ -79,12 +124,36 @@ public class ComboUI : MonoBehaviour
             {
                 numberPosition_tenPlace.enabled = true;
             }
+            if (GameManager.maxCombo >= 100)
+            {
+                numberPosition_hundredPlace.enabled = true;
+            }
+            if (GameManager.maxCombo >= 1000)
+            {
+                numberPosition_thousandPlace.enabled = true;
+            }
+            if (GameManager.maxCombo >= 10000)
+            {
+                numberPosition_tenthousandPlace.enabled = true;
+            }
             comboText.enabled = true;
 
             numberPosition_onePlace.sprite = comboNumberSprites[GameManager.maxCombo % 10];
             if (numberPosition_tenPlace.enabled)
             {
-                numberPosition_tenPlace.sprite = comboNumberSprites[(GameManager.maxCombo - GameManager.maxCombo % 10) / 10];
+                numberPosition_tenPlace.sprite = comboNumberSprites[(GameManager.maxCombo / 10) % 10];
+            }
+            if (numberPosition_hundredPlace.enabled)
+            {
+                numberPosition_hundredPlace.sprite = comboNumberSprites[(GameManager.maxCombo / 100) % 10];
+            }
+            if (numberPosition_thousandPlace.enabled)
+            {
+                numberPosition_thousandPlace.sprite = comboNumberSprites[(GameManager.maxCombo / 1000) % 10];
+            }
+            if (numberPosition_tenthousandPlace.enabled)
+            {
+                numberPosition_tenthousandPlace.sprite = comboNumberSprites[(GameManager.maxCombo / 10000) % 10];
             }
         }
     }
