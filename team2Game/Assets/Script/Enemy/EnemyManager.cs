@@ -23,13 +23,6 @@ public class EnemyManager : MonoBehaviour
     {
         //初期化
         DefeatedCount = 0;
-        for(int i = 0; i < enemys.Length; i++)
-        {
-            if (enemys[i] != null)
-            {
-                enemys[i] = null;
-            }
-        }
     }
 
     void Start()
