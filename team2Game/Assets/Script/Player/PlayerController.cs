@@ -57,42 +57,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if (Input.GetKey(KeyCode.Joystick1Button4) && Input.GetButtonDown("Jump"))
-        //{
-        //    //上方向に力を与える
-        //    rigid.AddForce(new Vector3(0, 5), ForceMode.Impulse);
-        //    SoundManager.PlaySE(4);
-        //}
-
         //移動制限がかかっていない場合
         if (!PlayerManager.isStop && !isMoveStop && !isDamage)
         {
-            //水の中でなければ
-            if (!inWater)
-            {
-                //重力を追加
-                rigid.AddForce(Vector3.down * addGravity);
-            }
-            
-
-
             //ジャンプ処理
             Jump();
-        //}
 
-        ////ジャンプ中であれば
-        //if (isJump)
-        //{
-        //    //ジャンプタイマー作動
-        //    jumpTimer += Time.deltaTime;
-        //    //ジャンプタイマーが3秒以上カウントしたら
-        //    if(jumpTimer >= 3f)
-        //    {
-        //        //ジャンプがまたできるように初期化
-        //        isJump = false;
-        //        jumpCount = 0;
-        //        jumpTimer = 0;
-        //    }
+            rigid.AddForce(new Vector3(0, -addGravity));
         }
 
         Animation();
@@ -110,18 +81,6 @@ public class PlayerController : MonoBehaviour
             //useGravityがFalseであれば
             if (!rigid.useGravity)
             {
-                ////Playerの向きに応じて跳ね返る方向を変える
-                //switch (PlayerManager.playerDirection)
-                //{
-                //    //左を向いている場合
-                //    case PlayerManager.PlayerDirection.LEFT:
-                //        rigid.AddForce(new Vector3(5, 5), ForceMode.Impulse);
-                //        break;
-                //    //右を向いている場合
-                //    case PlayerManager.PlayerDirection.RIGHT:
-                //        rigid.AddForce(new Vector3(-5, 5), ForceMode.Impulse);
-                //        break;
-                //}
                 //Rigidbodyの重力処理を開始
                 rigid.useGravity = true;
             }
@@ -164,9 +123,8 @@ public class PlayerController : MonoBehaviour
             rigid.velocity = Vector3.zero;
             //Rigidbodyの重力処理
             rigid.useGravity = false;
-            //動けなくする
-            isMoveStop = true;
-
+            ////動けなくする
+            //isMoveStop = true;
         }
     }
 
@@ -176,6 +134,7 @@ public class PlayerController : MonoBehaviour
         //ジャンプボタンを押したら
         if (Input.GetButtonDown("Jump") && !isJump)
         {
+            rigid.velocity = Vector3.zero;
                 if (Input.GetAxisRaw("Vertical") <= -0.7f)
                 {
                     //上方向に力を与える
@@ -266,26 +225,31 @@ public class PlayerController : MonoBehaviour
                 SoundManager.PlaySE(5);
                 isDamage = true;
 
+                rigid.velocity = Vector3.zero;
+
                 Vector3 hitVector = (collision.transform.position - transform.position).normalized;
                 if (hitVector.x >= 0)
                 {
-                    rigid.AddForce(new Vector3(-10, 5), ForceMode.Impulse);
+                    rigid.AddForce(new Vector3(-1, 3), ForceMode.Impulse);
                 }
                 else
                 {
-                    rigid.AddForce(new Vector3(10, 5), ForceMode.Impulse);
+                    rigid.AddForce(new Vector3(1, 3), ForceMode.Impulse);
                 }
             }
 
         }
+        rigid.useGravity = false;
     }
-    
+
+    private void OnCollisionExit(Collision collision)
+    {
+        rigid.useGravity = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        //ジャンプカウントを0に
-        jumpCount = 0;
-        //isJumpがtrueの場合、falseに
-        if (isJump)isJump = false;
+        
         //水の中に入ったら
         if (other.tag == "Water")
         {
@@ -305,7 +269,13 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Stage")
         {
             isDamage = false;
+            //ジャンプカウントを0に
+            jumpCount = 0;
+            //isJumpがtrueの場合、falseに
+            if (isJump) isJump = false;
         }
+
+        
         
     }
 
@@ -322,6 +292,7 @@ public class PlayerController : MonoBehaviour
         {
             isIce = false;//Iceに触れていない
         }
+        
     }
 
     private void OnTriggerStay(Collider other)
@@ -336,6 +307,7 @@ public class PlayerController : MonoBehaviour
         if(other.tag == "Water")
         {
             isJump = false;     //ジャンプの制限をなくす
+            isDamage = false;
         }
     }
 }

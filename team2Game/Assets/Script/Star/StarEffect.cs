@@ -24,19 +24,29 @@ public class StarEffect : MonoBehaviour
 
         if (!starMovement.returnPlayer && !PlayerManager.haveStar)
         {
-            effect.SetActive(true);
-            if (PlayerThrow.dank)
+            if (!effect.activeSelf)
             {
-                effect.transform.rotation = Quaternion.LookRotation(new Vector3(0, -1, 1));
+                effect.SetActive(true);
+                if (PlayerThrow.dank)
+                {
+                    effect.transform.rotation = Quaternion.LookRotation(new Vector3(0, -1, 1));
+                }
+                else if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.LEFT)
+                {
+                    //effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.throwDirection.x, -PlayerManager.throwDirection.y));
+                    effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.effectDirection.x, -PlayerManager.effectDirection.y));
+                    //effect.transform.rotation = Quaternion.LookRotation(new Vector3(1, -1));
+                    //effect.transform.LookAt(PlayerManager.throwDirection);
+                }
+                else if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.RIGHT)
+                {
+                    //effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.throwDirection.x, -PlayerManager.throwDirection.y));
+                    effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.effectDirection.x, -PlayerManager.effectDirection.y));
+                    //effect.transform.rotation = Quaternion.LookRotation(new Vector3(0.5f, -1));
+                    //effect.transform.LookAt(PlayerManager.throwDirection);
+                }
             }
-            else if(PlayerManager.playerDirection == PlayerManager.PlayerDirection.LEFT)
-            {
-                effect.transform.rotation = Quaternion.LookRotation(new Vector3(1, -1, 0));
-            }
-            else if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.RIGHT)
-            {
-                effect.transform.rotation = Quaternion.LookRotation(new Vector3(-1, -1, 0));
-            }
+            
         }
         else
         {

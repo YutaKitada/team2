@@ -119,6 +119,7 @@ public class WishManager : MonoBehaviour
                             UIManager.wishText = "だめです";
                             isWish = true;
                             SoundManager.PlaySE(3);
+                            PlayerManager.PlayerDamage(30);
                         }
                     }
                     Wish(wishCommand);

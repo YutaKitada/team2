@@ -25,6 +25,7 @@ public class StarMovement : MonoBehaviour
         
         returnX = 0;
         inWater = false;
+        rigid.useGravity = false;
     }
 
     // Update is called once per frame
