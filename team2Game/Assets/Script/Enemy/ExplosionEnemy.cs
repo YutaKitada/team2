@@ -13,6 +13,9 @@ public class ExplosionEnemy : Enemy
     float interval = 2;
     float elapedTime = 0;//経過時間
 
+    [SerializeField]
+    float maxDistande = 2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,8 @@ public class ExplosionEnemy : Enemy
         maxSpeed = power / 10f;
 
         parent = transform.parent;
+        changeDirection = GetComponent<ChangeDirection>();
+        changeDirection.MaxDistance = maxDistande;
     }
 
     // Update is called once per frame
@@ -36,35 +41,35 @@ public class ExplosionEnemy : Enemy
         Death();
     }
 
-    public override void Move()
-    {
-        //今のスピードを計算
-        float nowSpeed = Mathf.Abs(rigid.velocity.x);
+    //public override void Move()
+    //{
+    //    //今のスピードを計算
+    //    float nowSpeed = Mathf.Abs(rigid.velocity.x);
 
-        //最大の移動スピードを超えていないとき
-        if (nowSpeed < maxSpeed)
-        {
-            switch (state)
-            {
-                case State.NORMAL:
-                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-                    break;
+    //    //最大の移動スピードを超えていないとき
+    //    if (nowSpeed < maxSpeed)
+    //    {
+    //        switch (state)
+    //        {
+    //            case State.NORMAL:
+    //                rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+    //                break;
 
-                case State.CHASE:
-                    distance.x = target.position.x - transform.position.x;
-                    if (distance.x < 0)
-                    {
-                        direction_Left = true;
-                    }
-                    else if (distance.x > 0)
-                    {
-                        direction_Left = false;
-                    }
-                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-                    break;
-            }
-        }
-    }
+    //            case State.CHASE:
+    //                distance.x = target.position.x - transform.position.x;
+    //                if (distance.x < 0)
+    //                {
+    //                    direction_Left = true;
+    //                }
+    //                else if (distance.x > 0)
+    //                {
+    //                    direction_Left = false;
+    //                }
+    //                rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+    //                break;
+    //        }
+    //    }
+    //}
 
     public override void Explosion()
     {
@@ -107,25 +112,5 @@ public class ExplosionEnemy : Enemy
             Defeat = true;
             Explosion();
         }
-    }
-
-    public override void OnCollisionEnter(Collision other)
-    {
-        //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.tag.Contains("Enemy")
-            || other.gameObject.name.Contains("Wall"))
-        {
-            direction_Left = !direction_Left;
-        }
-
-        //if (other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    Explosion();
-        //    if (hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
     }
 }

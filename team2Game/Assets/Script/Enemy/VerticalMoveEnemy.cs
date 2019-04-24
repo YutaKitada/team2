@@ -71,7 +71,7 @@ public class VerticalMoveEnemy : Enemy
         }
     }
     
-    public override void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
         //if (other.transform.tag == "Star")
         //{

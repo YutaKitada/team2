@@ -36,8 +36,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject downParticle;
 
+    protected ChangeDirection changeDirection;
+
     public bool direction_Left = true;
-    
     public bool direction_Up = true;
 
     /// <summary>
@@ -54,7 +55,32 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void Move()
     {
+        //今のスピードを計算
+        float nowSpeed = Mathf.Abs(rigid.velocity.x);
 
+        //最大の移動スピードを超えていないとき
+        if (nowSpeed < maxSpeed)
+        {
+            switch (state)
+            {
+                case State.NORMAL:
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
+
+                case State.CHASE:
+                    distance.x = target.position.x - transform.position.x;
+                    if (distance.x < 0)
+                    {
+                        direction_Left = true;
+                    }
+                    else if (distance.x > 0)
+                    {
+                        direction_Left = false;
+                    }
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
+            }
+        }
     }
 
     /// <summary>
@@ -120,11 +146,6 @@ public class Enemy : MonoBehaviour
     /// ターゲット設定
     /// </summary>
     public virtual void SetTarget()
-    {
-
-    }
-    
-    public virtual void OnCollisionEnter(Collision other)
     {
 
     }
