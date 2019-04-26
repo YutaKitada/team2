@@ -68,7 +68,11 @@ public class BossEnemy : MonoBehaviour
         if (hp <= 0)
         {
             IsDead = true;
-            anim.SetBool("isDead", true);
+            if (anim != null)
+            {
+                anim.SetBool("isDead", true);
+                anim.speed = 1;
+            }
         }
     }
 

@@ -14,6 +14,8 @@ public class Taurus : BossEnemy
     float interval = 5;
     float intervalElapsedTime;//待機中の経過時間
 
+    SkinnedMeshRenderer skinnedMeshRenderer;
+
     //全ての状態
     public enum Mode
     {
@@ -44,13 +46,19 @@ public class Taurus : BossEnemy
         invincibleElapsedTime = 0;
 
         anim = GetComponent<Animator>();
+
+        skinnedMeshRenderer = transform.GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        Death();
+
         if (IsDead)
         {
+            anim.speed = 1;
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
             deadElapsedTime += Time.deltaTime;
@@ -73,6 +81,7 @@ public class Taurus : BossEnemy
 
             case Mode.RUSH:
                 RushAttack();
+                anim.speed = 2;
                 break;
 
             case Mode.STAN:
@@ -82,13 +91,12 @@ public class Taurus : BossEnemy
 
             case Mode.INVINCIBLE:
                 NowInvincible();
+                anim.speed = 1;
                 break;
 
             default:
                 break;
         }
-
-        Death();
     }
 
     public override void Direction()
@@ -153,11 +161,15 @@ public class Taurus : BossEnemy
     {
         invincibleElapsedTime += Time.deltaTime;
 
-        if(invincibleElapsedTime >= invincibleTime)
+        skinnedMeshRenderer.enabled = !skinnedMeshRenderer.enabled;
+
+        if (invincibleElapsedTime >= invincibleTime)
         {
             invincibleElapsedTime = 0;
             mode = Mode.WAIT;
             isHit = true;
+
+            skinnedMeshRenderer.enabled = true;
 
             intervalElapsedTime = 0;
         }
@@ -175,7 +187,7 @@ public class Taurus : BossEnemy
         }
 
         //壁に当たったらスタン状態に移行
-        if (other.gameObject.name.Contains("Wall"))
+        if (other.gameObject.name.Contains("Wall") && mode == Mode.RUSH)
         {
             Stop();
             mode = Mode.STAN;
