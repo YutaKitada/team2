@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GoalScript : MonoBehaviour
 {
+    [SerializeField]
+    private string sceneName = "GameClear";
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.transform.tag == "Player")
         {
-            SceneManager.LoadScene("GameClear");
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

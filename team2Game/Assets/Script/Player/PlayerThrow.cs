@@ -121,13 +121,20 @@ public class PlayerThrow : MonoBehaviour
         //Starオブジェクトを持っていた場合
         if (PlayerManager.haveStar)
         {
-            //StarはPlayerの3マス上に
-            GameManager.star.transform.position = transform.position + new Vector3(0, 2.5f);
-            //Starのvelocityを0に
-            starRigid.velocity = Vector3.zero;
+            if (!PlayerManager.isWishMode)
+            {
+                //StarはPlayerの3マス上に
+                GameManager.star.transform.position = transform.position + new Vector3(0, 2.5f);
+                //Starのvelocityを0に
+                starRigid.velocity = Vector3.zero;
 
-            //投げる処理
-            Throw();
+                //投げる処理
+                Throw();
+            }
+            else
+            {
+                GameManager.star.transform.position = Vector3.Lerp(transform.position + new Vector3(32, 0,10),transform.position + new Vector3(-16, 15,10) , UIManager.wishTimerFillamount / -3) ;
+            }
         }
         
         

@@ -52,6 +52,11 @@ public class StarEffect : MonoBehaviour
                 }
 
             }
+            else if (PlayerManager.isWishMode)
+            {
+                effect.SetActive(true);
+                effect.transform.rotation = Quaternion.LookRotation(new Vector3(-0.5f,-1f));
+            }
             else
             {
                 effect.SetActive(false);
