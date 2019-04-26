@@ -18,9 +18,13 @@ public class WishStarScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Enemy")
+        if(collision.transform.tag.Contains("Enemy"))
         {
-            collision.transform.GetComponent<Enemy>().Damage();
+            if(collision.transform.tag == "Enemy")
+            {
+                collision.transform.GetComponent<Enemy>().Damage();
+            }
+            
             SoundManager.PlaySE(5);
             UIManager.hpGageFillAmount += 10;
             GameManager.combo++;

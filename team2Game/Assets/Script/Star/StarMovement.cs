@@ -54,7 +54,7 @@ public class StarMovement : MonoBehaviour
             gameObject.layer = 11;                  //星のLayerを変更(Playerでも触れられるものへ)
 
             //当たったのがEnemyであれば
-            if (collision.transform.tag == "Enemy")
+            if (collision.transform.tag.Contains("Enemy"))
             {
                 SoundManager.PlaySE(5);
                 //温度ゲージが100以下であれば
@@ -89,8 +89,11 @@ public class StarMovement : MonoBehaviour
                     UIManager.isCombo = true;   //コンボを開始
                 }
                 GameManager.combo++;        //コンボ数を1増やす
-
-                collision.gameObject.GetComponent<Enemy>().Damage();
+                if(collision.transform.tag == "Enemy")
+                {
+                    collision.gameObject.GetComponent<Enemy>().Damage();
+                }
+                
             }
             //当たったのがEnemyでもPlayerでもなければ
             else if (collision.transform.tag != "Player")
