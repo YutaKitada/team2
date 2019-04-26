@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
                     //velocityに移動量を追加
                     rigid.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * speed, rigid.velocity.y);
                 }
+                
                 //左に移動していれば
                 if (rigid.velocity.x < 0)
                 {
@@ -125,6 +126,11 @@ public class PlayerController : MonoBehaviour
             rigid.useGravity = false;
             ////動けなくする
             //isMoveStop = true;
+
+            if (PlayerManager.isWishMode)
+            {
+                transform.LookAt(transform.position + new Vector3(0, 0, -1));
+            }
         }
     }
 
@@ -163,31 +169,35 @@ public class PlayerController : MonoBehaviour
 
     private void Animation()
     {
-        if (Input.GetAxisRaw("Horizontal") >= 0.6f || Input.GetAxisRaw("Horizontal") <= -0.6f)
+        if (!PlayerManager.isWishMode)
         {
-            animator.SetBool("Run", true);
-        }
-        else
-        {
-            animator.SetBool("Run", false);
-        }
-
-        if (Input.GetAxisRaw("Vertical") <= -0.7f)
-        {
-            if (!animator.GetBool("Squat"))
+            if (Input.GetAxisRaw("Horizontal") >= 0.6f || Input.GetAxisRaw("Horizontal") <= -0.6f)
             {
-                animator.SetBool("Squat", true);
+                animator.SetBool("Run", true);
+            }
+            else
+            {
+                animator.SetBool("Run", false);
+            }
+
+            if (Input.GetAxisRaw("Vertical") <= -0.7f)
+            {
+                if (!animator.GetBool("Squat"))
+                {
+                    animator.SetBool("Squat", true);
+                }
+            }
+            else
+            {
+                animator.SetBool("Squat", false);
+            }
+
+            if (Input.GetButtonDown("Jump"))
+            {
+                animator.SetTrigger("Jump");
             }
         }
-        else
-        {
-            animator.SetBool("Squat", false);
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            animator.SetTrigger("Jump");
-        }
+        
     }
 
         private void OnCollisionEnter(Collision collision)
