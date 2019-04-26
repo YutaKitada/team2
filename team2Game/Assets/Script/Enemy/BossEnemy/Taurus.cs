@@ -58,7 +58,6 @@ public class Taurus : BossEnemy
 
         if (IsDead)
         {
-            anim.speed = 1;
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
             deadElapsedTime += Time.deltaTime;
