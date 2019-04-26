@@ -25,6 +25,7 @@ public class StarMovement : MonoBehaviour
         
         returnX = 0;
         inWater = false;
+        rigid.useGravity = false;
     }
 
     // Update is called once per frame
@@ -53,7 +54,7 @@ public class StarMovement : MonoBehaviour
             gameObject.layer = 11;                  //星のLayerを変更(Playerでも触れられるものへ)
 
             //当たったのがEnemyであれば
-            if (collision.transform.tag == "Enemy")
+            if (collision.transform.tag.Contains("Enemy"))
             {
                 SoundManager.PlaySE(5);
                 //温度ゲージが100以下であれば
@@ -70,21 +71,29 @@ public class StarMovement : MonoBehaviour
                         //ゲージを10回復
                         UIManager.hpGageFillAmount += 10f;
                     }
+
+                    if(UIManager.hpGageFillAmount > 100)
+                    {
+                        UIManager.hpGageFillAmount = 100;
+                    }
                 }
-                //温度ゲージが100以上であれば
-                else
-                {
-                    //ゲージを0.5回復
-                    UIManager.hpGageFillAmount += 0.5f;
-                }
+                ////温度ゲージが100以上であれば
+                //else
+                //{
+                //    //ゲージを0.5回復
+                //    UIManager.hpGageFillAmount += 0.5f;
+                //}
                 //コンボ中でなければ
                 if (!UIManager.isCombo)
                 {
                     UIManager.isCombo = true;   //コンボを開始
                 }
                 GameManager.combo++;        //コンボ数を1増やす
-
-                collision.gameObject.GetComponent<Enemy>().Damage();
+                if(collision.transform.tag == "Enemy")
+                {
+                    collision.gameObject.GetComponent<Enemy>().Damage();
+                }
+                
             }
             //当たったのがEnemyでもPlayerでもなければ
             else if (collision.transform.tag != "Player")

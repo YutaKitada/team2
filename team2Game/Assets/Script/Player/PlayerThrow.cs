@@ -15,7 +15,7 @@ public class PlayerThrow : MonoBehaviour
 
     [SerializeField]
     private float stopTime = 1;             //投げた後の停止時間
-    private float stopTimer;                //停止時間用タイマー
+    public static float stopTimer;                //停止時間用タイマー
 
     public static bool dank;                      //下投げ
 
@@ -88,11 +88,13 @@ public class PlayerThrow : MonoBehaviour
                         {
                             //左を向いている場合
                             case PlayerManager.PlayerDirection.LEFT:
-                                starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
+                                //starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
+                                starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
                                 break;
                             //右を向いている場合
                             case PlayerManager.PlayerDirection.RIGHT:
-                                starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
+                                //starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
+                                starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
                                 break;
                         }
                     }

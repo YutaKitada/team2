@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
 
     public static bool isGameStop;     //ゲームの動きを止める
 
+    [SerializeField]
+    private bool DEBUG = false;
+    public static bool debug;
+
     
     void Awake()
     {
@@ -22,6 +26,8 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         //Star取得
         star = GameObject.FindGameObjectWithTag("Star");
+
+        debug = DEBUG;
     }
 
     void Start()
@@ -64,9 +70,15 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
 
+        
+
         if (maxCombo < combo)
         {
             maxCombo = combo;
+            if(maxCombo > 99999)
+            {
+                maxCombo = 99999;
+            }
         }
     }
 }
