@@ -27,6 +27,11 @@ public class WishStarScript : MonoBehaviour
             
             SoundManager.PlaySE(5);
             UIManager.hpGageFillAmount += 10;
+
+            if(UIManager.hpGageFillAmount > 100)
+            {
+                UIManager.hpGageFillAmount = 100;
+            }
             GameManager.combo++;
             ComboUI.comboTimer = 0;
         }
