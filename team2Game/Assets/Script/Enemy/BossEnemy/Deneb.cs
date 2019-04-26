@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Deneb : BossEnemy
 {
-    //Bezier right_LeftBezier, left_RightBezier;
-    //private float t = 0f;
-
     [SerializeField, Header("通る曲線の座標")]
     Vector3[] vector;
 
     bool onRight;//右側にいるか
     bool isMove;//移動中か
 
-    float speed = 1;
+    float speed = 1;//動きや経過時間の速さ
+    int maxHp;//最大体力
 
     [SerializeField]
     float interval = 3;
@@ -46,6 +44,7 @@ public class Deneb : BossEnemy
         mode = Mode.NORMAL;
 
         player = GameObject.FindGameObjectWithTag("Player");
+        maxHp = hp;
 
         onRight = true;
         isMove = false;
@@ -56,6 +55,8 @@ public class Deneb : BossEnemy
     {
         if (IsDead)
         {
+            Stop();
+
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
             deadElapsedTime += Time.deltaTime;
@@ -65,6 +66,11 @@ public class Deneb : BossEnemy
                 Destroy(gameObject);
             }
             return;
+        }
+
+        if (hp <= maxHp / 2)
+        {
+            speed = 2;
         }
 
         switch (mode)
@@ -97,7 +103,7 @@ public class Deneb : BossEnemy
 
     void Wait()
     {
-        intervalElapsedTime += Time.deltaTime;
+        intervalElapsedTime += Time.deltaTime * speed;
         if (intervalElapsedTime >= interval)
         {
             isMove = true;
@@ -113,7 +119,7 @@ public class Deneb : BossEnemy
     {
         if (isHit) return;
 
-        invincibleElapsedTime += Time.deltaTime;
+        invincibleElapsedTime += Time.deltaTime * speed;
 
         if (invincibleElapsedTime >= invincibleTime)
         {
@@ -127,13 +133,13 @@ public class Deneb : BossEnemy
     /// </summary>
     void Attack_FallStar()
     {
-        instantElapsedTime += Time.deltaTime;
+        instantElapsedTime += Time.deltaTime * speed;
         if (instantElapsedTime <= instantInterval) return;
 
         //3つ生成してポジションを分ける
         for(int i=-1; i<2; i++)
         {
-            Instantiate(fallStar, fallPosition + new Vector3(i * 5, Random.Range(0.5f, 2f), 0), Quaternion.identity);
+            Instantiate(fallStar, fallPosition + new Vector3(i * 5, Random.Range(0f, 3f), 0), Quaternion.identity);
         }
         instantElapsedTime = 0;
     }
@@ -151,20 +157,22 @@ public class Deneb : BossEnemy
             {
                 transform.position = Bezier.GetPoint(vector[0], vector[1], vector[2], vector[3], t);
 
-                t += 0.01f;
+                t += 0.01f * speed;
                 if (t > 1.0f) t = 0;
 
-                if (transform.position != vector[3]) yield break;
+                //終点との差が0.1f以下になるまで実行
+                if (Mathf.Abs(vector[3].x - transform.position.x) >= Mathf.Abs(0.1f)) yield break;
                 else break;
             }
             else
             {
                 transform.position = Bezier.GetPoint(vector[3], vector[2], vector[1], vector[0], t);
 
-                t += 0.01f;
+                t += 0.01f * speed;
                 if (t > 1.0f) t = 0;
 
-                if (transform.position != vector[0]) yield break;
+                //終点との差が0.1f以下になるまで実行
+                if (Mathf.Abs(vector[0].x - transform.position.x) >= Mathf.Abs(0.1f)) yield break;
                 else break;
             }
         }

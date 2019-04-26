@@ -168,10 +168,10 @@ MonoBehaviour:
   downParticle: {fileID: 5725949500956807022, guid: 0f88c19103f50134abd03767b5308e54,
     type: 3}
   vector:
-  - {x: 5, y: 2, z: 0}
+  - {x: 10, y: 3, z: 0}
   - {x: 2.5, y: -2, z: 0}
   - {x: -2.5, y: -2, z: 0}
-  - {x: -5, y: 2, z: 0}
+  - {x: -10, y: 3, z: 0}
   interval: 3
   fallStar: {fileID: 1197098874488578264, guid: 6f560387a32b58c42b8c38e2284b5671,
     type: 3}
@@ -244,7 +244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39129542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 2, z: 0}
+  m_LocalPosition: {x: 10, y: 3, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
@@ -395,17 +395,17 @@ PrefabInstance:
         type: 3}
       propertyPath: gage
       value: 
-      objectReference: {fileID: 950388248}
+      objectReference: {fileID: 0}
     - target: {fileID: 8876861116862013547, guid: 794521008e6b53e40bebcc279aa97a2b,
         type: 3}
       propertyPath: comboUI
       value: 
-      objectReference: {fileID: 950388247}
+      objectReference: {fileID: 0}
     - target: {fileID: 8876861116862013547, guid: 794521008e6b53e40bebcc279aa97a2b,
         type: 3}
       propertyPath: comboTimerGageUI
       value: 
-      objectReference: {fileID: 950388246}
+      objectReference: {fileID: 0}
     - target: {fileID: 8876861116862013547, guid: 794521008e6b53e40bebcc279aa97a2b,
         type: 3}
       propertyPath: wishUI
@@ -527,36 +527,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &950388246 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1955848725, guid: 794521008e6b53e40bebcc279aa97a2b,
-    type: 3}
-  m_PrefabInstance: {fileID: 950388244}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &950388247 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1137825760, guid: 794521008e6b53e40bebcc279aa97a2b,
-    type: 3}
-  m_PrefabInstance: {fileID: 950388244}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &950388248 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7496625072572023891, guid: 794521008e6b53e40bebcc279aa97a2b,
-    type: 3}
-  m_PrefabInstance: {fileID: 950388244}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &972328144

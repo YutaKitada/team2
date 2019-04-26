@@ -175,7 +175,7 @@ public class Taurus : BossEnemy
         }
 
         //壁に当たったらスタン状態に移行
-        if (other.gameObject.name.Contains("Wall"))
+        if (other.gameObject.name.Contains("Wall") && mode == Mode.RUSH)
         {
             Stop();
             mode = Mode.STAN;
