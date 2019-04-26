@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class ContractionEnemy : Enemy
 {
+    [SerializeField]
+    List<float> hp_RayList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +20,7 @@ public class ContractionEnemy : Enemy
         state = State.NORMAL;
 
         maxSpeed = power / 10f;
+        changeDirection = GetComponent<ChangeDirection>();
     }
 
     // Update is called once per frame
@@ -25,7 +29,6 @@ public class ContractionEnemy : Enemy
         Move();
         Direction();
         Contraction();
-        //Damage();
         SetTarget();
         Death();
     }
@@ -39,42 +42,54 @@ public class ContractionEnemy : Enemy
     {
         float scale;
 
-        if (hp == 3) scale = 2.5f;
-        else if (hp == 2) scale = 2f;
-        else scale = 1.5f;
+        if (hp == 3)
+        {
+            scale = 2.5f;
+            changeDirection.MaxDistance = hp_RayList[0];
+        }
+        else if (hp == 2)
+        {
+            scale = 2f;
+            changeDirection.MaxDistance = hp_RayList[1];
+        }
+        else
+        {
+            scale = 1.5f;
+            changeDirection.MaxDistance = hp_RayList[2];
+        }
 
         return scale;
     }
 
-    public override void Move()
-    {
-        //今のスピードを計算
-        float nowSpeed = Mathf.Abs(rigid.velocity.x);
+    //public override void Move()
+    //{
+    //    //今のスピードを計算
+    //    float nowSpeed = Mathf.Abs(rigid.velocity.x);
 
-        //最大の移動スピードを超えていないとき
-        if (nowSpeed < maxSpeed)
-        {
-            switch (state)
-            {
-                case State.NORMAL:
-                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-                    break;
+    //    //最大の移動スピードを超えていないとき
+    //    if (nowSpeed < maxSpeed)
+    //    {
+    //        switch (state)
+    //        {
+    //            case State.NORMAL:
+    //                rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+    //                break;
 
-                case State.CHASE:
-                    distance.x = target.position.x - transform.position.x;
-                    if (distance.x < 0)
-                    {
-                        direction_Left = true;
-                    }
-                    else if (distance.x > 0)
-                    {
-                        direction_Left = false;
-                    }
-                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-                    break;
-            }
-        }
-    }
+    //            case State.CHASE:
+    //                distance.x = target.position.x - transform.position.x;
+    //                if (distance.x < 0)
+    //                {
+    //                    direction_Left = true;
+    //                }
+    //                else if (distance.x > 0)
+    //                {
+    //                    direction_Left = false;
+    //                }
+    //                rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+    //                break;
+    //        }
+    //    }
+    //}
 
     public override void SetTarget()
     {
@@ -89,22 +104,5 @@ public class ContractionEnemy : Enemy
         {
             state = State.NORMAL;
         }
-    }
-
-    public override void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag.Contains("Enemy"))
-        {
-            direction_Left = !direction_Left;
-        }
-
-        //if (other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    if (hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
     }
 }

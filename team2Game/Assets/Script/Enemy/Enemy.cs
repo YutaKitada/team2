@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum State
-{
-    NORMAL,
-    CHASE
-}
-
 /// <summary>
 /// Enemyの大元
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
+    public enum State
+    {
+        NORMAL,
+        CHASE
+    }
+
     protected Rigidbody rigid;
     protected Quaternion rotation;
 
@@ -36,8 +36,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject downParticle;
 
+    protected ChangeDirection changeDirection;
+
     public bool direction_Left = true;
-    
     public bool direction_Up = true;
 
     /// <summary>
@@ -54,7 +55,32 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void Move()
     {
+        //今のスピードを計算
+        float nowSpeed = Mathf.Abs(rigid.velocity.x);
 
+        //最大の移動スピードを超えていないとき
+        if (nowSpeed < maxSpeed)
+        {
+            switch (state)
+            {
+                case State.NORMAL:
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
+
+                case State.CHASE:
+                    distance.x = target.position.x - transform.position.x;
+                    if (distance.x < 0)
+                    {
+                        direction_Left = true;
+                    }
+                    else if (distance.x > 0)
+                    {
+                        direction_Left = false;
+                    }
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
+            }
+        }
     }
 
     /// <summary>
@@ -123,11 +149,6 @@ public class Enemy : MonoBehaviour
     {
 
     }
-    
-    public virtual void OnCollisionEnter(Collision other)
-    {
-
-    }
 
     /// <summary>
     /// 死亡処理
@@ -147,7 +168,7 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// パーティクル生成
     /// </summary>
-    void ParticleGenerate()
+    public void ParticleGenerate()
     {
         if (downParticle == null) return;
 

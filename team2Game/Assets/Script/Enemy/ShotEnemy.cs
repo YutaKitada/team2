@@ -12,7 +12,7 @@ public class ShotEnemy : Enemy
     float shotTime = 3;
 
     [SerializeField]
-    GameObject bullet;
+    GameObject bullet;//弾のprefab
 
     private void Awake()
     {
@@ -44,6 +44,7 @@ public class ShotEnemy : Enemy
         elapsedTime += Time.deltaTime;
         if(elapsedTime >= shotTime)
         {
+            //子オブジェクトの位置に弾を生成
             Instantiate(bullet, transform.GetChild(0).position, transform.rotation);
             elapsedTime = 0;
         }

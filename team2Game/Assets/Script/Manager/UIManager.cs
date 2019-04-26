@@ -5,14 +5,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField]
-    private Text comboUI;
-    [SerializeField]
-    private GameObject comboTimerGageUI;
-    private Slider comboTimerGage;
 
     [SerializeField]
-    private Slider gage;                            //星の温度ゲージ
+    private Image hpGage;                            //星の温度ゲージ
     public static float hpGageFillAmount;               //星の温度ゲージの数値
     [SerializeField]
     private float hpGageStopTime = 3;                //ゲージが減少するまでの時間
@@ -54,14 +49,12 @@ public class UIManager : MonoBehaviour
     private Slider wishTimer;
     public static float wishTimerFillamount = -3;
 
+    [SerializeField]
+    private Image wishYButton;
+
     // Start is called before the first frame update
     void Start()
     {
-
-        comboUI.enabled = false;
-        comboTimerGage = comboTimerGageUI.GetComponent<Slider>();
-        comboTimerGageUI.SetActive(false);
-
         hpGageFillAmount = 100;
         isCombo = false;
         hpGageStopTimer = 0;
@@ -91,6 +84,8 @@ public class UIManager : MonoBehaviour
             buttonPositionX += 30;
         }
         wishTimer.gameObject.SetActive(false);
+
+        wishYButton.enabled = false;
     }
 
     // Update is called once per frame
@@ -98,8 +93,9 @@ public class UIManager : MonoBehaviour
     {
         AnswerUI();
         WishUI();
-        ComboUI();
+        //ComboUI();
         HPGageUI();
+        YButton();
         debugUI.text = "FPS;" + FPS.fps
             + "\n" + "isWishNow:" + WishManager.isWishNow
             + "\n" + "WishModeStay:" + PlayerManager.isWishStay
@@ -117,17 +113,10 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.combo >= 2)
         {
-            if (!comboUI.enabled)
-            {
-                comboUI.enabled = true;
-                comboTimerGageUI.SetActive(true);
-            }
-            comboUI.text = GameManager.combo + "コンボ";
 
             if (!comboGageStop && !GameManager.isGameStop)
             {
                 comboGageStopTimer += Time.deltaTime;
-                comboTimerGage.value = comboGageStopTime - comboGageStopTimer;
             }
 
 
@@ -141,20 +130,11 @@ public class UIManager : MonoBehaviour
                 comboGageStopTimer = 0;
             }
         }
-        else
-        {
-            if (comboUI.enabled)
-            {
-                comboUI.enabled = false;
-                comboTimerGageUI.SetActive(false);
-                comboTimerGage.value = hpGageStopTime;
-            }
-        }
     }
 
     private void HPGageUI()
     {
-        gage.value = hpGageFillAmount;                //ゲージの数値を挿入
+        hpGage.fillAmount = hpGageFillAmount/100;                //ゲージの数値を挿入
 
         if (!hpGageStop && !GameManager.isGameStop)
         {
@@ -282,6 +262,18 @@ public class UIManager : MonoBehaviour
 
                 mistakeObject.SetActive(false);
             }
+        }
+    }
+
+    private void YButton()
+    {
+        if(hpGageFillAmount >= 75 && !WishManager.isWishNow)
+        {
+            wishYButton.enabled = true;
+        }
+        else
+        {
+            wishYButton.enabled = false;
         }
     }
 }

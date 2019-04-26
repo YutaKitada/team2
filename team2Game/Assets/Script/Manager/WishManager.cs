@@ -28,6 +28,14 @@ public class WishManager : MonoBehaviour
     [SerializeField]
     private TextAsset csvFile;
     private List<string[]> wishDatas = new List<string[]>();
+    
+    [SerializeField]
+    private int wishNumber_Debug = 1;
+    private int wishNum;
+
+    [SerializeField]
+    private GameObject wishStar;
+    private float showerTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +89,10 @@ public class WishManager : MonoBehaviour
         wishTime = 0;
         wishTimer = 0;
         wishNumber = 0;
+
+        showerTimer = 0;
+
+        wishNum = 0;
     }
 
     // Update is called once per frame
@@ -106,7 +118,16 @@ public class WishManager : MonoBehaviour
             {
                 isWishMode = true;
                 GameManager.isGameStop = true;
-                UIManager.answerText = wishDatas[0][1];
+                if (GameManager.debug)
+                {
+                    UIManager.answerText = wishDatas[wishNumber_Debug][1];
+                }
+                else
+                {
+                    wishNum = Random.Range(1, 4);
+                    UIManager.answerText = wishDatas[wishNum][1];
+                }
+                
             }
             else
             {
@@ -119,6 +140,7 @@ public class WishManager : MonoBehaviour
                             UIManager.wishText = "だめです";
                             isWish = true;
                             SoundManager.PlaySE(3);
+                            PlayerManager.PlayerDamage(30);
                         }
                     }
                     Wish(wishCommand);
@@ -225,14 +247,19 @@ public class WishManager : MonoBehaviour
     {
         switch (wishNum)
         {
-            case 0:
+            case 1:
                 ReturnStar();
                 break;
-            case 1:
-                StopCombo();
-                break;
             case 2:
+                StopCombo();
+                EternalCombo();
                 EverCombo();
+                break;
+            case 3:
+                Shower();
+                break;
+            case 4:
+                Shower();
                 break;
         }
     }
@@ -241,6 +268,8 @@ public class WishManager : MonoBehaviour
     {
         UIManager.comboGageStop = false;
         isEverCombo = false;
+        ComboUI.comboTimerStop = false;
+        showerTimer = 0;
     }
 
     private void ReturnStar()
@@ -254,11 +283,27 @@ public class WishManager : MonoBehaviour
 
     private void StopCombo()
     {
-        UIManager.comboGageStop = true;
+        ComboUI.comboTimerStop = true;
     }
 
     private void EverCombo()
     {
         isEverCombo = true;
+    }
+
+    private void EternalCombo()
+    {
+        GameManager.combo++;
+    }
+
+    private void Shower()
+    {
+        showerTimer -= Time.deltaTime;
+
+        if(showerTimer < 0)
+        {
+            Instantiate(wishStar, player.transform.position + new Vector3(Random.Range(-20, 0), 20), Quaternion.identity);
+            showerTimer = 0.5f;
+        }
     }
 }
