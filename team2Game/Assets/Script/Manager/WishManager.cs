@@ -31,6 +31,7 @@ public class WishManager : MonoBehaviour
     
     [SerializeField]
     private int wishNumber_Debug = 1;
+    private int wishNum;
 
     [SerializeField]
     private GameObject wishStar;
@@ -90,6 +91,8 @@ public class WishManager : MonoBehaviour
         wishNumber = 0;
 
         showerTimer = 0;
+
+        wishNum = 0;
     }
 
     // Update is called once per frame
@@ -121,7 +124,8 @@ public class WishManager : MonoBehaviour
                 }
                 else
                 {
-                    UIManager.answerText = wishDatas[0][1];
+                    wishNum = Random.Range(1, 4);
+                    UIManager.answerText = wishDatas[wishNum][1];
                 }
                 
             }
