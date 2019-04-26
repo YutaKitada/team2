@@ -32,6 +32,10 @@ public class WishManager : MonoBehaviour
     [SerializeField]
     private int wishNumber_Debug = 1;
 
+    [SerializeField]
+    private GameObject wishStar;
+    private float showerTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,6 +88,8 @@ public class WishManager : MonoBehaviour
         wishTime = 0;
         wishTimer = 0;
         wishNumber = 0;
+
+        showerTimer = 0;
     }
 
     // Update is called once per frame
@@ -243,9 +249,13 @@ public class WishManager : MonoBehaviour
             case 2:
                 StopCombo();
                 EternalCombo();
+                EverCombo();
                 break;
             case 3:
-                EverCombo();
+                Shower();
+                break;
+            case 4:
+                Shower();
                 break;
         }
     }
@@ -255,6 +265,7 @@ public class WishManager : MonoBehaviour
         UIManager.comboGageStop = false;
         isEverCombo = false;
         ComboUI.comboTimerStop = false;
+        showerTimer = 0;
     }
 
     private void ReturnStar()
@@ -279,5 +290,16 @@ public class WishManager : MonoBehaviour
     private void EternalCombo()
     {
         GameManager.combo++;
+    }
+
+    private void Shower()
+    {
+        showerTimer -= Time.deltaTime;
+
+        if(showerTimer < 0)
+        {
+            Instantiate(wishStar, player.transform.position + new Vector3(Random.Range(-20, 0), 20), Quaternion.identity);
+            showerTimer = 0.5f;
+        }
     }
 }

@@ -71,13 +71,18 @@ public class StarMovement : MonoBehaviour
                         //ゲージを10回復
                         UIManager.hpGageFillAmount += 10f;
                     }
+
+                    if(UIManager.hpGageFillAmount > 100)
+                    {
+                        UIManager.hpGageFillAmount = 100;
+                    }
                 }
-                //温度ゲージが100以上であれば
-                else
-                {
-                    //ゲージを0.5回復
-                    UIManager.hpGageFillAmount += 0.5f;
-                }
+                ////温度ゲージが100以上であれば
+                //else
+                //{
+                //    //ゲージを0.5回復
+                //    UIManager.hpGageFillAmount += 0.5f;
+                //}
                 //コンボ中でなければ
                 if (!UIManager.isCombo)
                 {
