@@ -19,7 +19,6 @@ public class Deneb : BossEnemy
 
     float t = 0;
 
-    GameObject player;
     [SerializeField,　Header("降らせる星のオブジェ")]
     GameObject fallStar;
     [SerializeField, Header("降らせる星の座標の目安")]
@@ -45,7 +44,6 @@ public class Deneb : BossEnemy
         rotation = Quaternion.identity;
         mode = Mode.NORMAL;
 
-        player = GameObject.FindGameObjectWithTag("Player");
         maxHp = hp;
 
         onRight = true;
