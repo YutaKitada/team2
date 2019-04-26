@@ -39,6 +39,8 @@ public class Deneb : BossEnemy
     // Start is called before the first frame update
     void Start()
     {
+        transform.position = vector[0];
+
         rigid = GetComponent<Rigidbody>();
         rotation = Quaternion.identity;
         mode = Mode.NORMAL;
