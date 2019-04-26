@@ -14,8 +14,6 @@ public class Taurus : BossEnemy
     float interval = 5;
     float intervalElapsedTime;//待機中の経過時間
 
-    float deadElapsedTime;//死亡からの経過時間
-
     //全ての状態
     public enum Mode
     {
