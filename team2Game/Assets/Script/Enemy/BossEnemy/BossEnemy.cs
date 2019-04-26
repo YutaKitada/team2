@@ -30,6 +30,8 @@ public class BossEnemy : MonoBehaviour
     [SerializeField]
     protected GameObject downParticle;
 
+    protected float deadElapsedTime;//死亡からの経過時間
+
     public bool IsDead
     {
         get;
