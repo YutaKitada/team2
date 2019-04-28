@@ -61,36 +61,6 @@ public class ContractionEnemy : Enemy
         return scale;
     }
 
-    //public override void Move()
-    //{
-    //    //今のスピードを計算
-    //    float nowSpeed = Mathf.Abs(rigid.velocity.x);
-
-    //    //最大の移動スピードを超えていないとき
-    //    if (nowSpeed < maxSpeed)
-    //    {
-    //        switch (state)
-    //        {
-    //            case State.NORMAL:
-    //                rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-    //                break;
-
-    //            case State.CHASE:
-    //                distance.x = target.position.x - transform.position.x;
-    //                if (distance.x < 0)
-    //                {
-    //                    direction_Left = true;
-    //                }
-    //                else if (distance.x > 0)
-    //                {
-    //                    direction_Left = false;
-    //                }
-    //                rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-    //                break;
-    //        }
-    //    }
-    //}
-
     public override void SetTarget()
     {
         if (!isChase) return;

@@ -73,15 +73,6 @@ public class VerticalMoveEnemy : Enemy
     
     void OnCollisionEnter(Collision other)
     {
-        //if (other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    if (hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
-
         if(other.gameObject.tag.Contains("Stage"))
         {
             direction_Up = !direction_Up;
