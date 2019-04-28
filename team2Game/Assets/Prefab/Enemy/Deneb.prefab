@@ -113,14 +113,17 @@ MonoBehaviour:
   downParticle: {fileID: 5725949500956807022, guid: 0f88c19103f50134abd03767b5308e54,
     type: 3}
   vector:
-  - {x: 8, y: 3, z: 0}
+  - {x: 8, y: 2, z: 0}
   - {x: 2.5, y: -2, z: 0}
   - {x: -2.5, y: -2, z: 0}
-  - {x: -14, y: 3, z: 0}
+  - {x: -14, y: 2, z: 0}
   interval: 3
   fallStar: {fileID: 1197098874488578264, guid: 6f560387a32b58c42b8c38e2284b5671,
     type: 3}
   fallPosition: {x: -3, y: 30, z: 0}
+  shootinStar: {fileID: 552294679845656844, guid: 615526c14b3fc2c4abd06c62f206d499,
+    type: 3}
+  shootPositionY: -3
   instantInterval: 5
 --- !u!54 &8926766812163770502
 Rigidbody:

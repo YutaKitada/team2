@@ -153,7 +153,7 @@ public class Deneb : BossEnemy
     }
 
     /// <summary>
-    /// 降らせる星を生成
+    /// 攻撃用の星を生成
     /// </summary>
     void FallStarGenerate()
     {
