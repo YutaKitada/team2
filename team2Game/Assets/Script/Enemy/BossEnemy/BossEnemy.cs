@@ -52,6 +52,7 @@ public class BossEnemy : MonoBehaviour
     public virtual void Damage()
     {
         hp--;
+        isHit = false;
     }
 
     /// <summary>

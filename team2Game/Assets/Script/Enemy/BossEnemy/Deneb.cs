@@ -7,8 +7,14 @@ public class Deneb : BossEnemy
     [SerializeField, Header("通る曲線の座標")]
     Vector3[] vector;
 
-    bool onRight;//右側にいるか
+    public bool OnRight
+    {
+        get;
+        set;
+    }
+
     bool isMove;//移動中か
+    bool isWait;//待機中か
 
     float speed = 1;//動きや経過時間の速さ
     int maxHp;//最大体力
@@ -23,10 +29,16 @@ public class Deneb : BossEnemy
     GameObject fallStar;
     [SerializeField, Header("降らせる星の座標の中心")]
     Vector3 fallPosition;
+    [SerializeField, Header("横からくる星のオブジェ")]
+    GameObject shootinStar;
+    [SerializeField, Header("横からくる星の生成位置の高さ")]
+    float shootPositionY;
 
     [SerializeField, Header("生成までの時間")]
     float instantInterval = 5;
     float instantElapsedTime = 0;
+
+    MeshRenderer meshRenderer;
 
     public enum Mode//状態
     {
@@ -46,8 +58,11 @@ public class Deneb : BossEnemy
 
         maxHp = hp;
 
-        onRight = true;
+        OnRight = true;
         isMove = false;
+        isWait = true;
+
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -55,6 +70,7 @@ public class Deneb : BossEnemy
     {
         if (IsDead)
         {
+            meshRenderer.enabled = true;
             Stop();
 
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
@@ -78,6 +94,7 @@ public class Deneb : BossEnemy
         {
             case Mode.NORMAL:
                 Stop();
+                StartCoroutine(DirectionCoroutine());
                 Wait();
                 break;
 
@@ -99,7 +116,6 @@ public class Deneb : BossEnemy
         if (!isHit) return;
 
         base.Damage();
-        isHit = false;
     }
 
     /// <summary>
@@ -107,6 +123,8 @@ public class Deneb : BossEnemy
     /// </summary>
     void Wait()
     {
+        if (!isWait) return;
+
         intervalElapsedTime += Time.deltaTime * speed;
         if (intervalElapsedTime >= interval)
         {
@@ -121,14 +139,16 @@ public class Deneb : BossEnemy
     /// </summary>
     void NowInvincible()
     {
-        if (isHit) return;
+        if (isHit || IsDead) return;
 
         invincibleElapsedTime += Time.deltaTime * speed;
+        meshRenderer.enabled = !meshRenderer.enabled;
 
         if (invincibleElapsedTime >= invincibleTime)
         {
             invincibleElapsedTime = 0;
             isHit = true;
+            meshRenderer.enabled = true;
         }
     }
 
@@ -145,7 +165,30 @@ public class Deneb : BossEnemy
         {
             Instantiate(fallStar, fallPosition + new Vector3(i * 6, Random.Range(-3f, 3f), 0), Quaternion.identity);
         }
+        if (hp <= maxHp / 2)
+        {
+            Instantiate(shootinStar, GetShootPosition(), Quaternion.identity);
+        }
         instantElapsedTime = 0;
+    }
+
+    /// <summary>
+    /// 横からくる星の生成位置設定
+    /// </summary>
+    /// <returns></returns>
+    Vector3 GetShootPosition()
+    {
+        Vector3 position;
+        if(OnRight)
+        {
+            position = new Vector3(vector[0].x, shootPositionY);
+        }
+        else
+        {
+            position = new Vector3(vector[3].x, shootPositionY);
+        }
+
+        return position;
     }
 
     /// <summary>
@@ -157,7 +200,7 @@ public class Deneb : BossEnemy
         isMove = true;
         while (true)
         {
-            if (onRight)
+            if (OnRight)
             {
                 transform.position = Bezier.GetPoint(vector[0], vector[1], vector[2], vector[3], t);
 
@@ -192,8 +235,43 @@ public class Deneb : BossEnemy
         }
 
         mode = Mode.NORMAL;
-        onRight = !onRight;
+        OnRight = !OnRight;
         isMove = false;
+
+        yield return null;
+    }
+
+    IEnumerator DirectionCoroutine()
+    {
+        float rate = 0;
+        isWait = false;
+
+        while(true)
+        {
+            //右側にいたら左側を、左側にいたら右側を向く
+            rate += Time.deltaTime * 3 * speed;
+            if (OnRight)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
+            }
+            if (!OnRight)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
+            }
+
+            //向き終わったら、isWaitをtrueに
+            if(transform.rotation == Quaternion.Euler(forward) 
+                || transform.rotation == Quaternion.Euler(-forward))
+            {
+
+                isWait = true;
+                break;
+            }
+            else
+            {
+                yield break;
+            }
+        }
 
         yield return null;
     }
