@@ -17,11 +17,11 @@ public class Deneb : BossEnemy
     float interval = 3;
     float intervalElapsedTime;
 
-    float t = 0;
+    float t = 0;//ベジェ曲線移動の割合
 
     [SerializeField,　Header("降らせる星のオブジェ")]
     GameObject fallStar;
-    [SerializeField, Header("降らせる星の座標の目安")]
+    [SerializeField, Header("降らせる星の座標の中心")]
     Vector3 fallPosition;
 
     [SerializeField, Header("生成までの時間")]
@@ -68,6 +68,7 @@ public class Deneb : BossEnemy
             return;
         }
 
+        //体力が半分を切ったら、2倍の速度に変化
         if (hp <= maxHp / 2)
         {
             speed = 2;
@@ -81,14 +82,14 @@ public class Deneb : BossEnemy
                 break;
 
             case Mode.MOVE:
-                StartCoroutine(Move_AttackCoroutine());
+                StartCoroutine(MoveCoroutine());
                 break;
 
             default:
                 break;
         }
 
-        Attack_FallStar();
+        FallStarGenerate();
         NowInvincible();
         Death();
     }
@@ -101,6 +102,9 @@ public class Deneb : BossEnemy
         isHit = false;
     }
 
+    /// <summary>
+    /// 待機処理
+    /// </summary>
     void Wait()
     {
         intervalElapsedTime += Time.deltaTime * speed;
@@ -129,9 +133,9 @@ public class Deneb : BossEnemy
     }
 
     /// <summary>
-    /// 星を降らせる攻撃
+    /// 降らせる星を生成
     /// </summary>
-    void Attack_FallStar()
+    void FallStarGenerate()
     {
         instantElapsedTime += Time.deltaTime * speed;
         if (instantElapsedTime <= instantInterval) return;
@@ -139,16 +143,16 @@ public class Deneb : BossEnemy
         //3つ生成してポジションを分ける
         for(int i=-1; i<2; i++)
         {
-            Instantiate(fallStar, fallPosition + new Vector3(i * 5, Random.Range(0f, 3f), 0), Quaternion.identity);
+            Instantiate(fallStar, fallPosition + new Vector3(i * 6, Random.Range(-3f, 3f), 0), Quaternion.identity);
         }
         instantElapsedTime = 0;
     }
 
     /// <summary>
-    /// 移動兼攻撃の処理
+    /// 移動の処理
     /// </summary>
     /// <returns></returns>
-    IEnumerator Move_AttackCoroutine()
+    IEnumerator MoveCoroutine()
     {
         isMove = true;
         while (true)
@@ -157,23 +161,33 @@ public class Deneb : BossEnemy
             {
                 transform.position = Bezier.GetPoint(vector[0], vector[1], vector[2], vector[3], t);
 
+                //割合を増やす
                 t += 0.01f * speed;
                 if (t > 1.0f) t = 0;
 
                 //終点との差が0.1f以下になるまで実行
-                if (Mathf.Abs(vector[3].x - transform.position.x) >= Mathf.Abs(0.1f)) yield break;
-                else break;
+                if (Mathf.Abs(vector[3].x - transform.position.x) >= Mathf.Abs(0.1f))
+                {
+                    yield break;
+                }
+                else
+                    break;
             }
             else
             {
                 transform.position = Bezier.GetPoint(vector[3], vector[2], vector[1], vector[0], t);
 
+                //割合を増やす
                 t += 0.01f * speed;
                 if (t > 1.0f) t = 0;
 
                 //終点との差が0.1f以下になるまで実行
-                if (Mathf.Abs(vector[0].x - transform.position.x) >= Mathf.Abs(0.1f)) yield break;
-                else break;
+                if (Mathf.Abs(vector[0].x - transform.position.x) >= Mathf.Abs(0.1f))
+                {
+                    yield break;
+                }
+                else
+                    break;
             }
         }
 

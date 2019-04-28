@@ -916,11 +916,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Deneb
       objectReference: {fileID: 0}
-    - target: {fileID: 8926766812163770503, guid: edd3e4e3cb1ac4e449ac9a797a208722,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -975,11 +970,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
-        type: 3}
-      propertyPath: fallPosition.y
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd3e4e3cb1ac4e449ac9a797a208722, type: 3}
