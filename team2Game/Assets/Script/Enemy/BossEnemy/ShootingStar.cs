@@ -21,14 +21,9 @@ public class ShootingStar : MonoBehaviour
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
-        if (deneb.OnRight)
-        {
-            speed = -2;
-        }
-        else
-        {
-            speed = 2;
-        }
+
+        if (deneb.OnRight) speed = -2;
+        else speed = 2;
         SetMarker();
     }
 
@@ -36,6 +31,7 @@ public class ShootingStar : MonoBehaviour
     void Update()
     {
         rigid.velocity += new Vector3(speed, 0);
+        transform.Rotate(new Vector3(0, 5, 0));
     }
 
     void SetMarker()
@@ -49,7 +45,7 @@ public class ShootingStar : MonoBehaviour
         Ray ray = new Ray(transform.position, direction);
         var list = new List<RaycastHit>(Physics.RaycastAll(ray));
 
-        //進行方向に沿って、リストにソートをする
+        //方向に沿って、リストのソートをする
         if (deneb.OnRight)
         {
             list.Sort((i, j) => (int)(j.point.x - i.point.x) * 100);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class FallStar : MonoBehaviour
+public class FallingStar : MonoBehaviour
 {
     Rigidbody rigid;
 
@@ -21,6 +21,7 @@ public class FallStar : MonoBehaviour
     void Update()
     {
         rigid.velocity += new Vector3(0, -9.8f * Time.deltaTime, 0);
+        transform.Rotate(new Vector3(0, 5, 0));
     }
 
     void SetMarker()

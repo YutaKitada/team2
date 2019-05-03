@@ -971,5 +971,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
+        type: 3}
+      propertyPath: fallStar
+      value: 
+      objectReference: {fileID: 7197232160639393003, guid: ad301f3840c41624ca2a33e147028798,
+        type: 3}
+    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
+        type: 3}
+      propertyPath: shootinStar
+      value: 
+      objectReference: {fileID: 2342997111015991373, guid: 924b274f7a75ca441a5f557c28f91e60,
+        type: 3}
+    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
+        type: 3}
+      propertyPath: fallingStar
+      value: 
+      objectReference: {fileID: 7197232160639393003, guid: ad301f3840c41624ca2a33e147028798,
+        type: 3}
+    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
+        type: 3}
+      propertyPath: shootingStar
+      value: 
+      objectReference: {fileID: 2342997111015991373, guid: 924b274f7a75ca441a5f557c28f91e60,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd3e4e3cb1ac4e449ac9a797a208722, type: 3}
