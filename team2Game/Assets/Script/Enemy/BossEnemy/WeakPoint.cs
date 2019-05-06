@@ -22,7 +22,6 @@ public class WeakPoint : MonoBehaviour
             parent.Damage();
             parent.Stop();
             parent.mode = Taurus.Mode.INVINCIBLE;
-            parent.isHit = false;
         }
     }
 }

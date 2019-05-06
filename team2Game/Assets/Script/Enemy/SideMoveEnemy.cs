@@ -28,7 +28,6 @@ public class SideMoveEnemy : Enemy
     void Update()
     {
         Move();
-        //Direction();
         SetTarget();
         Death();
     }

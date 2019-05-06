@@ -194,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 583283836, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 583283842, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 972328146}
   - component: {fileID: 972328145}
   - component: {fileID: 972328148}
+  - component: {fileID: 972328149}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -549,6 +550,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPosition: {x: 0, y: 4, z: -12}
   cameraMoveStop: 2
+--- !u!114 &972328149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972328144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26264c5100899f54ebdb58811ce81234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1485007686
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,11 +916,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Deneb
       objectReference: {fileID: 0}
-    - target: {fileID: 8926766812163770503, guid: edd3e4e3cb1ac4e449ac9a797a208722,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -916,7 +924,7 @@ PrefabInstance:
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
@@ -931,7 +939,7 @@ PrefabInstance:
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
@@ -941,7 +949,7 @@ PrefabInstance:
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
@@ -956,7 +964,7 @@ PrefabInstance:
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 8926766812163770509, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
@@ -965,8 +973,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
         type: 3}
-      propertyPath: fallPosition.y
-      value: 10
-      objectReference: {fileID: 0}
+      propertyPath: fallStar
+      value: 
+      objectReference: {fileID: 7197232160639393003, guid: ad301f3840c41624ca2a33e147028798,
+        type: 3}
+    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
+        type: 3}
+      propertyPath: shootinStar
+      value: 
+      objectReference: {fileID: 2342997111015991373, guid: 924b274f7a75ca441a5f557c28f91e60,
+        type: 3}
+    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
+        type: 3}
+      propertyPath: fallingStar
+      value: 
+      objectReference: {fileID: 7197232160639393003, guid: ad301f3840c41624ca2a33e147028798,
+        type: 3}
+    - target: {fileID: 8926766812163770505, guid: edd3e4e3cb1ac4e449ac9a797a208722,
+        type: 3}
+      propertyPath: shootingStar
+      value: 
+      objectReference: {fileID: 2342997111015991373, guid: 924b274f7a75ca441a5f557c28f91e60,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edd3e4e3cb1ac4e449ac9a797a208722, type: 3}

@@ -26,4 +26,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/stage1-1.unity
     guid: 89b0f68bdea9628408aafc6ae3683931
+  - enabled: 1
+    path: Assets/Scenes/stage1-2.unity
+    guid: 9ebf8e3456a34b24d8f881425f4436c0
+  - enabled: 1
+    path: Assets/Scenes/stage1-3.unity
+    guid: c47c2ff89755e81479fa924dbd5e4dea
+  - enabled: 1
+    path: Assets/Scenes/Kanai/SceneSelect.unity
+    guid: 72b2093f8675bf94fba58176b3a6d74e
   m_configObjects: {}

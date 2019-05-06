@@ -58,7 +58,6 @@ public class Taurus : BossEnemy
 
         if (IsDead)
         {
-            anim.speed = 1;
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
             deadElapsedTime += Time.deltaTime;
@@ -73,7 +72,6 @@ public class Taurus : BossEnemy
         switch (mode)//状態に応じた処理を実行
         {
             case Mode.WAIT:
-                //Direction();
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
                 anim.speed = 1;
@@ -138,7 +136,6 @@ public class Taurus : BossEnemy
     void RushAttack()
     {
         rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-        //rigid.velocity /= 2f;
     }
 
     /// <summary>

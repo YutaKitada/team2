@@ -7,8 +7,14 @@ public class Deneb : BossEnemy
     [SerializeField, Header("通る曲線の座標")]
     Vector3[] vector;
 
-    bool onRight;//右側にいるか
+    public bool OnRight
+    {
+        get;
+        set;
+    }
+
     bool isMove;//移動中か
+    bool isWait;//待機中か
 
     float speed = 1;//動きや経過時間の速さ
     int maxHp;//最大体力
@@ -17,21 +23,33 @@ public class Deneb : BossEnemy
     float interval = 3;
     float intervalElapsedTime;
 
-    float t = 0;
+    float t = 0;//ベジェ曲線移動の割合
 
     [SerializeField,　Header("降らせる星のオブジェ")]
-    GameObject fallStar;
-    [SerializeField, Header("降らせる星の座標の目安")]
+    GameObject fallingStar;
+    [SerializeField, Header("降らせる星の座標の中心")]
     Vector3 fallPosition;
+    [SerializeField, Header("横からくる星のオブジェ")]
+    GameObject shootingStar;
+    [SerializeField, Header("横からくる星の生成位置の高さ")]
+    float shootPositionY;
 
     [SerializeField, Header("生成までの時間")]
     float instantInterval = 5;
     float instantElapsedTime = 0;
 
+    MeshRenderer meshRenderer;
+
+    GameObject[] starArray;
+    GameObject star;
+    bool isNone = true;//starがないか
+    bool isShoot = false;
+
     public enum Mode//状態
     {
         NORMAL,
-        MOVE
+        MOVE,
+        ATTACK_STAR
     }
     Mode mode;//現在の状態
 
@@ -46,8 +64,13 @@ public class Deneb : BossEnemy
 
         maxHp = hp;
 
-        onRight = true;
+        OnRight = true;
         isMove = false;
+        isWait = true;
+
+        meshRenderer = GetComponent<MeshRenderer>();
+
+        starArray = new GameObject[3];
     }
 
     // Update is called once per frame
@@ -55,6 +78,7 @@ public class Deneb : BossEnemy
     {
         if (IsDead)
         {
+            meshRenderer.enabled = true;
             Stop();
 
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
@@ -68,6 +92,7 @@ public class Deneb : BossEnemy
             return;
         }
 
+        //体力が半分を切ったら、2倍の速度に変化
         if (hp <= maxHp / 2)
         {
             speed = 2;
@@ -77,20 +102,29 @@ public class Deneb : BossEnemy
         {
             case Mode.NORMAL:
                 Stop();
-                Wait();
+                StartCoroutine(DirectionCoroutine());
+                //Wait();
                 break;
 
             case Mode.MOVE:
-                StartCoroutine(Move_AttackCoroutine());
+                StartCoroutine(MoveCoroutine());
+                break;
+
+            case Mode.ATTACK_STAR:
+                StartCoroutine(StarAttackCoroutine());
                 break;
 
             default:
                 break;
         }
-
-        Attack_FallStar();
+        
         NowInvincible();
         Death();
+
+        Debug.Log(mode);
+        Debug.Log("isWait="+ isWait);
+        Debug.Log("isMove="+ isMove);
+        Debug.Log("isNone=" + isNone);
     }
 
     public override void Damage()
@@ -98,15 +132,20 @@ public class Deneb : BossEnemy
         if (!isHit) return;
 
         base.Damage();
-        isHit = false;
     }
 
+    /// <summary>
+    /// 待機処理
+    /// </summary>
     void Wait()
     {
+        if (!isWait) return;
+
         intervalElapsedTime += Time.deltaTime * speed;
         if (intervalElapsedTime >= interval)
         {
             isMove = true;
+            isWait = false;
             intervalElapsedTime = 0;
             mode = Mode.MOVE;
         }
@@ -117,71 +156,187 @@ public class Deneb : BossEnemy
     /// </summary>
     void NowInvincible()
     {
-        if (isHit) return;
+        if (isHit || IsDead) return;
 
         invincibleElapsedTime += Time.deltaTime * speed;
+        meshRenderer.enabled = !meshRenderer.enabled;
 
         if (invincibleElapsedTime >= invincibleTime)
         {
             invincibleElapsedTime = 0;
             isHit = true;
+            meshRenderer.enabled = true;
         }
     }
 
     /// <summary>
-    /// 星を降らせる攻撃
-    /// </summary>
-    void Attack_FallStar()
-    {
-        instantElapsedTime += Time.deltaTime * speed;
-        if (instantElapsedTime <= instantInterval) return;
-
-        //3つ生成してポジションを分ける
-        for(int i=-1; i<2; i++)
-        {
-            Instantiate(fallStar, fallPosition + new Vector3(i * 5, Random.Range(0f, 3f), 0), Quaternion.identity);
-        }
-        instantElapsedTime = 0;
-    }
-
-    /// <summary>
-    /// 移動兼攻撃の処理
+    /// 横からくる星の生成位置設定
     /// </summary>
     /// <returns></returns>
-    IEnumerator Move_AttackCoroutine()
+    Vector3 GetShootPosition()
     {
-        isMove = true;
-        while (true)
+        Vector3 position;
+        if(OnRight)
         {
-            if (onRight)
+            position = new Vector3(vector[0].x, shootPositionY);
+        }
+        else
+        {
+            position = new Vector3(vector[3].x, shootPositionY);
+        }
+
+        return position;
+    }
+
+    /// <summary>
+    /// 移動の処理
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator MoveCoroutine()
+    {
+        if (!GetStarObjects()) yield break;
+
+        while (isMove)
+        {
+            if (OnRight)
             {
                 transform.position = Bezier.GetPoint(vector[0], vector[1], vector[2], vector[3], t);
 
+                //割合を増やす
                 t += 0.01f * speed;
                 if (t > 1.0f) t = 0;
 
                 //終点との差が0.1f以下になるまで実行
-                if (Mathf.Abs(vector[3].x - transform.position.x) >= Mathf.Abs(0.1f)) yield break;
-                else break;
+                if (Mathf.Abs(vector[3].x - transform.position.x) >= Mathf.Abs(0.1f))
+                {
+                    yield break;
+                }
+                else
+                    break;
             }
             else
             {
                 transform.position = Bezier.GetPoint(vector[3], vector[2], vector[1], vector[0], t);
 
+                //割合を増やす
                 t += 0.01f * speed;
                 if (t > 1.0f) t = 0;
 
                 //終点との差が0.1f以下になるまで実行
-                if (Mathf.Abs(vector[0].x - transform.position.x) >= Mathf.Abs(0.1f)) yield break;
-                else break;
+                if (Mathf.Abs(vector[0].x - transform.position.x) >= Mathf.Abs(0.1f))
+                {
+                    yield break;
+                }
+                else
+                    break;
             }
         }
 
-        mode = Mode.NORMAL;
-        onRight = !onRight;
+        OnRight = !OnRight;
         isMove = false;
+        isWait = true;
+        mode = Mode.NORMAL;
+        yield return null;
+    }
+
+    /// <summary>
+    /// 方向転換
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator DirectionCoroutine()
+    {
+        float rate = 0;
+
+        while(isWait)
+        {
+            //右側にいたら左側を、左側にいたら右側を向く
+            rate += Time.deltaTime * 3 * speed;
+            if (OnRight)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
+            }
+            if (!OnRight)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
+            }
+            
+            if(transform.rotation == Quaternion.Euler(forward) 
+                || transform.rotation == Quaternion.Euler(-forward))
+            {
+
+                intervalElapsedTime += Time.deltaTime * speed;
+                if (intervalElapsedTime >= interval)
+                {
+                    intervalElapsedTime = 0;
+                    mode = Mode.ATTACK_STAR;
+                    break;
+                }
+                else yield break;
+
+                //isWait = true;
+                //mode = Mode.ATTACK_STAR;
+                //break;
+            }
+        }
 
         yield return null;
+    }
+
+    /// <summary>
+    /// 星を使った攻撃
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator StarAttackCoroutine()
+    {
+        instantElapsedTime += Time.deltaTime * speed;
+        if (instantElapsedTime >= instantInterval)
+        {
+            if (GetStarObjects())
+            {
+                //3つ生成してポジションを分ける
+                for (int i = -1; i < 2; i++)
+                {
+                    //0から順に格納
+                    starArray[i + 1] = Instantiate(fallingStar, fallPosition + new Vector3(i * 6, Random.Range(-3f, 3f), 0), Quaternion.Euler(0, 90, 90));
+                }
+            }
+
+            //体力が半分以下のとき、横から星を生成
+            if (hp <= maxHp / 2)
+            {
+                if (!GetStarObjects() && !isShoot)
+                {
+                    star = Instantiate(shootingStar, GetShootPosition(), Quaternion.Euler(0, 90, 90));
+                    isShoot = true;
+                }
+            }
+
+            if (!GetStarObjects() && star == null)
+            {
+                instantElapsedTime = 0;
+                isMove = true;
+                isWait = false;
+                isShoot = false;
+                mode = Mode.MOVE;
+            }
+        }
+
+        yield return null;
+    }
+
+    bool GetStarObjects()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            if (starArray[i] != null)
+            {
+                isNone = false;
+                return isNone;
+            }
+        }
+
+        isNone = true;
+        return isNone;
     }
 
     public override void OnCollisionEnter(Collision collision)
