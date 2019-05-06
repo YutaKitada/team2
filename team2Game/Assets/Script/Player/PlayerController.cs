@@ -22,13 +22,13 @@ public class PlayerController : MonoBehaviour
 
     private float jumpTimer;                    //jumpがもういちどできるまでのタイマー
 
-    private Animator animator;
+    private Animator animator;                  //アニメーション用
 
     private int jumpCount;                      //2段ジャンプ用カウンター
 
     private bool isIce;                         //Iceに当たっているかどうか//追加丹下
 
-    private bool isDamage;
+    private bool isDamage;                      //ダメージを受けているか否か
 
     // Start is called before the first frame update
     void Start()
@@ -50,8 +50,10 @@ public class PlayerController : MonoBehaviour
         //Iceに当たっていない//追加丹下
         isIce = false;
 
+        //ダメージを受けていない
         isDamage = false;
 
+        //アニメーション用
         animator = GetComponent<Animator>();
     }
 
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviour
             rigid.AddForce(new Vector3(0, -addGravity));
         }
 
+        //アニメーションの処理
         Animation();
 
         //移動処理
@@ -140,6 +143,7 @@ public class PlayerController : MonoBehaviour
         //ジャンプボタンを押したら
         if (Input.GetButtonDown("Jump") && !isJump)
         {
+            //ジャンプする前に一旦移動量を0にする
             rigid.velocity = Vector3.zero;
                 if (Input.GetAxisRaw("Vertical") <= -0.7f)
                 {
@@ -169,9 +173,11 @@ public class PlayerController : MonoBehaviour
 
     private void Animation()
     {
+        //願い事を適えている時以外
         if (!PlayerManager.isWishMode)
         {
-            if (Input.GetAxisRaw("Horizontal") >= 0.6f || Input.GetAxisRaw("Horizontal") <= -0.6f)
+            //横方向の入力があれば走るアニメーション
+            if (Input.GetAxisRaw("Horizontal") >= 0.8f || Input.GetAxisRaw("Horizontal") <= -0.8f)
             {
                 animator.SetBool("Run", true);
             }
@@ -180,6 +186,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Run", false);
             }
 
+            //下方向の入力があれば座る
             if (Input.GetAxisRaw("Vertical") <= -0.7f)
             {
                 if (!animator.GetBool("Squat"))
@@ -192,12 +199,21 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Squat", false);
             }
 
+            //ジャンプアニメーション
             if (Input.GetButtonDown("Jump"))
             {
                 animator.SetTrigger("Jump");
             }
         }
-        
+        if (PlayerManager.isWishMode)
+        {
+            if (!animator.GetBool("Squat"))
+            {
+                animator.SetBool("Run", false);
+                animator.SetBool("Squat", true);
+            }
+        }
+
     }
 
         private void OnCollisionEnter(Collision collision)
@@ -230,18 +246,25 @@ public class PlayerController : MonoBehaviour
             //    rigid.AddForce(new Vector3(10, 5), ForceMode.Impulse);
             //    isMoveStop = true;
             //}
+            //ダメージをまだ受けていない場合
             if (!isDamage)
             {
+                //ダメージを受けた時の効果音の再生
                 SoundManager.PlaySE(5);
+                //ダメージを受けた
                 isDamage = true;
 
+                //一旦移動量を0に
                 rigid.velocity = Vector3.zero;
 
+                //当たった場所は自身の右か左かを取得
                 Vector3 hitVector = (collision.transform.position - transform.position).normalized;
+                //右であれば
                 if (hitVector.x >= 0)
                 {
                     rigid.AddForce(new Vector3(-1, 3), ForceMode.Impulse);
                 }
+                //左であれば
                 else
                 {
                     rigid.AddForce(new Vector3(1, 3), ForceMode.Impulse);

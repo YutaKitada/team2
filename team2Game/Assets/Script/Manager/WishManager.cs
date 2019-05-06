@@ -6,24 +6,24 @@ using System.IO;
 public class WishManager : MonoBehaviour
 {
 
-    private string wishCommand;
+    private string wishCommand;                 //入力しているコマンド
 
-    private bool isWishMode;
-    private bool isWish;
-
-    private bool stickLock;
+    private bool commandInput;                  //コマンド入力中か否か
+    private bool commandRestriction;            //コマンドが入力できるか否か
 
     public static GameObject player;            //Playerオブジェクト
-    private MeshRenderer playerRender;
     public static GameObject star;              //Starオブジェクト
 
-    public static bool isEverCombo;
+    public static bool isEverCombo;             //無限にコンボをつなげられるか否か
 
     public static bool isWishNow;               //現在願い事効果中か否か
-    private float wishTime;
-    private float wishTimer;
-    private int wishNumber;
-    private bool commandSuccess;
+
+
+    private float wishTime;                     //願い事の効果時間
+    private float wishTimer;                    //願い事の効果時間用タイマー
+    private int wishNumber;                     //願い事の番号
+
+    private bool commandSuccess;                //コマンド入力が成功したか否か
 
     [SerializeField]
     private TextAsset csvFile;
@@ -37,23 +37,22 @@ public class WishManager : MonoBehaviour
     private GameObject wishStar;
     private float showerTimer;
 
+    public static bool isMeteorShower;
+
     // Start is called before the first frame update
     void Start()
     {
 
         wishCommand = "";
 
-        isWish = false;
-        isWishMode = false;
+        commandRestriction = false;
+        commandInput = false;
         isEverCombo = false;
 
         commandSuccess = false;
 
-        stickLock = false;
-
         //Player取得
         player = GameObject.FindGameObjectWithTag("Player");
-        playerRender = player.GetComponent<MeshRenderer>();
         //Star取得
         star = GameObject.FindGameObjectWithTag("Star");
 
@@ -93,6 +92,8 @@ public class WishManager : MonoBehaviour
         showerTimer = 0;
 
         wishNum = 0;
+
+        isMeteorShower = false;
     }
 
     // Update is called once per frame
@@ -114,9 +115,9 @@ public class WishManager : MonoBehaviour
     {
         if (PlayerManager.isWishMode)
         {
-            if (!isWishMode)
+            if (!commandInput)
             {
-                isWishMode = true;
+                commandInput = true;
                 GameManager.isGameStop = true;
                 if (GameManager.debug)
                 {
@@ -131,14 +132,14 @@ public class WishManager : MonoBehaviour
             }
             else
             {
-                if (!isWish)
+                if (!commandRestriction)
                 {
                     if (wishCommand != "")
                     {
                         if (wishCommand.Substring(wishCommand.Length - 1, 1) != UIManager.answerText.Substring(wishCommand.Length - 1, 1))
                         {
                             UIManager.wishText = "だめです";
-                            isWish = true;
+                            commandRestriction = true;
                             SoundManager.PlaySE(3);
                             PlayerManager.PlayerDamage(30);
                         }
@@ -165,30 +166,6 @@ public class WishManager : MonoBehaviour
                         wishCommand += "Y";
                         SoundManager.PlaySE(1);
                     }
-                    //else if (Input.GetAxisRaw("Horizontal") >= 1 &&!stickLock)
-                    //{
-                    //    wishCommand += "→";
-                    //    stickLock = true;
-                    //}
-                    //else if (Input.GetAxisRaw("Horizontal") <= -1 && !stickLock)
-                    //{
-                    //    wishCommand += "←";
-                    //    stickLock = true;
-                    //}
-                    //else if (Input.GetAxisRaw("Vertical") <= -1 && !stickLock)
-                    //{
-                    //    wishCommand += "↑";
-                    //    stickLock = true;
-                    //}
-                    //else if (Input.GetAxisRaw("Vertical") >= 1 && !stickLock)
-                    //{
-                    //    wishCommand += "↓";
-                    //    stickLock = true;
-                    //}
-                    //else if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
-                    //{
-                    //    stickLock = false;
-                    //}
                     UIManager.wishText = wishCommand;
                     
                 }
@@ -197,11 +174,10 @@ public class WishManager : MonoBehaviour
         }
         else
         {
-            isWish = false;
+            commandRestriction = false;
             wishCommand = "";
             UIManager.wishText = wishCommand;
-            isWishMode = false;
-            stickLock = false;
+            commandInput = false;
             GameManager.isGameStop = false;
             if (commandSuccess)
             {
@@ -232,7 +208,7 @@ public class WishManager : MonoBehaviour
             {
                 wishTime = float.Parse(wishDatas[i][2]);
                 PlayerManager.PlayerDamage(float.Parse(wishDatas[i][3]));
-                isWish = true;
+                commandRestriction = true;
                 commandSuccess = true;
                 wishTimer = 0;
                 wishCommand = wishDatas[i][4];
@@ -270,6 +246,7 @@ public class WishManager : MonoBehaviour
         isEverCombo = false;
         ComboUI.comboTimerStop = false;
         showerTimer = 0;
+        isMeteorShower = false;
     }
 
     private void ReturnStar()
@@ -298,6 +275,7 @@ public class WishManager : MonoBehaviour
 
     private void Shower()
     {
+        isMeteorShower = true;
         showerTimer -= Time.deltaTime;
 
         if(showerTimer < 0)

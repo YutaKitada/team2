@@ -17,64 +17,65 @@ public class UIManager : MonoBehaviour
     private float comboGageStopTime = 3;                //ゲージが減少するまでの時間
     public static float comboGageStopTimer;                    //ゲージが減少するまでのタイマー
 
-    public static bool comboGageStop;
-    public static bool hpGageStop;
+    public static bool comboGageStop;                   //コンボゲージを止めるFlag
+    public static bool hpGageStop;                      //HPゲージを止めるFlag
+    
+    public static string wishText;                      //願い事用テキスト
 
-
-    public static string wishText;
-
-    public static string answerText;
-
-    [SerializeField]
-    private List<Sprite> buttonSprites;
+    public static string answerText;                    //願い事の答え用テキスト
 
     [SerializeField]
-    private Text debugUI;
-    public static string debugtext;
+    private List<Sprite> buttonSprites;                 //ボタンの画像List
 
     [SerializeField]
-    private int maxWishButton = 7;
-    private int wishButtonArrayNum;
+    private Text debugUI;                               //デバッグのテキスト
+    public static string debugtext;                     //外からデバッグのテキストをいじれるように
+
     [SerializeField]
-    private GameObject buttonObject;
+    private int maxWishButton = 7;                      //願い事のコマンド数の上限
+    private int wishButtonArrayNum;                     //コマンド配置用の数値
     [SerializeField]
-    private GameObject mistakeObject;
-    private List<GameObject> answerButtonList;
-    private List<GameObject> wishButtonList;
+    private GameObject mistakeObject;                   //コマンドをミスした時に表示するオブジェクト
+    private List<GameObject> answerButtonList;          //願い事の答え用List
+    private List<GameObject> wishButtonList;            //願い事のコマンド用List
     [SerializeField]
-    private GameObject buttonParent;
+    private GameObject buttonParent;                    //コマンドボタンを配置する親
+    [SerializeField]
+    private GameObject buttonObject;                    //コマンドボタン用オブジェクト
 
 
     [SerializeField]
-    private Slider wishTimer;
-    public static float wishTimerFillamount = -3;
+    private Slider wishTimer;                           //願い事コマンドの入力受付時間表示用スライダー
+    public static float wishTimerFillamount = -3;       //願い事コマンドの入力受付時間
 
     [SerializeField]
-    private Image wishYButton;
+    private Image wishYButton;                          //コマンド入力可能時に表示するYボタン
 
     // Start is called before the first frame update
     void Start()
     {
+        //HPの初期値を100に
         hpGageFillAmount = 100;
+        //コンボ中ではない
         isCombo = false;
+        //各ゲージを止めるタイマーを初期値に
         hpGageStopTimer = 0;
         comboGageStopTimer = 0;
 
+        //各テキストを初期値に
         wishText = "";
-
         answerText = "";
         
-
+        //各コンボゲージを止めるFlagを初期値に
         comboGageStop = false;
         hpGageStop = false;
 
+
+        //願い事のボタン用のポジションを指定
         wishButtonArrayNum = maxWishButton * 2 - 1;
-
         float buttonPositionX = -30 * maxWishButton;
-
         answerButtonList = new List<GameObject>();
         wishButtonList = new List<GameObject>();
-
         for (int i = 0;i < wishButtonArrayNum; i++)
         {
             answerButtonList.Add(Instantiate(buttonObject, buttonParent.transform));
@@ -83,8 +84,11 @@ public class UIManager : MonoBehaviour
             wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, -60);
             buttonPositionX += 30;
         }
+
+        //願い事入力受付時間用スライダーを非表示に
         wishTimer.gameObject.SetActive(false);
 
+        //Yボタンを非表示に
         wishYButton.enabled = false;
     }
 
@@ -109,45 +113,50 @@ public class UIManager : MonoBehaviour
             + "\n" + debugtext;
     }
 
-    private void ComboUI()
-    {
-        if (GameManager.combo >= 2)
-        {
+    //private void ComboUI()
+    //{
+    //    //2コンボ以上つながっていれば
+    //    if (GameManager.combo >= 2)
+    //    {
 
-            if (!comboGageStop && !GameManager.isGameStop)
-            {
-                comboGageStopTimer += Time.deltaTime;
-            }
+    //        if (!comboGageStop && !GameManager.isGameStop)
+    //        {
+    //            comboGageStopTimer += Time.deltaTime;
+    //        }
 
 
-            if (comboGageStopTimer >= comboGageStopTime && !PlayerManager.isWishMode)
-            {
-                if (isCombo)
-                {
-                    isCombo = false;
-                    GameManager.combo = 0;
-                }
-                comboGageStopTimer = 0;
-            }
-        }
-    }
+    //        if (comboGageStopTimer >= comboGageStopTime && !PlayerManager.isWishMode)
+    //        {
+    //            if (isCombo)
+    //            {
+    //                isCombo = false;
+    //                GameManager.combo = 0;
+    //            }
+    //            comboGageStopTimer = 0;
+    //        }
+    //    }
+    //}
 
     private void HPGageUI()
     {
         hpGage.fillAmount = hpGageFillAmount/100;                //ゲージの数値を挿入
 
+        //ゲージが止まっていない、もしくはゲームが止まっていない場合
         if (!hpGageStop && !GameManager.isGameStop)
         {
+            //HPゲージの減少を止めるタイマーを作動
             hpGageStopTimer += Time.deltaTime;
         }
 
-
+        //タイマーが規定値を超えた、もしくは願い事コマンド入力状態でなければ
         if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode)
         {
+            //HPゲージが0以上であれば
             if (hpGageFillAmount >= 0)
             {
                 hpGageFillAmount -= 5 * Time.deltaTime;   //毎秒5ずつ減っていく
             }
+            //HPゲージが0未満になったらゲームオーバーに
             else if (hpGageFillAmount < 0)
             {
                 GameManager.isOver = true;
