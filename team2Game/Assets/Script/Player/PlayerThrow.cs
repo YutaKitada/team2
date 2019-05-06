@@ -83,19 +83,40 @@ public class PlayerThrow : MonoBehaviour
                     //下投げでなければ
                     if (!dank)
                     {
-                        //Playerの向いている方向に応じて投げる方向を変える
-                        switch (PlayerManager.playerDirection)
+                        if (!WishManager.isTackleStar)
                         {
-                            //左を向いている場合
-                            case PlayerManager.PlayerDirection.LEFT:
-                                //starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
-                                starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
-                                break;
-                            //右を向いている場合
-                            case PlayerManager.PlayerDirection.RIGHT:
-                                //starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
-                                starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
-                                break;
+                            //Playerの向いている方向に応じて投げる方向を変える
+                            switch (PlayerManager.playerDirection)
+                            {
+                                //左を向いている場合
+                                case PlayerManager.PlayerDirection.LEFT:
+                                    //starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
+                                    break;
+                                //右を向いている場合
+                                case PlayerManager.PlayerDirection.RIGHT:
+                                    //starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            GameManager.star.transform.position = transform.position + new Vector3(0, 1.5f);
+                            //Playerの向いている方向に応じて投げる方向を変える
+                            switch (PlayerManager.playerDirection)
+                            {
+                                //左を向いている場合
+                                case PlayerManager.PlayerDirection.LEFT:
+                                    //starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(new Vector3(-1,0) * throwPower, ForceMode.Impulse);
+                                    break;
+                                //右を向いている場合
+                                case PlayerManager.PlayerDirection.RIGHT:
+                                    //starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(new Vector3(1,0) * throwPower, ForceMode.Impulse);
+                                    break;
+                            }
                         }
                     }
                     //下投げの場合

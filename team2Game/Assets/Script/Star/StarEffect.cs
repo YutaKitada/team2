@@ -37,17 +37,32 @@ public class StarEffect : MonoBehaviour
                     }
                     else if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.LEFT)
                     {
-                        //effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.throwDirection.x, -PlayerManager.throwDirection.y));
-                        effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.effectDirection.x, -PlayerManager.effectDirection.y));
-                        //effect.transform.rotation = Quaternion.LookRotation(new Vector3(1, -1));
-                        //effect.transform.LookAt(PlayerManager.throwDirection);
+                        if (WishManager.isTackleStar)
+                        {
+                            effect.transform.rotation = Quaternion.LookRotation(transform.position +new Vector3(-2, 0, 0));
+                        }
+                        else
+                        {
+                            //effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.throwDirection.x, -PlayerManager.throwDirection.y));
+                            effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.effectDirection.x, -PlayerManager.effectDirection.y));
+                            //effect.transform.rotation = Quaternion.LookRotation(new Vector3(1, -1));
+                            //effect.transform.LookAt(PlayerManager.throwDirection);
+                        }
+
                     }
                     else if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.RIGHT)
                     {
-                        //effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.throwDirection.x, -PlayerManager.throwDirection.y));
-                        effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.effectDirection.x, -PlayerManager.effectDirection.y));
-                        //effect.transform.rotation = Quaternion.LookRotation(new Vector3(0.5f, -1));
-                        //effect.transform.LookAt(PlayerManager.throwDirection);
+                        if (WishManager.isTackleStar)
+                        {
+                            effect.transform.rotation = Quaternion.LookRotation(transform.position + new Vector3(2, 0, 0));
+                        }
+                        else
+                        {
+                            //effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.throwDirection.x, -PlayerManager.throwDirection.y));
+                            effect.transform.rotation = Quaternion.LookRotation(new Vector3(PlayerManager.effectDirection.x, -PlayerManager.effectDirection.y));
+                            //effect.transform.rotation = Quaternion.LookRotation(new Vector3(0.5f, -1));
+                            //effect.transform.LookAt(PlayerManager.throwDirection);
+                        }
                     }
                 }
 

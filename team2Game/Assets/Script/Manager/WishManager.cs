@@ -38,6 +38,7 @@ public class WishManager : MonoBehaviour
     private float showerTimer;
 
     public static bool isMeteorShower;
+    public static bool isTackleStar;
 
     // Start is called before the first frame update
     void Start()
@@ -94,6 +95,7 @@ public class WishManager : MonoBehaviour
         wishNum = 0;
 
         isMeteorShower = false;
+        isTackleStar = false;
     }
 
     // Update is called once per frame
@@ -235,7 +237,7 @@ public class WishManager : MonoBehaviour
                 Shower();
                 break;
             case 4:
-                Shower();
+                Tackle();
                 break;
         }
     }
@@ -247,6 +249,7 @@ public class WishManager : MonoBehaviour
         ComboUI.comboTimerStop = false;
         showerTimer = 0;
         isMeteorShower = false;
+        isTackleStar = false;
     }
 
     private void ReturnStar()
@@ -283,5 +286,10 @@ public class WishManager : MonoBehaviour
             Instantiate(wishStar, player.transform.position + new Vector3(Random.Range(-20, 0), 20), Quaternion.identity);
             showerTimer = 0.5f;
         }
+    }
+
+    private void Tackle()
+    {
+        isTackleStar = true;
     }
 }
