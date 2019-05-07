@@ -53,11 +53,11 @@ public class CameraManager : MonoBehaviour
             
             float distance = player.transform.position.x - transform.position.x;
 
-            if(distance >= 5)
+            if(distance >= 0.5f)
             {
                 cameraMoveDirectionX = CameraMoveDirectionX.RIGHT;
             }
-            else if (distance <= -5)
+            else if (distance <= -0.5f)
             {
                 cameraMoveDirectionX = CameraMoveDirectionX.LEFT;
                 
@@ -83,11 +83,11 @@ public class CameraManager : MonoBehaviour
 
             float distance = player.transform.position.y - transform.position.y;
 
-            if (distance >= 3)
+            if (distance >= 0.3f)
             {
                 cameraMoveDirectionY = CameraMoveDirectionY.UP;
             }
-            else if (distance <= -3)
+            else if (distance <= -0.3f)
             {
                 cameraMoveDirectionY = CameraMoveDirectionY.DOWN;
 
@@ -110,11 +110,11 @@ public class CameraManager : MonoBehaviour
         {
             float distanceX = player.transform.position.x - transform.position.x;
 
-            if (distanceX >= 5)
+            if (distanceX >= 0.5f)
             {
                 cameraMoveDirectionX = CameraMoveDirectionX.RIGHT;
             }
-            else if (distanceX <= -5)
+            else if (distanceX <= -0.5f)
             {
                 cameraMoveDirectionX = CameraMoveDirectionX.LEFT;
 
@@ -136,11 +136,11 @@ public class CameraManager : MonoBehaviour
 
             float distanceY = player.transform.position.y - transform.position.y;
 
-            if (distanceY >= 3)
+            if (distanceY >= 0.3f)
             {
                 cameraMoveDirectionY = CameraMoveDirectionY.UP;
             }
-            else if (distanceY <= -3)
+            else if (distanceY <= -0.3f)
             {
                 cameraMoveDirectionY = CameraMoveDirectionY.DOWN;
 
