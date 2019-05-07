@@ -110,7 +110,7 @@ public class Deneb : BossEnemy
                 break;
 
             case Mode.ATTACK_STAR:
-                StartCoroutine(StarAttackCoroutine());
+                StarAttack();
                 break;
 
             default:
@@ -153,6 +153,7 @@ public class Deneb : BossEnemy
     Vector3 GetShootPosition()
     {
         Vector3 position;
+        //x座標は自身に合わせ、y座標はinspectorで調整
         if(OnRight)
         {
             position = new Vector3(vector[0].x, shootPositionY);
@@ -225,7 +226,7 @@ public class Deneb : BossEnemy
     {
         float rate = 0;
 
-        while(true)
+        while(isWait)
         {
             //右側にいたら左側を、左側にいたら右側を向く
             rate += Time.deltaTime * 3 * speed;
@@ -263,8 +264,7 @@ public class Deneb : BossEnemy
     /// <summary>
     /// 星を使った攻撃
     /// </summary>
-    /// <returns></returns>
-    IEnumerator StarAttackCoroutine()
+    void StarAttack()
     {
         instantElapsedTime += Time.deltaTime * speed;
         if (instantElapsedTime >= instantInterval)
@@ -300,8 +300,6 @@ public class Deneb : BossEnemy
                 mode = Mode.MOVE;
             }
         }
-
-        yield return null;
     }
 
     bool GetStarObjects()
