@@ -9,6 +9,7 @@ public class FallingStar : MonoBehaviour
 
     [SerializeField]
     GameObject marker;
+    GameObject setObj;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,16 @@ public class FallingStar : MonoBehaviour
         list.RemoveAll(i => i.transform.tag == "BossEnemy");
         list.RemoveAll(i => i.transform.tag == "Player");
         list.RemoveAll(i => i.transform.name.Contains("Star"));
-        Instantiate(marker, list[0].point, Quaternion.identity);
+        setObj = Instantiate(marker, list[0].point, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// 星と生成したマーカーを削除
+    /// </summary>
+    void RemoveObjects()
+    {
+        Destroy(setObj);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -45,6 +55,6 @@ public class FallingStar : MonoBehaviour
             PlayerManager.PlayerDamage(10);
         }
 
-        Destroy(gameObject);
+        RemoveObjects();
     }
 }

@@ -8,6 +8,7 @@ public class ShootingStar : MonoBehaviour
     Rigidbody rigid;
     [SerializeField]
     GameObject marker;
+    GameObject setObj;
 
     Deneb deneb;
     float speed = 0;
@@ -58,7 +59,16 @@ public class ShootingStar : MonoBehaviour
         list.RemoveAll(i => i.transform.tag == "BossEnemy");
         list.RemoveAll(i => i.transform.tag == "Player");
         list.RemoveAll(i => i.transform.name.Contains("Star"));
-        Instantiate(marker, list[0].point, Quaternion.identity);
+        setObj = Instantiate(marker, list[0].point, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// 星と生成したマーカーを削除
+    /// </summary>
+    void RemoveObjects()
+    {
+        Destroy(setObj);
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -68,6 +78,6 @@ public class ShootingStar : MonoBehaviour
             PlayerManager.PlayerDamage(10);
         }
 
-        Destroy(gameObject);
+        RemoveObjects();
     }
 }

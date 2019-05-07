@@ -118,10 +118,10 @@ MonoBehaviour:
   - {x: -2.5, y: -2, z: 0}
   - {x: -14, y: 2, z: 0}
   interval: 3
-  fallStar: {fileID: 1197098874488578264, guid: 6f560387a32b58c42b8c38e2284b5671,
+  fallingStar: {fileID: 7197232160639393003, guid: ad301f3840c41624ca2a33e147028798,
     type: 3}
   fallPosition: {x: -3, y: 30, z: 0}
-  shootinStar: {fileID: 552294679845656844, guid: 615526c14b3fc2c4abd06c62f206d499,
+  shootingStar: {fileID: 2342997111015991373, guid: 924b274f7a75ca441a5f557c28f91e60,
     type: 3}
   shootPositionY: -3
   instantInterval: 5
@@ -139,5 +139,5 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 126
   m_CollisionDetection: 0
