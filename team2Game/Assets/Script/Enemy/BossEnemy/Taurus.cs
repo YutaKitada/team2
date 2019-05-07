@@ -53,11 +53,12 @@ public class Taurus : BossEnemy
     // Update is called once per frame
     void Update()
     {
-
         Death();
+        isHit = true;
 
         if (IsDead)
         {
+            skinnedMeshRenderer.enabled = true;
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
             deadElapsedTime += Time.deltaTime;
@@ -88,6 +89,7 @@ public class Taurus : BossEnemy
                 break;
 
             case Mode.INVINCIBLE:
+                isHit = false;
                 NowInvincible();
                 anim.speed = 1;
                 break;
@@ -163,12 +165,10 @@ public class Taurus : BossEnemy
         if (invincibleElapsedTime >= invincibleTime)
         {
             invincibleElapsedTime = 0;
-            mode = Mode.WAIT;
-            isHit = true;
-
             skinnedMeshRenderer.enabled = true;
 
             intervalElapsedTime = 0;
+            mode = Mode.WAIT;
         }
     }
 
