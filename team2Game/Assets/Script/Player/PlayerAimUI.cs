@@ -71,5 +71,10 @@ public class PlayerAimUI : MonoBehaviour
         {
             playerAimUI.SetActive(false);       //activeSelfをfalseに
         }
+
+        if (PlayerManager.isWishMode || WishManager.isTackleStar)
+        {
+            playerAimUI.SetActive(false);       //activeSelfをfalseに
+        }
     }
 }

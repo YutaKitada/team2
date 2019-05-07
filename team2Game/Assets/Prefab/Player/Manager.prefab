@@ -1657,10 +1657,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 94afeb1be4c903149855b7346dfa3ea8, type: 3}
   debugUI: {fileID: 1692150609}
   maxWishButton: 6
-  buttonObject: {fileID: 4403258938180033219, guid: 71584dae104e7094e9cdfe84216a48ee,
-    type: 3}
   mistakeObject: {fileID: 5951526176837671118}
   buttonParent: {fileID: 4305896572691835888}
+  buttonObject: {fileID: 4403258938180033219, guid: 71584dae104e7094e9cdfe84216a48ee,
+    type: 3}
   wishTimer: {fileID: 4660312884526858720}
   wishYButton: {fileID: 7202423426293591346}
 --- !u!1 &8876861116889932787
