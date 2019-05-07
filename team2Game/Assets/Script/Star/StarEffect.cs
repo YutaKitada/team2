@@ -39,7 +39,7 @@ public class StarEffect : MonoBehaviour
                     {
                         if (WishManager.isTackleStar)
                         {
-                            effect.transform.rotation = Quaternion.LookRotation(transform.position +new Vector3(-2, 0, 0));
+                            effect.transform.rotation = Quaternion.LookRotation(new Vector3(0.1f, -1));
                         }
                         else
                         {
@@ -54,7 +54,7 @@ public class StarEffect : MonoBehaviour
                     {
                         if (WishManager.isTackleStar)
                         {
-                            effect.transform.rotation = Quaternion.LookRotation(transform.position + new Vector3(2, 0, 0));
+                            effect.transform.rotation = Quaternion.LookRotation(new Vector3(-0.1f, -1));
                         }
                         else
                         {
