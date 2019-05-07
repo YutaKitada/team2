@@ -21,8 +21,7 @@ public class Taurus : BossEnemy
     {
         WAIT,
         RUSH,
-        STAN,
-        INVINCIBLE
+        STAN
     }
     [HideInInspector]
     public Mode mode;//現在の状態
@@ -54,7 +53,6 @@ public class Taurus : BossEnemy
     void Update()
     {
         Death();
-        isHit = true;
 
         if (IsDead)
         {
@@ -73,6 +71,7 @@ public class Taurus : BossEnemy
         switch (mode)//状態に応じた処理を実行
         {
             case Mode.WAIT:
+                Stop();
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
                 anim.speed = 1;
@@ -84,32 +83,15 @@ public class Taurus : BossEnemy
                 break;
 
             case Mode.STAN:
+                Stop();
                 NowStan();
                 anim.speed = 0;
-                break;
-
-            case Mode.INVINCIBLE:
-                isHit = false;
-                NowInvincible();
-                anim.speed = 1;
                 break;
 
             default:
                 break;
         }
-    }
-
-    public override void Direction()
-    {
-        if(transform.position.x > target.position.x)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        if (transform.position.x < target.position.x)
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
-        transform.rotation = rotation;
+        NowInvincible();
     }
 
     /// <summary>
@@ -117,6 +99,8 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushPrepare()
     {
+        if (!isHit) return;
+
         intervalElapsedTime += Time.deltaTime;
         //待機中の経過時間が規定時間まで過ぎたら突進状態へ移行
         if (intervalElapsedTime < interval) return;
@@ -158,17 +142,19 @@ public class Taurus : BossEnemy
     /// </summary>
     void NowInvincible()
     {
-        invincibleElapsedTime += Time.deltaTime;
+        if (isHit) return;
 
+        invincibleElapsedTime += Time.deltaTime;
+        isHit = false;
         skinnedMeshRenderer.enabled = !skinnedMeshRenderer.enabled;
 
         if (invincibleElapsedTime >= invincibleTime)
         {
             invincibleElapsedTime = 0;
             skinnedMeshRenderer.enabled = true;
+            isHit = true;
 
             intervalElapsedTime = 0;
-            mode = Mode.WAIT;
         }
     }
 
@@ -178,7 +164,6 @@ public class Taurus : BossEnemy
         if (other.gameObject.tag.Contains("Player"))
         {
             //その場にとどまり、待機状態に移行
-            Stop();
             PlayerManager.PlayerDamage(10);
             mode = Mode.WAIT;
         }
@@ -186,7 +171,6 @@ public class Taurus : BossEnemy
         //壁に当たったらスタン状態に移行
         if (other.gameObject.name.Contains("Wall") && mode == Mode.RUSH)
         {
-            Stop();
             mode = Mode.STAN;
         }
     }
@@ -197,6 +181,8 @@ public class Taurus : BossEnemy
     /// <returns></returns>
     IEnumerator DirectionCoroutine()
     {
+        if (!isHit) yield break;
+
         float rate = 0;
 
         while (true)
