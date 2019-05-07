@@ -76,10 +76,11 @@ public class Deneb : BossEnemy
     // Update is called once per frame
     void Update()
     {
+        Stop();
+
         if (IsDead)
         {
             meshRenderer.enabled = true;
-            Stop();
 
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
@@ -101,9 +102,7 @@ public class Deneb : BossEnemy
         switch (mode)
         {
             case Mode.NORMAL:
-                Stop();
                 StartCoroutine(DirectionCoroutine());
-                //Wait();
                 break;
 
             case Mode.MOVE:
@@ -111,7 +110,7 @@ public class Deneb : BossEnemy
                 break;
 
             case Mode.ATTACK_STAR:
-                StartCoroutine(StarAttackCoroutine());
+                StarAttack();
                 break;
 
             default:
@@ -120,11 +119,6 @@ public class Deneb : BossEnemy
         
         NowInvincible();
         Death();
-
-        Debug.Log(mode);
-        Debug.Log("isWait="+ isWait);
-        Debug.Log("isMove="+ isMove);
-        Debug.Log("isNone=" + isNone);
     }
 
     public override void Damage()
@@ -132,23 +126,6 @@ public class Deneb : BossEnemy
         if (!isHit) return;
 
         base.Damage();
-    }
-
-    /// <summary>
-    /// 待機処理
-    /// </summary>
-    void Wait()
-    {
-        if (!isWait) return;
-
-        intervalElapsedTime += Time.deltaTime * speed;
-        if (intervalElapsedTime >= interval)
-        {
-            isMove = true;
-            isWait = false;
-            intervalElapsedTime = 0;
-            mode = Mode.MOVE;
-        }
     }
 
     /// <summary>
@@ -176,6 +153,7 @@ public class Deneb : BossEnemy
     Vector3 GetShootPosition()
     {
         Vector3 position;
+        //x座標は自身に合わせ、y座標はinspectorで調整
         if(OnRight)
         {
             position = new Vector3(vector[0].x, shootPositionY);
@@ -194,6 +172,7 @@ public class Deneb : BossEnemy
     /// <returns></returns>
     IEnumerator MoveCoroutine()
     {
+        //星が生成されていれば動かない
         if (!GetStarObjects()) yield break;
 
         while (isMove)
@@ -255,38 +234,37 @@ public class Deneb : BossEnemy
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
             }
-            if (!OnRight)
+            else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
             }
-            
-            if(transform.rotation == Quaternion.Euler(forward) 
-                || transform.rotation == Quaternion.Euler(-forward))
-            {
-
-                intervalElapsedTime += Time.deltaTime * speed;
-                if (intervalElapsedTime >= interval)
-                {
-                    intervalElapsedTime = 0;
-                    mode = Mode.ATTACK_STAR;
-                    break;
-                }
-                else yield break;
-
-                //isWait = true;
-                //mode = Mode.ATTACK_STAR;
-                //break;
-            }
+            break;
         }
 
-        yield return null;
+        //方向転換し終えたら、モード移行までの待機時間
+        if (transform.rotation == Quaternion.Euler(forward)
+            || transform.rotation == Quaternion.Euler(-forward))
+        {
+            //指定した経過時間を過ぎたらモードを移行
+            intervalElapsedTime += Time.deltaTime * speed;
+            if (intervalElapsedTime >= interval)
+            {
+                intervalElapsedTime = 0;
+                mode = Mode.ATTACK_STAR;
+                yield return null;
+            }
+            //過ぎなければ中断
+            else
+            {
+                yield break;
+            }
+        }
     }
 
     /// <summary>
     /// 星を使った攻撃
     /// </summary>
-    /// <returns></returns>
-    IEnumerator StarAttackCoroutine()
+    void StarAttack()
     {
         instantElapsedTime += Time.deltaTime * speed;
         if (instantElapsedTime >= instantInterval)
@@ -301,9 +279,10 @@ public class Deneb : BossEnemy
                 }
             }
 
-            //体力が半分以下のとき、横から星を生成
+            //体力が半分以下のとき
             if (hp <= maxHp / 2)
             {
+                //生成した星が全て消えた時1つだけ生成
                 if (!GetStarObjects() && !isShoot)
                 {
                     star = Instantiate(shootingStar, GetShootPosition(), Quaternion.Euler(0, 90, 90));
@@ -311,6 +290,7 @@ public class Deneb : BossEnemy
                 }
             }
 
+            //生成したすべての星が無くなったときモードを移行
             if (!GetStarObjects() && star == null)
             {
                 instantElapsedTime = 0;
@@ -320,12 +300,12 @@ public class Deneb : BossEnemy
                 mode = Mode.MOVE;
             }
         }
-
-        yield return null;
     }
 
     bool GetStarObjects()
     {
+        //生成した3つの星のうち1つでも存在すればfalse、
+        //なければtrue
         for(int i = 0; i < 3; i++)
         {
             if (starArray[i] != null)
