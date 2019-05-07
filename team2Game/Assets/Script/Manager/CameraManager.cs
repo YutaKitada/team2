@@ -27,9 +27,20 @@ public class CameraManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         player = GameObject.FindGameObjectWithTag("Player");
         cameraMoveDirectionX = CameraMoveDirectionX.NONE;
         cameraMoveDirectionY = CameraMoveDirectionY.NONE;
+        transform.position = player.transform.position + cameraPosition;
+        switch (cameraMoveStop)
+        {
+            case CameraMoveStop.Y:
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                break;
+            case CameraMoveStop.X:
+                transform.position = new Vector3(0, transform.position.y, transform.position.z);
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -37,8 +48,8 @@ public class CameraManager : MonoBehaviour
     {
         if(cameraMoveStop == CameraMoveStop.Y)
         {
-            //transform.position = player.transform.position + cameraPosition;
-            //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            
+            
             
             float distance = player.transform.position.x - transform.position.x;
 
@@ -68,7 +79,7 @@ public class CameraManager : MonoBehaviour
         else if(cameraMoveStop == CameraMoveStop.X)
         {
             //transform.position = player.transform.position + cameraPosition;
-            //transform.position = new Vector3(0, transform.position.y, transform.position.z);
+            
 
             float distance = player.transform.position.y - transform.position.y;
 
