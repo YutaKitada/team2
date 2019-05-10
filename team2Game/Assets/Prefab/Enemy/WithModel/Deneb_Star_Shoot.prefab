@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marker: {fileID: 5444341343796207797, guid: 54010cce62fe387418bb346708b93f05, type: 3}
+  speedOrigin: 1
 --- !u!135 &880827943303731588
 SphereCollider:
   m_ObjectHideFlags: 0

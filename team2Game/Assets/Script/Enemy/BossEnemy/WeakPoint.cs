@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// タウラスにダメージが通る弱点
+/// </summary>
 public class WeakPoint : MonoBehaviour
 {
     Taurus parent;
@@ -14,7 +17,7 @@ public class WeakPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //弱点に星が当たったら、ボスを無敵状態に移行
+        //弱点に星が当たったら、ボスにダメージ
         if (other.gameObject.tag.Contains("Star"))
         {
             if (!parent.isHit) return;

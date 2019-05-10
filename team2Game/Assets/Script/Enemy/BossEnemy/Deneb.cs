@@ -8,8 +8,13 @@ using UnityEngine;
 public class Deneb : BossEnemy
 {
     [SerializeField, Header("通る曲線の座標")]
-    Vector3[] vector;
+    Vector3[] vector;//ベジェ曲線の通る座標
 
+    float t = 0;//ベジェ曲線移動の割合
+
+    /// <summary>
+    /// 左右のどちらにいるか：true=右、false=左
+    /// </summary>
     public bool OnRight
     {
         get;
@@ -22,11 +27,17 @@ public class Deneb : BossEnemy
     float speed = 1;//動きや経過時間の速さ
     int maxHp;//最大体力
 
-    [SerializeField]
-    float interval = 3;
-    float intervalElapsedTime;
+    /// <summary>
+    /// 体力取得用プロパティ
+    /// </summary>
+    public int Hp
+    {
+        get { return hp; }
+    }
 
-    float t = 0;//ベジェ曲線移動の割合
+    [SerializeField]
+    float interval = 3;//待機状態から攻撃モードへの移行までの時間
+    float intervalElapsedTime;//上記に関する経過時間
 
     [SerializeField,　Header("降らせる星のオブジェ")]
     GameObject fallingStar;
@@ -39,12 +50,13 @@ public class Deneb : BossEnemy
 
     [SerializeField, Header("生成までの時間")]
     float instantInterval = 5;
-    float instantElapsedTime = 0;
+    float instantElapsedTime = 0;//上記に関する経過時間
 
     MeshRenderer meshRenderer;
 
     GameObject[] starArray;//上から生成した星を格納する配列
     GameObject star;//横から生成した星を格納する変数
+
     bool isNone = true;//starArray、starが存在していないか
     bool isShoot = false;//横から星が飛んできたか
     bool isInstante = false;//攻撃モード中に星を上に生成したか
