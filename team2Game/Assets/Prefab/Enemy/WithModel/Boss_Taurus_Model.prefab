@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 583283839}
   m_Layer: 0
   m_Name: Boss_Taurus_Model
-  m_TagString: Untagged
+  m_TagString: BossEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2f7148df98cfe46a06b24bcbf3bd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
+  hp: 20
   stanTime: 3
   isHit: 1
   invincibleTime: 3
@@ -773,7 +773,7 @@ GameObject:
   - component: {fileID: 2125948025}
   m_Layer: 0
   m_Name: WeakPoint
-  m_TagString: Untagged
+  m_TagString: BossEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

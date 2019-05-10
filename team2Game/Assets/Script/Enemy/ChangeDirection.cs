@@ -4,67 +4,61 @@ using UnityEngine;
 using UnityEditor;
 
 /// <summary>
-/// 方向転換を行うクラス
+/// 左右移動の方向転換を行うクラス
 /// </summary>
 public class ChangeDirection : MonoBehaviour
 {
     Ray ray;
     RaycastHit hit;
-    bool isChange = false;
-    //[SerializeField, Header("レイの距離")]
-    float maxDistance = 1;
+    bool isChange = false;//反転させるか
+
+    public float MaxDistance
+    {
+        private get;
+        set;
+    }
 
     Enemy enemy;
 
-    [SerializeField]
+    [SerializeField, Header("中心値")]
     Vector3 centerPosition = Vector3.zero;
 
-    bool isReverse = false;
+    bool isReverse = false;//反転しているモデルか
+    bool inWater = false;//水中の中か
+
+    Vector3 leftRayDirection = Vector3.down + Vector3.left;
+    Vector3 rightRayDirection = Vector3.down + Vector3.right;
 
     // Start is called before the first frame update
     void Start()
     {
         enemy = GetComponent<Enemy>();
-        if (transform.rotation.y == 1)
+        if (transform.name.Contains("Cancer"))
         {
             isReverse = true;
         }
     }
 
-    /// <summary>
-    /// レイの長さ設定
-    /// </summary>
-    /// <returns></returns>
-    float GetDistance()
-    {
-        float distance;
-
-        if (transform.localScale.x >= 2.5f) distance = 4;
-        else if (transform.localScale.x >= 1.5f) distance = 3;
-        else distance = 1;
-
-        return distance;
-    }
-
     private void OnDrawGizmosSelected()
     {
-        if (EditorApplication.isPlaying)
+        //プレイ中の表示
+        if (!Application.isPlaying)
+            return;
+
+        Gizmos.color = Color.red;
+        if (enemy.direction_Left)//左向き
         {
-            Gizmos.color = Color.red;
-            if (enemy.direction_Left)
-            {
-                if(!isReverse)
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
-                else
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
-            }
-            else
-            {
-                if(!isReverse)
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right) * GetDistance());
-                else
-                    Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left) * GetDistance());
-            }
+            if (!isReverse)//反転していない
+                Gizmos.DrawLine(transform.position + centerPosition, transform.position + leftRayDirection);
+            else//反転している
+                Gizmos.DrawLine(transform.position + centerPosition, transform.position + rightRayDirection);
+        }
+        else//右向き
+        {
+            if (!isReverse)//反転していない
+                Gizmos.DrawLine(transform.position + centerPosition, transform.position + rightRayDirection);
+            else//反転している
+                Gizmos.DrawLine(transform.position + centerPosition, transform.position + leftRayDirection);
         }
     }
 
@@ -75,25 +69,43 @@ public class ChangeDirection : MonoBehaviour
             if (enemy.direction_Left)
             {
                 if(!isReverse)
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+                    ray = new Ray(transform.position + centerPosition, leftRayDirection);
                 else
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+                    ray = new Ray(transform.position + centerPosition, rightRayDirection);
             }
             else
             {
                 if(!isReverse)
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+                    ray = new Ray(transform.position + centerPosition, rightRayDirection);
                 else
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+                    ray = new Ray(transform.position + centerPosition, leftRayDirection);
             }
 
             //レイがオブジェクトに当たらなくなったら方向反転
-            isChange = !Physics.Raycast(ray, out hit, maxDistance * GetDistance());
+            isChange = !Physics.Raycast(ray, out hit, MaxDistance);
 
-            if (isChange)
+            if (isChange || hit.transform.tag != "Stage")
             {
                 enemy.direction_Left = !enemy.direction_Left;
             }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag.Contains("Water"))
+        {
+            inWater = true;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //敵に当たるか、水中でステージタグに当たった場合反転
+        if(collision.gameObject.tag.Contains("Enemy")
+            || (collision.gameObject.tag.Contains("Stage") && inWater))
+        {
+            enemy.direction_Left = !enemy.direction_Left;
         }
     }
 }

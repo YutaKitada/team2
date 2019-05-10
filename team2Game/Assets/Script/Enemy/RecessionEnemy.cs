@@ -96,33 +96,4 @@ public class RecessionEnemy : Enemy
             state = State.NORMAL;
         }
     }
-
-    public override void OnCollisionEnter(Collision other)
-    {
-        //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.name.Contains("Enemy"))
-        {
-            direction_Left = !direction_Left;
-        }
-
-        //if (other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    Vector3 recession;
-        //    if (Direction_Left)
-        //    {
-        //        recession = recessionVector;
-        //    }
-        //    else
-        //    {
-        //        Vector3 reverceRecession = new Vector3(-recessionDistance, 10, 0);
-        //        recession = reverceRecession;
-        //    }
-        //    rigid.AddForce(recession * power, ForceMode.Acceleration);
-        //    if (hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
-    }
 }

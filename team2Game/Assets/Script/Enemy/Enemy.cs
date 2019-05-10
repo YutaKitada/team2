@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum State
-{
-    NORMAL,
-    CHASE
-}
-
 /// <summary>
 /// Enemyの大元
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
+    public enum State
+    {
+        NORMAL,
+        CHASE
+    }
+
     protected Rigidbody rigid;
     protected Quaternion rotation;
 
@@ -36,25 +36,42 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected GameObject downParticle;
 
-    public bool direction_Left = true;
-    
-    public bool direction_Up = true;
+    protected ChangeDirection changeDirection;
 
-    /// <summary>
-    /// 倒したかどうか
-    /// </summary>
-    public bool Defeat
-    {
-        get;
-        protected set;
-    } = false;
+    public bool direction_Left = true;
+    public bool direction_Up = true;
 
     /// <summary>
     /// 移動処理
     /// </summary>
     public virtual void Move()
     {
+        //今のスピードを計算
+        float nowSpeed = Mathf.Abs(rigid.velocity.x);
 
+        //最大の移動スピードを超えていないとき
+        if (nowSpeed < maxSpeed)
+        {
+            switch (state)
+            {
+                case State.NORMAL:
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
+
+                case State.CHASE:
+                    distance.x = target.position.x - transform.position.x;
+                    if (distance.x < 0)
+                    {
+                        direction_Left = true;
+                    }
+                    else if (distance.x > 0)
+                    {
+                        direction_Left = false;
+                    }
+                    rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+                    break;
+            }
+        }
     }
 
     /// <summary>
@@ -123,11 +140,6 @@ public class Enemy : MonoBehaviour
     {
 
     }
-    
-    public virtual void OnCollisionEnter(Collision other)
-    {
-
-    }
 
     /// <summary>
     /// 死亡処理
@@ -136,9 +148,7 @@ public class Enemy : MonoBehaviour
     {
         if(hp <= 0)
         {
-            EnemyManager.DefeatedCount++;
-            Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
-            Defeat = true;
+            EnemyManager.CountUp();
             ParticleGenerate();
             Destroy(gameObject);
         }
@@ -147,9 +157,9 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// パーティクル生成
     /// </summary>
-    void ParticleGenerate()
+    public void ParticleGenerate()
     {
-        if (downParticle == null) return;
+        if (downParticle == null) return;//パーティクルが設定されていなければreturn
 
         Instantiate(downParticle, transform.position, Quaternion.identity);
     }

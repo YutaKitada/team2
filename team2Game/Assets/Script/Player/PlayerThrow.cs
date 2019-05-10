@@ -15,7 +15,7 @@ public class PlayerThrow : MonoBehaviour
 
     [SerializeField]
     private float stopTime = 1;             //投げた後の停止時間
-    private float stopTimer;                //停止時間用タイマー
+    public static float stopTimer;                //停止時間用タイマー
 
     public static bool dank;                      //下投げ
 
@@ -83,17 +83,40 @@ public class PlayerThrow : MonoBehaviour
                     //下投げでなければ
                     if (!dank)
                     {
-                        //Playerの向いている方向に応じて投げる方向を変える
-                        switch (PlayerManager.playerDirection)
+                        if (!WishManager.isTackleStar)
                         {
-                            //左を向いている場合
-                            case PlayerManager.PlayerDirection.LEFT:
-                                starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
-                                break;
-                            //右を向いている場合
-                            case PlayerManager.PlayerDirection.RIGHT:
-                                starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
-                                break;
+                            //Playerの向いている方向に応じて投げる方向を変える
+                            switch (PlayerManager.playerDirection)
+                            {
+                                //左を向いている場合
+                                case PlayerManager.PlayerDirection.LEFT:
+                                    //starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
+                                    break;
+                                //右を向いている場合
+                                case PlayerManager.PlayerDirection.RIGHT:
+                                    //starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(PlayerManager.throwDirection * throwPower, ForceMode.Impulse);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            GameManager.star.transform.position = transform.position + new Vector3(0, 1.5f);
+                            //Playerの向いている方向に応じて投げる方向を変える
+                            switch (PlayerManager.playerDirection)
+                            {
+                                //左を向いている場合
+                                case PlayerManager.PlayerDirection.LEFT:
+                                    //starRigid.AddForce(new Vector3(-throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(new Vector3(-1,0) * throwPower, ForceMode.Impulse);
+                                    break;
+                                //右を向いている場合
+                                case PlayerManager.PlayerDirection.RIGHT:
+                                    //starRigid.AddForce(new Vector3(throwPower, -throwPower), ForceMode.Impulse);
+                                    starRigid.AddForce(new Vector3(1,0) * throwPower, ForceMode.Impulse);
+                                    break;
+                            }
                         }
                     }
                     //下投げの場合
@@ -119,13 +142,20 @@ public class PlayerThrow : MonoBehaviour
         //Starオブジェクトを持っていた場合
         if (PlayerManager.haveStar)
         {
-            //StarはPlayerの3マス上に
-            GameManager.star.transform.position = transform.position + new Vector3(0, 2.5f);
-            //Starのvelocityを0に
-            starRigid.velocity = Vector3.zero;
+            if (!PlayerManager.isWishMode)
+            {
+                //StarはPlayerの3マス上に
+                GameManager.star.transform.position = transform.position + new Vector3(0, 2.5f);
+                //Starのvelocityを0に
+                starRigid.velocity = Vector3.zero;
 
-            //投げる処理
-            Throw();
+                //投げる処理
+                Throw();
+            }
+            else
+            {
+                GameManager.star.transform.position = Vector3.Lerp(transform.position + new Vector3(32, 0,10),transform.position + new Vector3(-16, 15,10) , UIManager.wishTimerFillamount / -3) ;
+            }
         }
         
         

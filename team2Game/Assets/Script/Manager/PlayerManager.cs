@@ -17,6 +17,13 @@ public class PlayerManager : MonoBehaviour
 
     public static Vector3 throwPosition;            //投げた場所用Position
 
+    public static Vector3 throwDirection;
+    public static Vector3 effectDirection;
+
+    private float directionPlus;
+    [SerializeField]
+    private float directionMoveSpeed = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,22 +37,24 @@ public class PlayerManager : MonoBehaviour
         invincibleTimer = 0;        //無敵用タイマー初期化
 
         throwPosition = Vector3.zero;   //一旦0に
+        throwDirection = new Vector3(1, -1);
+        effectDirection = new Vector3(1, -1);
+
+        directionPlus = 0.5f;
     }
 
     private void Update()
     {
         //温度が80以上ある時、Rボタンを押すと願い事待機状態切り替え
-        if(UIManager.hpGageFillAmount >= 80)
+        if(UIManager.hpGageFillAmount >= 75)
         {
             if (Input.GetButtonDown("YButton") && !WishManager.isWishNow)
             {
-                if (!isWishStay)
+                if (!isWishMode)
                 {
-                    isWishStay = true;
-                }
-                else if (isWishStay)
-                {
-                    isWishStay = false;
+                    isWishMode = true;
+                    PlayerThrow.stopTimer = -3f;        //移動制限用タイマーを1秒長くする
+                    isStop = true;
                 }
             }
         }
@@ -67,6 +76,75 @@ public class PlayerManager : MonoBehaviour
                 invincibleTimer = 0;
             }
         }
+
+        ThrowDirection();
+    }
+
+    private void ThrowDirection()
+    {
+        //Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal_R"), Input.GetAxisRaw("Vertical_R"));
+
+        if (playerDirection == PlayerDirection.LEFT)
+        {
+            if(directionPlus <= 1f && directionPlus >= 0f)
+            {
+                if(Input.GetAxisRaw("Horizontal_R") < 0)
+                {
+                    directionPlus += directionMoveSpeed * Time.deltaTime;
+                }
+                else if(Input.GetAxisRaw("Horizontal_R") > 0)
+                {
+                    directionPlus -= directionMoveSpeed * Time.deltaTime;
+                }
+
+                
+            }
+            if(directionPlus > 1) 
+            {
+                directionPlus = 1;
+            }
+            else if (directionPlus < 0)
+            {
+                directionPlus = 0;
+            }
+
+            
+            throwDirection = Vector3.Lerp(new Vector3(-0.75f, -1), new Vector3(-2f, -1), directionPlus);
+            effectDirection = Vector3.Lerp(new Vector3(-2f, -1), new Vector3(-0.75f, -1), directionPlus);
+
+            throwDirection = throwDirection.normalized;
+            effectDirection = effectDirection.normalized;
+        }
+        else if (playerDirection == PlayerDirection.RIGHT)
+        {
+            if (directionPlus <= 1f && directionPlus >= 0f)
+            {
+                if (Input.GetAxisRaw("Horizontal_R") > 0)
+                {
+                    directionPlus += directionMoveSpeed * Time.deltaTime;
+                }
+                else if (Input.GetAxisRaw("Horizontal_R") < 0)
+                {
+                    directionPlus -= directionMoveSpeed * Time.deltaTime;
+                }
+
+
+            }
+            if (directionPlus > 1)
+            {
+                directionPlus = 1;
+            }
+            else if (directionPlus < 0)
+            {
+                directionPlus = 0;
+            }
+
+            throwDirection = Vector3.Lerp(new Vector3(0.75f, -1), new Vector3(2f, -1f), directionPlus);
+            effectDirection = Vector3.Lerp(new Vector3(2f, -1), new Vector3(0.75f, -1), directionPlus);
+            throwDirection = throwDirection.normalized;
+            effectDirection = effectDirection.normalized;
+        }
+        //Debug.Log(direction);
     }
 
 

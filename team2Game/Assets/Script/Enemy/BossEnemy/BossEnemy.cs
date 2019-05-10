@@ -30,6 +30,8 @@ public class BossEnemy : MonoBehaviour
     [SerializeField]
     protected GameObject downParticle;
 
+    protected float deadElapsedTime;//死亡からの経過時間
+
     public bool IsDead
     {
         get;
@@ -50,6 +52,7 @@ public class BossEnemy : MonoBehaviour
     public virtual void Damage()
     {
         hp--;
+        isHit = false;
     }
 
     /// <summary>
@@ -66,7 +69,11 @@ public class BossEnemy : MonoBehaviour
         if (hp <= 0)
         {
             IsDead = true;
-            anim.SetBool("isDead", true);
+            if (anim != null)
+            {
+                anim.SetBool("isDead", true);
+                anim.speed = 1;
+            }
         }
     }
 

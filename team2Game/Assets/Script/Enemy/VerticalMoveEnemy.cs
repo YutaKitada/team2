@@ -14,6 +14,9 @@ public class VerticalMoveEnemy : Enemy
     Vector3 destinationPosition1;
     Vector3 destinationPosition2;
 
+    [SerializeField, Header("スピード")]
+    float speed = 1;
+
     private void Awake()
     {
         startPosition = transform.position;
@@ -42,15 +45,15 @@ public class VerticalMoveEnemy : Enemy
         {
             //rigid.velocity = Vector3.up * power;
             rigid.AddForce(Vector3.up, ForceMode.Acceleration);
-            if (rigid.velocity.y >= 1)
-                rigid.velocity = new Vector3(0, 1, 0);
+            if (rigid.velocity.y >= speed)
+                rigid.velocity = new Vector3(0, speed, 0);
         }
         else
         {
             //rigid.velocity = Vector3.down * power;
             rigid.AddForce(Vector3.down, ForceMode.Acceleration);
-            if (rigid.velocity.y <= -1)
-                rigid.velocity = new Vector3(0, -1, 0);
+            if (rigid.velocity.y <= -speed)
+                rigid.velocity = new Vector3(0, -speed, 0);
         }
     }
 
@@ -68,17 +71,8 @@ public class VerticalMoveEnemy : Enemy
         }
     }
     
-    public override void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
-        //if (other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    if (hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
-
         if(other.gameObject.tag.Contains("Stage"))
         {
             direction_Up = !direction_Up;

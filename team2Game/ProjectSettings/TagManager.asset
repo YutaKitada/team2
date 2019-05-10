@@ -11,6 +11,7 @@ TagManager:
   - Water
   - Kcube
   - Ice
+  - BossEnemy
   layers:
   - Default
   - TransparentFX

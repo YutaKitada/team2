@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class SideMoveEnemy : Enemy
 {
+    [SerializeField]
+    float maxDistande = 2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +20,14 @@ public class SideMoveEnemy : Enemy
         state = State.NORMAL;
 
         maxSpeed = power / 10f;
+        changeDirection = GetComponent<ChangeDirection>();
+        changeDirection.MaxDistance = maxDistande;
     }
 
     // Update is called once per frame
     void Update()
     {
         Move();
-        //Direction();
         SetTarget();
         Death();
     }
@@ -81,23 +85,5 @@ public class SideMoveEnemy : Enemy
             state = State.NORMAL;
         }
 
-    }
-
-    public override void OnCollisionEnter(Collision other)
-    {
-        //壁か別の敵に当たったとき進行方向を逆にする
-        if (other.gameObject.tag.Contains("Enemy"))
-        {
-            direction_Left = !direction_Left;
-        }
-
-        //if(other.transform.tag == "Star")
-        //{
-        //    hp--;
-        //    if(hp <= 0)
-        //    {
-        //        Destroy(gameObject);
-        //    }
-        //}
     }
 }

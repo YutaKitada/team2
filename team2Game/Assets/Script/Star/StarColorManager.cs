@@ -15,6 +15,9 @@ public class StarColorManager : MonoBehaviour
 
     private Color materialColor;                                        //星の色
 
+    [SerializeField]
+    private GameObject starLight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,8 @@ public class StarColorManager : MonoBehaviour
         render = GetComponent<MeshRenderer>();      //MeshRenderer取得
 
         materialColor = materialList[4].color;      //高温の状態に色を変更
+
+        starLight.SetActive(false);
     }
 
     // Update is called once per frame
@@ -79,6 +84,15 @@ public class StarColorManager : MonoBehaviour
                 materialColor = Color.Lerp(materialList[0].color, materialList[5].color, (20 - UIManager.hpGageFillAmount) / 20);
                 render.material.color = materialColor;
                 break;
+        }
+
+        if (!PlayerManager.isWishMode)
+        {
+            starLight.SetActive(false);
+        }
+        else
+        {
+            starLight.SetActive(true);
         }
     }
 }

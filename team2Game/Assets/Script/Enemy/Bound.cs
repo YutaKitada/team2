@@ -8,8 +8,14 @@ using UnityEngine;
 public class Bound : MonoBehaviour
 {
     Rigidbody rigid;
+
     [SerializeField]
     float boundPower = 5;
+    public float BoundPower
+    {
+        get { return boundPower; }
+        set { boundPower = value; }
+    }
 
     private void Start()
     {
@@ -20,7 +26,7 @@ public class Bound : MonoBehaviour
     {
         if(other.gameObject.tag.Contains("Stage"))
         {
-            rigid.AddForce(Vector3.up * boundPower, ForceMode.Impulse);
+            rigid.AddForce(Vector3.up * BoundPower, ForceMode.Impulse);
         }
     }
 }
