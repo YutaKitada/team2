@@ -192,21 +192,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_Taurus_Model
       objectReference: {fileID: 0}
-    - target: {fileID: 583283836, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 583283842, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.86
+      value: 7.76
       objectReference: {fileID: 0}
     - target: {fileID: 583283842, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.411612
+      value: -4.65
       objectReference: {fileID: 0}
     - target: {fileID: 583283842, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 583283842, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_LocalRotation.x
@@ -550,6 +546,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraPosition: {x: 0, y: 4, z: -12}
   cameraMoveStop: 2
+  moveSpeedX: 7
+  moveSpeedY: 3
 --- !u!114 &972328149
 MonoBehaviour:
   m_ObjectHideFlags: 0

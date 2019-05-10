@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ボス（モチーフ：牡牛座）
+/// 牡牛座のボス
 /// </summary>
 public class Taurus : BossEnemy
 {
@@ -27,7 +27,6 @@ public class Taurus : BossEnemy
     public Mode mode;//現在の状態
 
     Vector3 targetPosition;//突進開始時のプレイヤーの位置
-    Vector3 startPosition;//突進開始地点
 
     bool isChange = false;//方向転換中か
 
@@ -79,7 +78,7 @@ public class Taurus : BossEnemy
 
             case Mode.RUSH:
                 RushAttack();
-                anim.speed = 2;
+                anim.speed = 3;
                 break;
 
             case Mode.STAN:
@@ -91,7 +90,6 @@ public class Taurus : BossEnemy
             default:
                 break;
         }
-        NowInvincible();
     }
 
     /// <summary>
@@ -99,8 +97,6 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushPrepare()
     {
-        if (!isHit) return;
-
         intervalElapsedTime += Time.deltaTime;
         //待機中の経過時間が規定時間まで過ぎたら突進状態へ移行
         if (intervalElapsedTime < interval) return;
@@ -109,8 +105,7 @@ public class Taurus : BossEnemy
             if (isChange) return;
 
             //突進に必要な情報を得る
-            startPosition = transform.position;
-            targetPosition = target.position;
+            targetPosition = target.position;//突進開始時のプレイヤーの位置に向かう
             intervalElapsedTime = 0;
             mode = Mode.RUSH;
         }
@@ -137,38 +132,24 @@ public class Taurus : BossEnemy
         }
     }
 
-    /// <summary>
-    /// 無敵時間の処理
-    /// </summary>
-    void NowInvincible()
-    {
-        if (isHit) return;
-
-        invincibleElapsedTime += Time.deltaTime;
-        isHit = false;
-        skinnedMeshRenderer.enabled = !skinnedMeshRenderer.enabled;
-
-        if (invincibleElapsedTime >= invincibleTime)
-        {
-            invincibleElapsedTime = 0;
-            skinnedMeshRenderer.enabled = true;
-            isHit = true;
-
-            intervalElapsedTime = 0;
-        }
-    }
-
     public override void OnCollisionEnter(Collision other)
     {
-        //Playerに当たったらPlayerにダメージ
-        if (other.gameObject.tag.Contains("Player"))
+        if (mode != Mode.STAN)
         {
-            //その場にとどまり、待機状態に移行
-            PlayerManager.PlayerDamage(10);
-            mode = Mode.WAIT;
+            //Playerに当たったらPlayerにダメージ
+            if (other.gameObject.tag.Contains("Player"))
+            {
+                //その場で待機状態に移行
+                PlayerManager.PlayerDamage(10);
+
+                if (mode == Mode.RUSH)
+                {
+                    mode = Mode.WAIT;
+                }
+            }
         }
 
-        //壁に当たったらスタン状態に移行
+        //突進中に壁に当たったらスタン状態に移行
         if (other.gameObject.name.Contains("Wall") && mode == Mode.RUSH)
         {
             mode = Mode.STAN;
@@ -181,8 +162,6 @@ public class Taurus : BossEnemy
     /// <returns></returns>
     IEnumerator DirectionCoroutine()
     {
-        if (!isHit) yield break;
-
         float rate = 0;
 
         while (true)
@@ -196,7 +175,6 @@ public class Taurus : BossEnemy
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
             }
-            isChange = true;
             break;
         }
 
@@ -205,6 +183,10 @@ public class Taurus : BossEnemy
             transform.rotation == Quaternion.Euler(-forward))
         {
             isChange = false;
+        }
+        else
+        {
+            isChange = true;
         }
 
         yield return null;

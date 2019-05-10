@@ -21,7 +21,14 @@ public class WeakPoint : MonoBehaviour
 
             parent.Damage();
             parent.Stop();
-            parent.isHit = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag.Contains("Star"))
+        {
+            parent.isHit = true;
         }
     }
 }
