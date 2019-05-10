@@ -85,6 +85,8 @@ public class Taurus : BossEnemy
                 Stop();
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
+                if (transform.position.x > target.position.x) onRight = true;
+                if (transform.position.x < target.position.x) onRight = false;
                 anim.speed = 1;
                 break;
 
@@ -102,9 +104,6 @@ public class Taurus : BossEnemy
             default:
                 break;
         }
-
-        if (transform.position.x > target.position.x) onRight = true;
-        if (transform.position.x < target.position.x) onRight = false;
     }
 
     /// <summary>
@@ -147,6 +146,10 @@ public class Taurus : BossEnemy
     void RushAttack()
     {
         rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        if (onRight)
+            Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleRight));
+        else
+            Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleLeft));
     }
 
     /// <summary>
