@@ -19,6 +19,7 @@ public class EnemyManager : MonoBehaviour
         get;
         private set;
     }
+
     void Awake()
     {
         //初期化
@@ -30,5 +31,11 @@ public class EnemyManager : MonoBehaviour
         enemys = GameObject.FindGameObjectsWithTag("Enemy");//シーン上の全てのEnemyを取得
         EnemyCount = enemys.Length;//Enemyの総数を取得
         Debug.Log("敵の総数："+EnemyCount);
+    }
+
+    public static void CountUp()
+    {
+        DefeatedCount++;
+        Debug.Log("倒した数:" + DefeatedCount);
     }
 }

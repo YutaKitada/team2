@@ -8,7 +8,7 @@ using UnityEngine;
 public class Deneb : BossEnemy
 {
     [SerializeField, Header("通る曲線の座標")]
-    Vector3[] vector;//ベジェ曲線の通る座標
+    Vector3[] vector;//ベジェ曲線の通る座標の配列
 
     float t = 0;//ベジェ曲線移動の割合
 
@@ -27,9 +27,7 @@ public class Deneb : BossEnemy
     float speed = 1;//動きや経過時間の速さ
     int maxHp;//最大体力
 
-    /// <summary>
-    /// 体力取得用プロパティ
-    /// </summary>
+    // 体力取得用プロパティ
     public int Hp
     {
         get { return hp; }
