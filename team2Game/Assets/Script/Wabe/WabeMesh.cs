@@ -40,6 +40,7 @@ public class WabeMesh : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             transform.parent.GetComponent<MyMesh>().isPlayer = false;
+            transform.parent.GetComponent<MyMesh>().WabeMotionFlag = true;
         }
     }
 }
