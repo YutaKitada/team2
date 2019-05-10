@@ -40,6 +40,13 @@ public class Taurus : BossEnemy
     Vector3 particleRight = new Vector3(0, 90);
     Vector3 particleLeft = new Vector3(0, -90);
 
+    bool isFeint = false;//フェイントをかけるか
+    Dictionary<int, bool> FeintInfo;//フェイントするかのディクショナリ
+    Dictionary<int, float> FeintDictionary;//上記のための確率用のディクショナリ
+
+    bool isChosen = false;//フェイントのboolが決められたか
+    float stopTime;//フェイント時の止まるまでの時間
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +65,8 @@ public class Taurus : BossEnemy
         anim = GetComponent<Animator>();
 
         skinnedMeshRenderer = transform.GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+
+        InitializeDictionary();
     }
 
     // Update is called once per frame
@@ -107,6 +116,71 @@ public class Taurus : BossEnemy
     }
 
     /// <summary>
+    /// フェイント取得
+    /// </summary>
+    void GetFeint()
+    {
+        if (isChosen) return;
+
+        int Id = Choose();
+
+        if (Id != 0)
+        {
+            isFeint = false;
+        }
+        else
+        {
+            isFeint = true;
+        }
+
+        isChosen = true;
+    }
+
+    /// <summary>
+    /// ディクショナリの初期化
+    /// </summary>
+    void InitializeDictionary()
+    {
+        FeintInfo = new Dictionary<int, bool>();
+        FeintInfo.Add(0, true);
+        FeintInfo.Add(1, false);
+
+        FeintDictionary = new Dictionary<int, float>();
+        FeintDictionary.Add(0, 50f);
+        FeintDictionary.Add(1, 50f);
+    }
+
+    /// <summary>
+    /// 確率を決める処理
+    /// </summary>
+    /// <returns></returns>
+    int Choose()
+    {
+        float total = 0;
+
+        foreach(KeyValuePair<int, float> elem in FeintDictionary)
+        {
+            total += elem.Value;
+        }
+
+        float randomPoint = Random.value * total;
+
+        foreach(KeyValuePair<int, float> elem in FeintDictionary)
+        {
+            if (randomPoint < elem.Value)
+            {
+                return elem.Key;
+            }
+            else
+            {
+                randomPoint -= elem.Value;
+            }
+        }
+
+        return 1;
+    }
+
+    /// <summary>
     /// 突進準備
     /// </summary>
     void RushPrepare()
@@ -136,6 +210,8 @@ public class Taurus : BossEnemy
             //突進に必要な情報を得る
             targetPosition = target.position;//突進開始時のプレイヤーの位置に向かう
             intervalElapsedTime = 0;
+            GetFeint();
+            Debug.Log(isFeint);
             mode = Mode.RUSH;
         }
     }
@@ -146,10 +222,24 @@ public class Taurus : BossEnemy
     void RushAttack()
     {
         rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        //フェイントするとき
+        if (isFeint)
+        {
+            stopTime += Time.deltaTime;
+            if (stopTime >= 1)
+            {
+                Stop();
+                stopTime = 0;
+                mode = Mode.WAIT;
+            }
+        }
+        //向きに応じて、砂埃の方向を変更
         if (onRight)
             Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleRight));
         else
             Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleLeft));
+
+        isChosen = false;
     }
 
     /// <summary>

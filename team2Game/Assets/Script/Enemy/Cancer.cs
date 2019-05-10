@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 横移動のEnemyクラス（モチーフ：蟹座）
 /// </summary>
-public class SideMoveEnemy : Enemy
+public class Cancer : Enemy
 {
     [SerializeField]
     float maxDistande = 2;

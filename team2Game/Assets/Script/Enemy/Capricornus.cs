@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 体力に応じてスケールが変わるEnemyクラス（モチーフ：山羊座）
 /// </summary>
-public class ContractionEnemy : Enemy
+public class Capricornus : Enemy
 {
     [SerializeField]
     List<float> hp_RayList;
