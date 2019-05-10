@@ -30,6 +30,16 @@ public class Taurus : BossEnemy
 
     bool isChange = false;//方向転換中か
 
+    bool onRight = true;//プレイヤーより右側にいるか
+
+    [SerializeField]
+    GameObject sandParticle;
+    float instanteTime;
+
+    Vector3 instantePosition;
+    Vector3 particleRight = new Vector3(0, 90);
+    Vector3 particleLeft = new Vector3(0, -90);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +52,8 @@ public class Taurus : BossEnemy
         //全ての経過時間を0
         stanElapsedTime = 0;
         invincibleElapsedTime = 0;
+
+        instanteTime = 0;
 
         anim = GetComponent<Animator>();
 
@@ -90,6 +102,9 @@ public class Taurus : BossEnemy
             default:
                 break;
         }
+
+        if (transform.position.x > target.position.x) onRight = true;
+        if (transform.position.x < target.position.x) onRight = false;
     }
 
     /// <summary>
@@ -98,6 +113,21 @@ public class Taurus : BossEnemy
     void RushPrepare()
     {
         intervalElapsedTime += Time.deltaTime;
+
+        instanteTime += Time.deltaTime;
+        if (instanteTime >= 1)
+        {
+            if (onRight)
+            {
+                Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleRight));
+            }
+            else
+            {
+                Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleLeft));
+            }
+            instanteTime = 0;
+        }
+
         //待機中の経過時間が規定時間まで過ぎたら突進状態へ移行
         if (intervalElapsedTime < interval) return;
         else
@@ -156,6 +186,14 @@ public class Taurus : BossEnemy
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Stage")
+        {
+            instantePosition = collision.contacts[0].point;
+        }
+    }
+
     /// <summary>
     /// 時間をかけて回転させる
     /// </summary>
@@ -167,11 +205,11 @@ public class Taurus : BossEnemy
         while (true)
         {
             rate += Time.deltaTime * 3;
-            if (transform.position.x > target.position.x)
+            if (onRight)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
             }
-            if (transform.position.x < target.position.x)
+            if (!onRight)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
             }
