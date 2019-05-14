@@ -206,10 +206,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.006073426
-  m_Height: 0.01601112
+  m_Radius: 0.006171092
+  m_Height: 0.01640178
   m_Direction: 1
-  m_Center: {x: -3.2928287e-17, y: 0.017887725, z: 0.007666165}
+  m_Center: {x: -3.4554722e-17, y: 0.018083055, z: 0.007763829}
 --- !u!136 &583283838
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -245,6 +245,8 @@ MonoBehaviour:
   power: 20
   interval: 5
   mode: 0
+  sandParticle: {fileID: 6430994268695726755, guid: 3740c7bec18d62a4f9bc55911aecbff6,
+    type: 3}
 --- !u!1 &607839546
 GameObject:
   m_ObjectHideFlags: 0
