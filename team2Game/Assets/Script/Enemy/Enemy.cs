@@ -38,8 +38,8 @@ public class Enemy : MonoBehaviour
 
     protected ChangeDirection changeDirection;
 
-    public bool direction_Left = true;
-    public bool direction_Up = true;
+    public bool direction_Left = true;//横移動用
+    public bool direction_Up = true;//縦移動用
 
     /// <summary>
     /// 移動処理
