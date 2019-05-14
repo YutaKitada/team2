@@ -14,8 +14,6 @@ public class Taurus : BossEnemy
     float interval = 5;
     float intervalElapsedTime;//待機中の経過時間
 
-    //SkinnedMeshRenderer skinnedMeshRenderer;
-
     //全ての状態
     public enum Mode
     {
@@ -42,6 +40,7 @@ public class Taurus : BossEnemy
 
     Vector3 startScale;
     int hitCount;
+    bool isHuging = true;
 
     //bool isFeint = false;//フェイントをかけるか
     //Dictionary<int, bool> FeintInfo;//フェイントするかのディクショナリ
@@ -67,8 +66,6 @@ public class Taurus : BossEnemy
 
         anim = GetComponent<Animator>();
 
-        //skinnedMeshRenderer = transform.GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
-
         startScale = transform.localScale;
         hitCount = 0;
 
@@ -82,7 +79,6 @@ public class Taurus : BossEnemy
 
         if (IsDead)
         {
-            //skinnedMeshRenderer.enabled = true;
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
             deadElapsedTime += Time.deltaTime;
@@ -100,6 +96,7 @@ public class Taurus : BossEnemy
                 Stop();
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
+                ContractionScale();
                 if (transform.position.x > target.position.x) onRight = true;
                 if (transform.position.x < target.position.x) onRight = false;
                 anim.speed = 1;
@@ -107,6 +104,7 @@ public class Taurus : BossEnemy
 
             case Mode.RUSH:
                 RushAttack();
+                ContractionScale();
                 anim.speed = 3;
                 break;
 
@@ -192,10 +190,7 @@ public class Taurus : BossEnemy
     void RushPrepare()
     {
         intervalElapsedTime += Time.deltaTime;
-        if (transform.localScale.x >= startScale.x * 2)
-        {
-            transform.localScale += new Vector3(10, 10, 10) * Time.deltaTime;
-        }
+        HugingScale();
         instanteTime += Time.deltaTime;
         if (instanteTime >= 1)
         {
@@ -224,10 +219,44 @@ public class Taurus : BossEnemy
         }
     }
 
+
     void HitCount()
     {
+        if (!isHit) return;
+
         hitCount++;
-        if (hitCount >= 3) mode = Mode.STAN;
+        isHit = false;
+
+        if (hitCount >= 3)
+        {
+            hitCount = 0;
+            isHuging = false;
+            mode = Mode.STAN;
+        }
+    }
+
+    /// <summary>
+    /// サイズ変化（巨大化）
+    /// </summary>
+    void HugingScale()
+    {
+        //巨大化
+        if (transform.localScale.x <= startScale.x * 2 && isHuging)
+        {
+            transform.localScale += new Vector3(10, 10, 10) * Time.deltaTime * 2;
+        }
+    }
+
+    /// <summary>
+    /// サイズ変化（収縮）
+    /// </summary>
+    void ContractionScale()
+    {
+        //収縮
+        if (transform.localScale.x >= startScale.x && !isHuging)
+        {
+            transform.localScale -= new Vector3(10, 10, 10) * Time.deltaTime * 3;
+        }
     }
 
     /// <summary>
@@ -293,9 +322,17 @@ public class Taurus : BossEnemy
             mode = Mode.STAN;
         }
 
-        if (mode == Mode.WAIT)
+        if (mode == Mode.WAIT && other.gameObject.tag.Contains("Star"))
         {
             HitCount();
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag.Contains("Star"))
+        {
+            isHit = true;
         }
     }
 
