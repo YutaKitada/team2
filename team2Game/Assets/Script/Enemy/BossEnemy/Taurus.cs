@@ -34,13 +34,13 @@ public class Taurus : BossEnemy
     GameObject sandParticle;
     float instanteTime;
 
-    Vector3 instantePosition;
-    Vector3 particleRight = new Vector3(0, 90);
-    Vector3 particleLeft = new Vector3(0, -90);
+    Vector3 instantePosition;//パーティクルを生成する位置
+    Vector3 particleRight = new Vector3(0, 90);//右側の生成方向
+    Vector3 particleLeft = new Vector3(0, -90);//左側の生成方向
 
-    Vector3 startScale;
-    int hitCount;
-    bool isHuging = true;
+    Vector3 startScale;//スケールの初期値
+    int hitCount;//星を当てた回数
+    bool isHuging = true;//巨大化するか
 
     //bool isFeint = false;//フェイントをかけるか
     //Dictionary<int, bool> FeintInfo;//フェイントするかのディクショナリ
@@ -96,9 +96,8 @@ public class Taurus : BossEnemy
                 Stop();
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
+                SetOnRight();
                 ContractionScale();
-                if (transform.position.x > target.position.x) onRight = true;
-                if (transform.position.x < target.position.x) onRight = false;
                 anim.speed = 1;
                 break;
 
@@ -183,6 +182,13 @@ public class Taurus : BossEnemy
 
     //    return 1;
     //}
+
+
+    void SetOnRight()
+    {
+        if (transform.position.x > target.position.x) onRight = true;
+        if (transform.position.x < target.position.x) onRight = false;
+    }
 
     /// <summary>
     /// 突進準備

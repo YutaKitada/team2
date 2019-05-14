@@ -10,7 +10,7 @@ public class Leo : Enemy
     [SerializeField]
     float maxDistance = 2;
 
-    bool isAttack = false;
+    bool isAttack = false;//攻撃中か
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,7 @@ public class Leo : Enemy
     {
         if (!isAttack)
         {
+            //攻撃中でなければ移動
             Move();
         }
         Direction();
@@ -62,11 +63,10 @@ public class Leo : Enemy
         //正面のオブジェクトがプレイヤー以外であれば、return
         if (ToForwardObject() != target && !isAttack) return;
 
-        isAttack = true;
+        isAttack = true;//攻撃中に変更
 
         //時間でダメージを与える
         intervalElapsedTime += Time.deltaTime;
-        Debug.Log(intervalElapsedTime);
         if (intervalElapsedTime >= attackInterval)
         {
             //正面にまだプレイヤーがいる場合のみダメージを与える
@@ -74,6 +74,7 @@ public class Leo : Enemy
             {
                 PlayerManager.PlayerDamage(10);
             }
+            //経過時間を戻して、攻撃中ではなくす
             intervalElapsedTime = 0;
             isAttack = false;
         }
