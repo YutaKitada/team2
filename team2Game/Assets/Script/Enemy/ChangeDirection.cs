@@ -103,7 +103,8 @@ public class ChangeDirection : MonoBehaviour
     {
         //敵に当たるか、水中でステージタグに当たった場合反転
         if(collision.gameObject.tag.Contains("Enemy")
-            || (collision.gameObject.tag.Contains("Stage") && inWater))
+            || (collision.gameObject.tag.Contains("Stage") && inWater)
+            || collision.gameObject.name.Contains("Wall"))
         {
             enemy.direction_Left = !enemy.direction_Left;
         }

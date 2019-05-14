@@ -375,4 +375,15 @@ public class Deneb : BossEnemy
             Damage();
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!Application.isPlaying) return;
+
+        for(int i=0; i<4; i++)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(vector[i], 1);
+        }
+    }
 }

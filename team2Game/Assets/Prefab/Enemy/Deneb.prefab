@@ -115,7 +115,7 @@ MonoBehaviour:
   vector:
   - {x: 8, y: 2, z: 0}
   - {x: 2.5, y: -2, z: 0}
-  - {x: -2.5, y: -2, z: 0}
+  - {x: -5.5, y: -2, z: 0}
   - {x: -14, y: 2, z: 0}
   interval: 3
   fallingStar: {fileID: 7197232160639393003, guid: ad301f3840c41624ca2a33e147028798,

@@ -65,7 +65,6 @@ public class Cancer : Enemy
                         direction_Left = false;
                         rigid.AddForce(transform.right * power, ForceMode.Acceleration);
                     }
-                    //rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
             }
         }
@@ -84,6 +83,5 @@ public class Cancer : Enemy
         {
             state = State.NORMAL;
         }
-
     }
 }
