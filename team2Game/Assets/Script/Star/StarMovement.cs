@@ -35,12 +35,24 @@ public class StarMovement : MonoBehaviour
         //跳ねずにそのまま帰ってくる際の処理
         if (returnPlayer)
         {
-            Vector3 returnVector = (GameManager.player.transform.position + new Vector3(0,2)) - transform.position;
+            if (GameManager.player.GetComponent<PlayerController>().gravityArea)
+            {
+                Vector3 returnVector = (GameManager.player.transform.position - new Vector3(0, 2)) - transform.position;
+                returnVector = returnVector.normalized;
 
-            returnVector = returnVector.normalized;
+                //rigid.AddForce(returnVector * returnPower);
+                rigid.velocity = returnVector * returnPower;
+            }
+            else
+            {
+                Vector3 returnVector = (GameManager.player.transform.position + new Vector3(0, 2)) - transform.position;
+                returnVector = returnVector.normalized;
 
-            //rigid.AddForce(returnVector * returnPower);
-            rigid.velocity = returnVector * returnPower;
+                //rigid.AddForce(returnVector * returnPower);
+                rigid.velocity = returnVector * returnPower;
+            }
+
+            
         }
 
     }
@@ -119,11 +131,11 @@ public class StarMovement : MonoBehaviour
                 //ベクトルのxの値に応じて戻る方向を決める
                 if (vector.x > 0)       //ベクトルが右を向いていれば
                 {
-                    returnX = 5 + GameManager.combo;        //returnXの値を5に、それに加えてコンボ数を足す
+                    returnX = 5;// + GameManager.combo;        //returnXの値を5に、それに加えてコンボ数を足す
                 }
                 else if (vector.x < 0)
                 {
-                    returnX = -5 - GameManager.combo;       //returnXの値を-5に、それに加えてコンボ数を足す
+                    returnX = -5;// - GameManager.combo;       //returnXの値を-5に、それに加えてコンボ数を足す
                 }
 
                 rigid.AddForce(new Vector3(returnX, 8), ForceMode.Impulse);     //Playerのいる方向に跳ねる

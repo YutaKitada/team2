@@ -10,10 +10,13 @@ public class NextScene : MonoBehaviour
     [SerializeField]
     private string nextSceneName;       //次のシーンの名前
 
+    private bool titleScene;
+    
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        titleScene = false;
     }
 
     // Update is called once per frame
@@ -28,7 +31,23 @@ public class NextScene : MonoBehaviour
         //ボタンを押したら次のシーンへ
         if (Input.GetButtonDown(buttonName))
         {
-            SceneManager.LoadScene(nextSceneName);
+            if(SceneManager.GetActiveScene().name == "Title")
+            {
+                titleScene = true;
+                SoundManager.PlayVOICE(Random.Range(0, 3));
+            }
+            else
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
+        }
+
+        if (titleScene)
+        {
+            if (!SoundManager.CheckPlayVOICE())
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
         }
     }
 }
