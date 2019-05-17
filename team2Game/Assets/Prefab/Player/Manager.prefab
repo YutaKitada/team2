@@ -1297,7 +1297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   csvFile: {fileID: 4900000, guid: 764bd0fcbfedc8e4386d1d033c9736d1, type: 3}
-  wishNumber_Debug: 1
+  wishNumber_Debug: 4
   wishStar: {fileID: 712918252764647382, guid: 0cb5b383d2305df4b84d9f4708a8fe40, type: 3}
 --- !u!1 &8876861116231963463
 GameObject:
@@ -1395,10 +1395,10 @@ MonoBehaviour:
   hpGageStopTime: 3
   comboGageStopTime: 3
   buttonSprites:
-  - {fileID: 21300000, guid: 3b18d50c96c61a444884ba769c28c5fa, type: 3}
-  - {fileID: 21300000, guid: 5a3a0b2a0daa1ae429789719e1f1787d, type: 3}
-  - {fileID: 21300000, guid: 6c2c6495edc99a744aed9f08d7e343f6, type: 3}
-  - {fileID: 21300000, guid: 5d0a4f7e36e23a4408229e975d100609, type: 3}
+  - {fileID: 21300000, guid: 37393e246e46b6447b638875190764cb, type: 3}
+  - {fileID: 21300000, guid: 206be483987a5c044b5db66155ccce55, type: 3}
+  - {fileID: 21300000, guid: 2424a2ab756c2d84dacff66ba509a299, type: 3}
+  - {fileID: 21300000, guid: 0a83af88dc11b1a4cb2631751b8b2449, type: 3}
   - {fileID: 21300000, guid: 94afeb1be4c903149855b7346dfa3ea8, type: 3}
   debugUI: {fileID: 1692150609}
   maxWishButton: 6
