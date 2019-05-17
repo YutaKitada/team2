@@ -20,8 +20,6 @@ public class WeakPoint : MonoBehaviour
         //弱点に星が当たったら、ボスにダメージ
         if (other.gameObject.tag.Contains("Star"))
         {
-            if (!parent.isHit) return;
-
             parent.Damage(2);
         }
     }

@@ -32,7 +32,11 @@ public class Taurus : BossEnemy
 
     bool isChange = false;//方向転換中か
 
-    bool onRight = true;//プレイヤーより右側にいるか
+    bool OnRight
+    {
+        get;
+        set;
+    }//プレイヤーより右側にいるか
 
     [SerializeField]
     GameObject sandParticle;
@@ -43,7 +47,6 @@ public class Taurus : BossEnemy
     Vector3 particleLeft = new Vector3(0, -90);//左側の生成方向
 
     Vector3 startScale;//スケールの初期値
-    int hitCount;//星を当てた回数
     bool isHuging = false;//巨大化中か
 
     // Start is called before the first frame update
@@ -55,6 +58,8 @@ public class Taurus : BossEnemy
         target = GameObject.FindGameObjectWithTag("Player").transform;
         mode = Mode.WAIT;//待機状態に設定
 
+        OnRight = true;
+
         //全ての経過時間を0
         stanElapsedTime = 0;
         invincibleElapsedTime = 0;
@@ -64,7 +69,6 @@ public class Taurus : BossEnemy
         anim = GetComponent<Animator>();
 
         startScale = transform.localScale;
-        hitCount = 0;
 
         maxHp = hp;
     }
@@ -120,8 +124,8 @@ public class Taurus : BossEnemy
     /// </summary>
     void SetOnRight()
     {
-        if (transform.position.x > target.position.x) onRight = true;//右
-        if (transform.position.x < target.position.x) onRight = false;//左
+        if (transform.position.x > target.position.x) OnRight = true;//右
+        if (transform.position.x < target.position.x) OnRight = false;//左
     }
 
     /// <summary>
@@ -132,7 +136,7 @@ public class Taurus : BossEnemy
         GameObject particle;
 
         //向きに応じて、砂埃の方向を変更
-        if (onRight)
+        if (OnRight)
             particle = Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleRight));
         else
             particle = Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleLeft));
@@ -235,7 +239,6 @@ public class Taurus : BossEnemy
 
         if (other.gameObject.tag == "Star" && !isHuging)
         {
-            if (!isHit) return;
             Damage(1);
         }
     }
@@ -267,11 +270,11 @@ public class Taurus : BossEnemy
         while (true)
         {
             rate += Time.deltaTime * 3;
-            if (onRight)
+            if (OnRight)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
             }
-            if (!onRight)
+            if (!OnRight)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
             }

@@ -136,13 +136,6 @@ public class Deneb : BossEnemy
         Death();
     }
 
-    public override void Damage(int damage)
-    {
-        if (!isHit) return;
-
-        base.Damage(damage);
-    }
-
     /// <summary>
     /// 無敵時間の処理
     /// </summary>
