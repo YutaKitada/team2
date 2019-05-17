@@ -39,6 +39,7 @@ public class WishManager : MonoBehaviour
 
     public static bool isMeteorShower;
     public static bool isTackleStar;
+    public static bool isChase;
 
     // Start is called before the first frame update
     void Start()
@@ -96,6 +97,7 @@ public class WishManager : MonoBehaviour
 
         isMeteorShower = false;
         isTackleStar = false;
+        isChase = false;
     }
 
     // Update is called once per frame
@@ -239,6 +241,9 @@ public class WishManager : MonoBehaviour
             case 4:
                 Tackle();
                 break;
+            case 5:
+                ChaseStar();
+                break;
         }
     }
 
@@ -250,6 +255,7 @@ public class WishManager : MonoBehaviour
         showerTimer = 0;
         isMeteorShower = false;
         isTackleStar = false;
+        isChase = false;
     }
 
     private void ReturnStar()
@@ -291,5 +297,34 @@ public class WishManager : MonoBehaviour
     private void Tackle()
     {
         isTackleStar = true;
+    }
+
+    private void ChaseStar()
+    {
+        isChase = true;
+
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject enemy = null;
+
+        float distance = -1;
+
+        foreach (var n in enemys)
+        {
+            if (distance == -1)
+            {
+                distance = Vector3.Distance(player.transform.position, n.transform.position);
+                enemy = n;
+            }
+            else if (distance >= Vector3.Distance(player.transform.position, n.transform.position))
+            {
+                distance = Vector3.Distance(player.transform.position, n.transform.position);
+                enemy = n;
+            }
+        }
+
+        if (!PlayerManager.haveStar && !star.GetComponent<StarMovement>().returnPlayer)
+        {
+            star.GetComponent<Rigidbody>().velocity = (enemy.transform.position + new Vector3(0,1) - star.transform.position).normalized * 30;
+        }
     }
 }

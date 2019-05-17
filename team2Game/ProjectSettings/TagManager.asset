@@ -12,6 +12,8 @@ TagManager:
   - Kcube
   - Ice
   - BossEnemy
+  - UpStage
+  - Gravity
   layers:
   - Default
   - TransparentFX
