@@ -14,6 +14,16 @@ public class Sagittarius : Enemy
     [SerializeField]
     GameObject bullet;//弾のprefab
 
+    [SerializeField]
+    float range1 = 5;
+    [SerializeField]
+    float range2 = 5;
+
+    Vector3 rangeVector1;
+    Vector3 rangeVector2;
+    bool isWithinShot = false;//射程圏内か
+    bool isShot = false;//射程圏内に入ったときに撃たせるためのbool
+
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -32,21 +42,37 @@ public class Sagittarius : Enemy
     void Update()
     {
         Direction();
+        SetWIthin();
         Shot();
         Death();
     }
 
+    /// <summary>
+    /// 射程圏内に入ったかどうか
+    /// </summary>
+    void SetWIthin()
+    {
+        rangeVector1 = new Vector3(transform.position.x - range1, transform.position.y);//左側
+        rangeVector2 = new Vector3(transform.position.x + range2, transform.position.y);//右側
+
+        if (target.position.x >= rangeVector1.x
+            && target.position.x <= rangeVector2.x)
+        {
+            isWithinShot = true;
+        }
+    }
+
     public override void Shot()
     {
-        //プレイヤーがいなければ何もしない
-        if (target == null) return;
+        if (!isWithinShot) return;
 
         elapsedTime += Time.deltaTime;
-        if(elapsedTime >= shotTime)
+        if (elapsedTime >= shotTime)
         {
             //子オブジェクトの位置に弾を生成
             Instantiate(bullet, transform.GetChild(0).position, transform.rotation);
             elapsedTime = 0;
+            isWithinShot = false;
         }
     }
 
@@ -77,5 +103,14 @@ public class Sagittarius : Enemy
         }
 
         transform.rotation = rotation;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!Application.isPlaying) return;
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(rangeVector1, rangeVector1 + Vector3.up * 3);
+        Gizmos.DrawLine(rangeVector2, rangeVector2 + Vector3.up * 3);
     }
 }
