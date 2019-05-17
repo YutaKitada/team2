@@ -10,14 +10,24 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private List<AudioClip> bgmList;
     public static List<AudioClip> soundList_BGM;
+    [SerializeField]
+    private List<AudioClip> voiceList;
+    public static List<AudioClip> soundList_VOICE;
 
     public static AudioSource se;
     public static AudioSource bgm;
+    public static AudioSource voice;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (GameObject.Find("SoundManager") != null && GameObject.Find("SoundManager") != gameObject)
+        {
+            Destroy(gameObject);
+        }
         BGM_SE_Load();
+        DontDestroyOnLoad(gameObject);
+        
     }
 
     // Update is called once per frame
@@ -41,6 +51,12 @@ public class SoundManager : MonoBehaviour
         bgm.Play();
     }
 
+    //VOICEを再生
+    public static void PlayVOICE(int voiceNumber)
+    {
+        voice.PlayOneShot(soundList_VOICE[voiceNumber]);
+    }
+
     //BGMを止める
     public static void StopBGM()
     {
@@ -50,6 +66,10 @@ public class SoundManager : MonoBehaviour
     //現在のBGMが指定したBGMと一緒か否か
     public static bool CheckBGM(int bgmNumber)
     {
+        if(bgm.clip == null)
+        {
+            return false;
+        }
         if (bgm.clip == soundList_BGM[bgmNumber])
         {
             return true;
@@ -58,6 +78,12 @@ public class SoundManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    //VOICEが再生中か否か
+    public static bool CheckPlayVOICE()
+    {
+        return voice.isPlaying;
     }
 
     //BGMをフェードアウトさせる
@@ -77,9 +103,11 @@ public class SoundManager : MonoBehaviour
     {
         soundList_SE = seList;
         soundList_BGM = bgmList;
+        soundList_VOICE = voiceList;
 
         AudioSource[] audioSources = GetComponents<AudioSource>();
         se = audioSources[0];
         bgm = audioSources[1];
+        voice = audioSources[2];
     }
 }

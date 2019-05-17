@@ -110,7 +110,7 @@ public class UIManager : MonoBehaviour
             + "\n" + "isInvincible:" + PlayerManager.isInvincible
             + "\n" + "isStop:" + PlayerManager.isStop
             + "\n" + "isGameStop:" + GameManager.isGameStop
-            + "\n" +  "isTackleStar:"+ WishManager.isTackleStar;
+            + "\n" +  "isTackleStar:"+ WishManager.isTackleStar + debugtext;
     }
 
     //private void ComboUI()
