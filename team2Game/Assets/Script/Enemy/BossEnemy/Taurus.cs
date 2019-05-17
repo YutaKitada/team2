@@ -115,10 +115,29 @@ public class Taurus : BossEnemy
         HugingScale();
     }
 
+    /// <summary>
+    /// プレイヤーから見て、どちらにいるか
+    /// </summary>
     void SetOnRight()
     {
-        if (transform.position.x > target.position.x) onRight = true;
-        if (transform.position.x < target.position.x) onRight = false;
+        if (transform.position.x > target.position.x) onRight = true;//右
+        if (transform.position.x < target.position.x) onRight = false;//左
+    }
+
+    /// <summary>
+    /// 砂埃のパーティクル生成
+    /// </summary>
+    void GenerateSandParticle()
+    {
+        GameObject particle;
+
+        //向きに応じて、砂埃の方向を変更
+        if (onRight)
+            particle = Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleRight));
+        else
+            particle = Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleLeft));
+
+        particle.transform.localScale = transform.localScale / 150f;
     }
 
     /// <summary>
@@ -131,14 +150,7 @@ public class Taurus : BossEnemy
         instanteTime += Time.deltaTime;
         if (instanteTime >= 1)
         {
-            if (onRight)
-            {
-                Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleRight));
-            }
-            else
-            {
-                Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleLeft));
-            }
+            GenerateSandParticle();
             instanteTime = 0;
         }
 
@@ -182,13 +194,7 @@ public class Taurus : BossEnemy
     {
         rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
 
-        //向きに応じて、砂埃の方向を変更
-        if (onRight)
-            Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleRight));
-        else
-            Instantiate(sandParticle, instantePosition, Quaternion.Euler(particleLeft));
-
-        //isChosen = false;
+        GenerateSandParticle();
     }
 
     /// <summary>
