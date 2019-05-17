@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
     Vector3 targetPosition;
 
     Vector3 initialPosition;//初期位置
+    Vector3 shootVector;//弾の方向
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +26,8 @@ public class Bullet : MonoBehaviour
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
         targetPosition = target.position;
-
         initialPosition = transform.position;
+        shootVector = targetPosition - initialPosition + new Vector3(0, 1, 0);
     }
 
     // Update is called once per frame
@@ -40,7 +41,7 @@ public class Bullet : MonoBehaviour
     /// </summary>
     void BulletMove()
     {
-        rigid.AddForce(targetPosition - initialPosition, ForceMode.Impulse);
+        rigid.AddForce(shootVector, ForceMode.Impulse);
         rigid.velocity /= 2f;
 
         Destroy(gameObject, 2);
@@ -51,7 +52,6 @@ public class Bullet : MonoBehaviour
         if(other.gameObject.tag=="Player")
         {
             PlayerManager.PlayerDamage(10);
-            //Destroy(other.gameObject);
         }
 
         Destroy(gameObject);
