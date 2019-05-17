@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2105e4bec61398940aaf72cc757b0e76
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rollRock: {fileID: 3456377074070510610, guid: daa4fd74799c810409897b2fd5c3b744,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
