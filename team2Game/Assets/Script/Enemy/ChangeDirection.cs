@@ -89,7 +89,7 @@ public class ChangeDirection : MonoBehaviour
         //レイがオブジェクトに当たらなくなったら、ステージ以外に当たったら方向反転
         isChange = !Physics.Raycast(ray, out hit, MaxDistance);
 
-        if (isChange || hit.transform.tag != "Stage")
+        if (isChange || hit.transform.tag != "Stage" || hit.transform.tag == "Ice")
         {
             enemy.direction_Left = !enemy.direction_Left;
         }
@@ -115,7 +115,7 @@ public class ChangeDirection : MonoBehaviour
     {
         //敵に当たるか、水中でステージタグに当たった場合反転
         if(collision.gameObject.tag.Contains("Enemy")
-            || (collision.gameObject.tag.Contains("Stage") && inWater)
+            || (collision.gameObject.tag == "Stage" && inWater)
             || collision.gameObject.name.Contains("Wall"))
         {
             enemy.direction_Left = !enemy.direction_Left;
