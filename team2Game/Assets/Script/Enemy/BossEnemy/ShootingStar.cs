@@ -18,16 +18,12 @@ public class ShootingStar : MonoBehaviour
     float speedOrigin = 2;
     float speed;
 
-    private void Awake()
-    {
-        deneb = GameObject.Find("Deneb").GetComponent<Deneb>();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
 
+        deneb = GameObject.FindGameObjectWithTag("BossEnemy").GetComponent<Deneb>();
         if (deneb.OnRight) speed = -speedOrigin;
         else speed = speedOrigin;
         SetMarker();
