@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 横移動のEnemyクラス（モチーフ：蟹座）
 /// </summary>
-public class SideMoveEnemy : Enemy
+public class Cancer : Enemy
 {
     [SerializeField]
     float maxDistande = 2;
@@ -28,7 +28,6 @@ public class SideMoveEnemy : Enemy
     void Update()
     {
         Move();
-        //Direction();
         SetTarget();
         Death();
     }
@@ -66,7 +65,6 @@ public class SideMoveEnemy : Enemy
                         direction_Left = false;
                         rigid.AddForce(transform.right * power, ForceMode.Acceleration);
                     }
-                    //rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
                     break;
             }
         }
@@ -85,6 +83,5 @@ public class SideMoveEnemy : Enemy
         {
             state = State.NORMAL;
         }
-
     }
 }

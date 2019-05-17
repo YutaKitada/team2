@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 弾を撃つEnemyクラス（モチーフ：射手座）
 /// </summary>
-public class ShotEnemy : Enemy
+public class Sagittarius : Enemy
 {
     float elapsedTime;//経過時間
     [SerializeField, Header("次の射撃までの待機時間")]
@@ -78,16 +78,4 @@ public class ShotEnemy : Enemy
 
         transform.rotation = rotation;
     }
-
-    //public override void OnCollisionEnter(Collision other)
-    //{
-    //    if (other.transform.tag == "Star")
-    //    {
-    //        hp--;
-    //        if (hp <= 0)
-    //        {
-    //            Destroy(gameObject);
-    //        }
-    //    }
-    //}
 }

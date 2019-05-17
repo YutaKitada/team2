@@ -26,6 +26,11 @@ public class ChangeDirection : MonoBehaviour
     bool isReverse = false;//反転しているモデルか
     bool inWater = false;//水中の中か
 
+    Vector3 leftRayDirection = Vector3.down + Vector3.left;
+    Vector3 rightRayDirection = Vector3.down + Vector3.right;
+
+    Vector3 transformCenter;//centerPositionを加えた最終的な中心値
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,27 +39,35 @@ public class ChangeDirection : MonoBehaviour
         {
             isReverse = true;
         }
+
+        transformCenter = transform.position + centerPosition;
+    }
+
+    private void Update()
+    {
+        transformCenter = transform.position + centerPosition;
     }
 
     private void OnDrawGizmosSelected()
     {
+        //プレイ中の表示
         if (!Application.isPlaying)
             return;
 
         Gizmos.color = Color.red;
-        if (enemy.direction_Left)
+        if (enemy.direction_Left)//左向き
         {
-            if (!isReverse)
-                Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left));
-            else
-                Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right));
+            if (!isReverse)//反転していない
+                Gizmos.DrawLine(transformCenter, transformCenter + leftRayDirection);
+            else//反転している
+                Gizmos.DrawLine(transformCenter, transformCenter + rightRayDirection);
         }
-        else
+        else//右向き
         {
-            if (!isReverse)
-                Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.right));
-            else
-                Gizmos.DrawLine(transform.position + centerPosition, transform.position + (Vector3.down + Vector3.left));
+            if (!isReverse)//反転していない
+                Gizmos.DrawLine(transformCenter, transformCenter + rightRayDirection);
+            else//反転している
+                Gizmos.DrawLine(transformCenter, transformCenter + leftRayDirection);
         }
     }
 
@@ -65,22 +78,22 @@ public class ChangeDirection : MonoBehaviour
             if (enemy.direction_Left)
             {
                 if(!isReverse)
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+                    ray = new Ray(transformCenter, transformCenter + leftRayDirection);
                 else
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+                    ray = new Ray(transformCenter, transformCenter + rightRayDirection);
             }
             else
             {
                 if(!isReverse)
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.right);
+                    ray = new Ray(transformCenter, transformCenter + rightRayDirection);
                 else
-                    ray = new Ray(transform.position + centerPosition, Vector3.down + Vector3.left);
+                    ray = new Ray(transformCenter, transformCenter + leftRayDirection);
             }
 
             //レイがオブジェクトに当たらなくなったら方向反転
             isChange = !Physics.Raycast(ray, out hit, MaxDistance);
 
-            if (isChange)
+            if (isChange || hit.transform.tag != "Stage")
             {
                 enemy.direction_Left = !enemy.direction_Left;
             }
@@ -99,7 +112,8 @@ public class ChangeDirection : MonoBehaviour
     {
         //敵に当たるか、水中でステージタグに当たった場合反転
         if(collision.gameObject.tag.Contains("Enemy")
-            || (collision.gameObject.tag.Contains("Stage") && inWater))
+            || (collision.gameObject.tag.Contains("Stage") && inWater)
+            || collision.gameObject.name.Contains("Wall"))
         {
             enemy.direction_Left = !enemy.direction_Left;
         }

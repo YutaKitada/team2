@@ -150,6 +150,57 @@ public class StarMovement : MonoBehaviour
             inWater = true;         //水に入った
             SoundManager.PlaySE(9);
         }
+
+        if(WishManager.isTackleStar)
+        {
+            if(other.tag == "Enemy")
+            {
+                SoundManager.PlaySE(5);
+                //温度ゲージが100以下であれば
+                if (UIManager.hpGageFillAmount <= 100)
+                {
+                    //コンボが続いていれば
+                    if (UIManager.isCombo)
+                    {
+                        //ゲージ回復10に加えて、コンボ数に応じて1.2倍の回復量を得る
+                        UIManager.hpGageFillAmount += 10f * (1 + (float)GameManager.combo * 0.2f);
+                    }
+                    else
+                    {
+                        //ゲージを10回復
+                        UIManager.hpGageFillAmount += 10f;
+                    }
+
+                    if (UIManager.hpGageFillAmount > 100)
+                    {
+                        UIManager.hpGageFillAmount = 100;
+                    }
+                }
+                ////温度ゲージが100以上であれば
+                //else
+                //{
+                //    //ゲージを0.5回復
+                //    UIManager.hpGageFillAmount += 0.5f;
+                //}
+                //コンボ中でなければ
+                if (!UIManager.isCombo)
+                {
+                    UIManager.isCombo = true;   //コンボを開始
+                }
+                GameManager.combo++;        //コンボ数を1増やす
+                other.gameObject.GetComponent<Enemy>().Damage();
+                UIManager.hpGageStopTimer = 0;        //温度ゲージの減少を止めるタイマーの初期化
+                ComboUI.comboTimer = 0;
+                PlayerThrow.dank = false;
+            }
+            if(other.tag == "Stage")
+            {
+                returnPlayer = true;
+                gameObject.layer = 11;                  //星のLayerを変更(Playerでも触れられるものへ)
+                PlayerThrow.dank = false;
+
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
