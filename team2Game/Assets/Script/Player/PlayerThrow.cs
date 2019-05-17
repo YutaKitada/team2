@@ -122,7 +122,7 @@ public class PlayerThrow : MonoBehaviour
                     //下投げの場合
                     else
                     {
-                        if (GameManager.player.GetComponent<PlayerController>().gravityArea)
+                        if (GameManager.player.GetComponent<PlayerController>().normalRotation)
                         {
                             //真下に投げる
                             starRigid.AddForce(new Vector3(0, throwPower), ForceMode.Impulse);
@@ -153,7 +153,7 @@ public class PlayerThrow : MonoBehaviour
         {
             if (!PlayerManager.isWishMode)
             {
-                if (GameManager.player.GetComponent<PlayerController>().gravityArea)
+                if (!GameManager.player.GetComponent<PlayerController>().normalRotation)
                 {
                     //StarはPlayerの3マス上に
                     GameManager.star.transform.position = transform.position - new Vector3(0, 2.5f);

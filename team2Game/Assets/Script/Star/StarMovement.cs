@@ -35,7 +35,7 @@ public class StarMovement : MonoBehaviour
         //跳ねずにそのまま帰ってくる際の処理
         if (returnPlayer)
         {
-            if (GameManager.player.GetComponent<PlayerController>().gravityArea)
+            if (!GameManager.player.GetComponent<PlayerController>().normalRotation)
             {
                 Vector3 returnVector = (GameManager.player.transform.position - new Vector3(0, 2)) - transform.position;
                 returnVector = returnVector.normalized;
