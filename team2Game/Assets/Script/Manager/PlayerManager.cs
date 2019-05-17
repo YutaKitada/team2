@@ -115,7 +115,7 @@ public class PlayerManager : MonoBehaviour
             throwDirection = throwDirection.normalized;
             effectDirection = effectDirection.normalized;
 
-            if (GameManager.player.GetComponent<PlayerController>().gravityArea)
+            if (!GameManager.player.GetComponent<PlayerController>().normalRotation)
             {
                 throwDirection = new Vector3(throwDirection.x, -throwDirection.y, throwDirection.z);
                 effectDirection = new Vector3(effectDirection.x, -effectDirection.y, effectDirection.z);
@@ -150,7 +150,7 @@ public class PlayerManager : MonoBehaviour
             throwDirection = throwDirection.normalized;
             effectDirection = effectDirection.normalized;
 
-            if (GameManager.player.GetComponent<PlayerController>().gravityArea)
+            if (!GameManager.player.GetComponent<PlayerController>().normalRotation)
             {
                 throwDirection = new Vector3(throwDirection.x, -throwDirection.y, throwDirection.z);
                 effectDirection = new Vector3(effectDirection.x, -effectDirection.y, effectDirection.z);

@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public bool gravityArea;//重力反転エリアに入っているかどうか
     private bool gravityStop;//重力無効判定用
 
+    [HideInInspector]
+    public bool normalRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +65,8 @@ public class PlayerController : MonoBehaviour
 
         gravityArea = false;//重力反転エリアに入っていない
         gravityStop = false;
+
+        normalRotation = true;
     }
 
     void FixedUpdate()
@@ -120,12 +124,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Playerの向きを左に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.LEFT;
-                    transform.LookAt(transform.position + new Vector3(-1, 0));
-                    if(gravityArea)
-                    {
-                        transform.LookAt(transform.position + new Vector3(1, 0));
-                        transform.Rotate(new Vector3(180, 0));
-                    }
+                    
 
                 }
                 //右に移動していれば
@@ -133,12 +132,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Playerの向きを右に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.RIGHT;
-                    transform.LookAt(transform.position + new Vector3(1, 0));
-                    if (gravityArea)
-                    {
-                        transform.LookAt(transform.position + new Vector3(-1, 0));
-                        transform.Rotate(new Vector3(180, 0));
-                    }
+                    
 
                 }
             }
@@ -158,6 +152,41 @@ public class PlayerController : MonoBehaviour
             {
                 transform.LookAt(transform.position + new Vector3(0, 0, -1));
             }
+        }
+
+        if(PlayerManager.playerDirection == PlayerManager.PlayerDirection.LEFT)
+        {
+            transform.LookAt(transform.position + new Vector3(-1, 0));
+            if (!normalRotation)
+            {
+                transform.LookAt(transform.position + new Vector3(1, 0));
+                transform.Rotate(new Vector3(180, 0));
+            }
+        }
+        else if(PlayerManager.playerDirection == PlayerManager.PlayerDirection.RIGHT)
+        {
+            transform.LookAt(transform.position + new Vector3(1, 0));
+            if (!normalRotation)
+            {
+                transform.LookAt(transform.position + new Vector3(-1, 0));
+                transform.Rotate(new Vector3(180, 0));
+            }
+        }
+
+        if (gravityArea)
+        {
+            if(rigid.velocity.y >= 5)
+            {
+                normalRotation = false;
+            }
+        }
+        else
+        {
+                if (rigid.velocity.y <= -5)
+                {
+                    normalRotation = true;
+                }
+            
         }
     }
 
