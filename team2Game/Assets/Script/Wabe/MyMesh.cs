@@ -22,12 +22,18 @@ public class MyMesh : MonoBehaviour
 
     public bool isPlayer = false;//Playerに触れているかどうか
 
+    public bool WabeMotionFlag;//Playerとの当たり判定の後の処理用フラグ
+
+    private float x = 4;
+    private float y = 4;
+
 
     void Start()
     {
         mesh = CreatePlaneMesh();
         meshFilter.mesh = mesh;
         isPlayer = false;//Playerに触れていない
+        WabeMotionFlag = false;
     }
     private Mesh CreatePlaneMesh()
     {
@@ -63,23 +69,49 @@ public class MyMesh : MonoBehaviour
 
     void Update()
     {
-        
+
+        Wabe();
+        mesh.SetVertices(vertextList);
+
+    }
+
+    private void Wabe()//波の処理
+    {
         for (var i = 0; i < vertextList.Count; i += 2)
         {
             var v = vertextList[i];
-            if (!isPlayer)
+            if (WabeMotionFlag && !isPlayer) 
             {
-                v.y = Mathf.Sin((i + cnt) / sin) / smoothness;
+                v.y = Mathf.Sin((i + cnt) / x) / y;
+                x+=Time.deltaTime;y += Time.deltaTime;
+                if (x > sin)
+                {
+                    x = sin;
+                }
+                if (y > smoothness)
+                {
+                    y = smoothness;
+                }
+
+                if (x == sin && y == smoothness)
+                {
+                    WabeMotionFlag = false;
+                }
+            }
+            else if (!isPlayer)
+            {
+                v.y = Mathf.Sin((i + cnt) / sin) / smoothness;//通常時の波
             }
             else
             {
-                v.y = Mathf.Sin((i + cnt) / 4f) / (4f);//v.y = Mathf.Sin((i + cnt) / sin - 9) / (smoothness - 7)
+                v.y = Mathf.Sin((i + cnt) / 4f) / (4f);//Playerと当たっているときの波
+                x = 4;
+                y = 4;
             }
             vertextList[i] = v;
         }
-        cnt += 1f;
-        mesh.SetVertices(vertextList);
 
+        cnt += 1f;
     }
 
     private void OnCollisionEnter(Collision collision)//あたったとき
@@ -118,6 +150,7 @@ public class MyMesh : MonoBehaviour
         if (other.transform.tag == "Player")
         {
             isPlayer = false;
+            WabeMotionFlag = true;
         }
     }
 }

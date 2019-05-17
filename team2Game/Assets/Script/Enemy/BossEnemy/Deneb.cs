@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ラスボス：デネブ
+/// </summary>
 public class Deneb : BossEnemy
 {
     [SerializeField, Header("通る曲線の座標")]
-    Vector3[] vector;
+    Vector3[] vector;//ベジェ曲線の通る座標の配列
 
+    float t = 0;//ベジェ曲線移動の割合
+
+    /// <summary>
+    /// 左右のどちらにいるか：true=右、false=左
+    /// </summary>
     public bool OnRight
     {
         get;
@@ -19,11 +27,15 @@ public class Deneb : BossEnemy
     float speed = 1;//動きや経過時間の速さ
     int maxHp;//最大体力
 
-    [SerializeField]
-    float interval = 3;
-    float intervalElapsedTime;
+    // 体力取得用プロパティ
+    public int Hp
+    {
+        get { return hp; }
+    }
 
-    float t = 0;//ベジェ曲線移動の割合
+    [SerializeField]
+    float interval = 3;//待機状態から攻撃モードへの移行までの時間
+    float intervalElapsedTime;//上記に関する経過時間
 
     [SerializeField,　Header("降らせる星のオブジェ")]
     GameObject fallingStar;
@@ -36,14 +48,16 @@ public class Deneb : BossEnemy
 
     [SerializeField, Header("生成までの時間")]
     float instantInterval = 5;
-    float instantElapsedTime = 0;
+    float instantElapsedTime = 0;//上記に関する経過時間
 
     MeshRenderer meshRenderer;
 
-    GameObject[] starArray;
-    GameObject star;
-    bool isNone = true;//starがないか
-    bool isShoot = false;
+    GameObject[] starArray;//上から生成した星を格納する配列
+    GameObject star;//横から生成した星を格納する変数
+
+    bool isNone = true;//starArray、starが存在していないか
+    bool isShoot = false;//横から星が飛んできたか
+    bool isInstante = false;//攻撃モード中に星を上に生成したか
 
     public enum Mode//状態
     {
@@ -111,6 +125,7 @@ public class Deneb : BossEnemy
 
             case Mode.ATTACK_STAR:
                 StarAttack();
+                Mode_MoveChange();
                 break;
 
             default:
@@ -119,13 +134,6 @@ public class Deneb : BossEnemy
         
         NowInvincible();
         Death();
-    }
-
-    public override void Damage()
-    {
-        if (!isHit) return;
-
-        base.Damage();
     }
 
     /// <summary>
@@ -211,6 +219,8 @@ public class Deneb : BossEnemy
             }
         }
 
+        //左右の位置のboolを変更
+        //待機状態に移行
         OnRight = !OnRight;
         isMove = false;
         isWait = true;
@@ -269,7 +279,7 @@ public class Deneb : BossEnemy
         instantElapsedTime += Time.deltaTime * speed;
         if (instantElapsedTime >= instantInterval)
         {
-            if (GetStarObjects())
+            if (GetStarObjects() && !isInstante)
             {
                 //3つ生成してポジションを分ける
                 for (int i = -1; i < 2; i++)
@@ -277,27 +287,18 @@ public class Deneb : BossEnemy
                     //0から順に格納
                     starArray[i + 1] = Instantiate(fallingStar, fallPosition + new Vector3(i * 6, Random.Range(-3f, 3f), 0), Quaternion.Euler(0, 90, 90));
                 }
+                isInstante = true;
             }
 
             //体力が半分以下のとき
             if (hp <= maxHp / 2)
             {
                 //生成した星が全て消えた時1つだけ生成
-                if (!GetStarObjects() && !isShoot)
+                if (GetStarObjects() && !isShoot)
                 {
                     star = Instantiate(shootingStar, GetShootPosition(), Quaternion.Euler(0, 90, 90));
                     isShoot = true;
                 }
-            }
-
-            //生成したすべての星が無くなったときモードを移行
-            if (!GetStarObjects() && star == null)
-            {
-                instantElapsedTime = 0;
-                isMove = true;
-                isWait = false;
-                isShoot = false;
-                mode = Mode.MOVE;
             }
         }
     }
@@ -319,6 +320,42 @@ public class Deneb : BossEnemy
         return isNone;
     }
 
+    /// <summary>
+    /// 攻撃モードから移動モードへの移行
+    /// </summary>
+    void Mode_MoveChange()
+    {
+        //現体力に応じて切り替えるタイミングを調整
+
+        //最大体力の半分以下なら
+        if (hp <= maxHp / 2)
+        {
+            //横から生成した星が無くなったとき
+            if (GetStarObjects() && (star == null && isShoot))
+            {
+                instantElapsedTime = 0;
+                isMove = true;
+                isWait = false;
+                isShoot = false;
+                isInstante = false;
+                mode = Mode.MOVE;
+            }
+        }
+        //最大体力の半分よりも多ければ
+        else
+        {
+            //上から生成したすべての星が無くなったとき
+            if (GetStarObjects() && isInstante)
+            {
+                instantElapsedTime = 0;
+                isMove = true;
+                isWait = false;
+                isInstante = false;
+                mode = Mode.MOVE;
+            }
+        }
+    }
+
     public override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag.Contains("Player"))
@@ -328,7 +365,18 @@ public class Deneb : BossEnemy
 
         if (collision.gameObject.tag.Contains("Star"))
         {
-            Damage();
+            Damage(1);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!Application.isPlaying) return;
+
+        for(int i=0; i<4; i++)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(vector[i], 1);
         }
     }
 }

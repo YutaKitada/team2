@@ -765,13 +765,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93cadbdbabfcac04fb06ef5036ddebd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 10
+  power: 20
   isChase: 0
   hp: 1
   downParticle: {fileID: 1639172340994352, guid: d6b24f7075ddc214386b55682843cecf,
     type: 3}
   direction_Left: 1
   direction_Up: 1
+  maxDistande: 2
 --- !u!1 &1912666748
 GameObject:
   m_ObjectHideFlags: 0

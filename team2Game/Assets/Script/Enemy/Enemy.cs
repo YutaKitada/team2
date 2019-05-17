@@ -38,17 +38,8 @@ public class Enemy : MonoBehaviour
 
     protected ChangeDirection changeDirection;
 
-    public bool direction_Left = true;
-    public bool direction_Up = true;
-
-    /// <summary>
-    /// 倒したかどうか
-    /// </summary>
-    public bool Defeat
-    {
-        get;
-        protected set;
-    } = false;
+    public bool direction_Left = true;//横移動用
+    public bool direction_Up = true;//縦移動用
 
     /// <summary>
     /// 移動処理
@@ -157,9 +148,7 @@ public class Enemy : MonoBehaviour
     {
         if(hp <= 0)
         {
-            EnemyManager.DefeatedCount++;
-            Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
-            Defeat = true;
+            EnemyManager.CountUp();
             ParticleGenerate();
             Destroy(gameObject);
         }
@@ -170,7 +159,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void ParticleGenerate()
     {
-        if (downParticle == null) return;
+        if (downParticle == null) return;//パーティクルが設定されていなければreturn
 
         Instantiate(downParticle, transform.position, Quaternion.identity);
     }
