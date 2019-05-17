@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 76b1139c58df9f645a71e3206ec06f2f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - snowStorm: {fileID: 2042055694281394259, guid: c14009e89ac1cfa4e92c67de63c43fc9,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

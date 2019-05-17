@@ -28,7 +28,7 @@ public class ChangeScene : MonoBehaviour
     private void Update()
     {
         //ボタンがクリックされたときに「シーンを読み込む機能」が呼ばれるように登録
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetButtonDown("AButton") || Input.GetKeyDown(KeyCode.Z)) 
         {
             loadSceneName = ImageSelect.currentStageName;
             NextScene();
