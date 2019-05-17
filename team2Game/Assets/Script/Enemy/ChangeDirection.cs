@@ -39,8 +39,6 @@ public class ChangeDirection : MonoBehaviour
         {
             isReverse = true;
         }
-
-        transformCenter = transform.position + centerPosition;
     }
 
     private void Update()
@@ -71,32 +69,37 @@ public class ChangeDirection : MonoBehaviour
         }
     }
 
+    void DirectionChange()
+    {
+        if (enemy.direction_Left)
+        {
+            if (!isReverse)
+                ray = new Ray(transformCenter, leftRayDirection);
+            else
+                ray = new Ray(transformCenter, rightRayDirection);
+        }
+        else
+        {
+            if (!isReverse)
+                ray = new Ray(transformCenter, rightRayDirection);
+            else
+                ray = new Ray(transformCenter, leftRayDirection);
+        }
+
+        //レイがオブジェクトに当たらなくなったら、ステージ以外に当たったら方向反転
+        isChange = !Physics.Raycast(ray, out hit, MaxDistance);
+
+        if (isChange || hit.transform.tag != "Stage")
+        {
+            enemy.direction_Left = !enemy.direction_Left;
+        }
+    }
+
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag.Contains("Stage"))
         {
-            if (enemy.direction_Left)
-            {
-                if(!isReverse)
-                    ray = new Ray(transformCenter, transformCenter + leftRayDirection);
-                else
-                    ray = new Ray(transformCenter, transformCenter + rightRayDirection);
-            }
-            else
-            {
-                if(!isReverse)
-                    ray = new Ray(transformCenter, transformCenter + rightRayDirection);
-                else
-                    ray = new Ray(transformCenter, transformCenter + leftRayDirection);
-            }
-
-            //レイがオブジェクトに当たらなくなったら方向反転
-            isChange = !Physics.Raycast(ray, out hit, MaxDistance);
-
-            if (isChange || hit.transform.tag != "Stage")
-            {
-                enemy.direction_Left = !enemy.direction_Left;
-            }
+            DirectionChange();
         }
     }
 
