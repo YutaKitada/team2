@@ -16,15 +16,11 @@ public class FallingStar : MonoBehaviour
 
     Deneb deneb;
 
-    private void Awake()
-    {
-        deneb = GameObject.Find("Deneb").GetComponent<Deneb>();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
+        deneb = GameObject.FindGameObjectWithTag("BossEnemy").GetComponent<Deneb>();
         SetMarker();
     }
 
