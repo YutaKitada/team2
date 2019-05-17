@@ -14,6 +14,10 @@ public class Taurus : BossEnemy
     float interval = 5;
     float intervalElapsedTime;//待機中の経過時間
 
+    int maxHp;
+    [SerializeField, Header("巨大化サイズ")]
+    float hugingScale = 1.5f;
+
     //全ての状態
     public enum Mode
     {
@@ -40,14 +44,7 @@ public class Taurus : BossEnemy
 
     Vector3 startScale;//スケールの初期値
     int hitCount;//星を当てた回数
-    bool isHuging = true;//巨大化するか
-
-    //bool isFeint = false;//フェイントをかけるか
-    //Dictionary<int, bool> FeintInfo;//フェイントするかのディクショナリ
-    //Dictionary<int, float> FeintDictionary;//上記のための確率用のディクショナリ
-
-    //bool isChosen = false;//フェイントのboolが決められたか
-    //float stopTime;//フェイント時の止まるまでの時間
+    bool isHuging = false;//巨大化中か
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +66,7 @@ public class Taurus : BossEnemy
         startScale = transform.localScale;
         hitCount = 0;
 
-        //InitializeDictionary();
+        maxHp = hp;
     }
 
     // Update is called once per frame
@@ -97,13 +94,11 @@ public class Taurus : BossEnemy
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
                 SetOnRight();
-                ContractionScale();
                 anim.speed = 1;
                 break;
 
             case Mode.RUSH:
                 RushAttack();
-                ContractionScale();
                 anim.speed = 3;
                 break;
 
@@ -116,73 +111,9 @@ public class Taurus : BossEnemy
             default:
                 break;
         }
+
+        HugingScale();
     }
-
-    ///// <summary>
-    ///// フェイント取得
-    ///// </summary>
-    //void GetFeint()
-    //{
-    //    if (isChosen) return;
-
-    //    int Id = Choose();
-
-    //    if (Id != 0)
-    //    {
-    //        isFeint = false;
-    //    }
-    //    else
-    //    {
-    //        isFeint = true;
-    //    }
-
-    //    isChosen = true;
-    //}
-
-    ///// <summary>
-    ///// ディクショナリの初期化
-    ///// </summary>
-    //void InitializeDictionary()
-    //{
-    //    FeintInfo = new Dictionary<int, bool>();
-    //    FeintInfo.Add(0, true);
-    //    FeintInfo.Add(1, false);
-
-    //    FeintDictionary = new Dictionary<int, float>();
-    //    FeintDictionary.Add(0, 50f);
-    //    FeintDictionary.Add(1, 50f);
-    //}
-
-    ///// <summary>
-    ///// 確率を決める処理
-    ///// </summary>
-    ///// <returns></returns>
-    //int Choose()
-    //{
-    //    float total = 0;
-
-    //    foreach(KeyValuePair<int, float> elem in FeintDictionary)
-    //    {
-    //        total += elem.Value;
-    //    }
-
-    //    float randomPoint = Random.value * total;
-
-    //    foreach(KeyValuePair<int, float> elem in FeintDictionary)
-    //    {
-    //        if (randomPoint < elem.Value)
-    //        {
-    //            return elem.Key;
-    //        }
-    //        else
-    //        {
-    //            randomPoint -= elem.Value;
-    //        }
-    //    }
-
-    //    return 1;
-    //}
-
 
     void SetOnRight()
     {
@@ -215,29 +146,12 @@ public class Taurus : BossEnemy
         if (intervalElapsedTime < interval) return;
         else
         {
-            if (isChange) return;
+            if (isChange || isHuging) return;
 
             //突進に必要な情報を得る
             targetPosition = target.position;//突進開始時のプレイヤーの位置に向かう
             intervalElapsedTime = 0;
-            //GetFeint();
             mode = Mode.RUSH;
-        }
-    }
-
-
-    void HitCount()
-    {
-        if (!isHit) return;
-
-        hitCount++;
-        isHit = false;
-
-        if (hitCount >= 3)
-        {
-            hitCount = 0;
-            isHuging = false;
-            mode = Mode.STAN;
         }
     }
 
@@ -246,22 +160,18 @@ public class Taurus : BossEnemy
     /// </summary>
     void HugingScale()
     {
-        //巨大化
-        if (transform.localScale.x <= startScale.x * 2 && isHuging)
-        {
-            transform.localScale += new Vector3(10, 10, 10) * Time.deltaTime * 2;
-        }
-    }
+        //体力が半分を切ったら巨大化
+        if (hp > maxHp / 2) return;
 
-    /// <summary>
-    /// サイズ変化（収縮）
-    /// </summary>
-    void ContractionScale()
-    {
-        //収縮
-        if (transform.localScale.x >= startScale.x && !isHuging)
+        //巨大化
+        if (transform.localScale.x <= startScale.x * hugingScale)
         {
-            transform.localScale -= new Vector3(10, 10, 10) * Time.deltaTime * 3;
+            transform.localScale += new Vector3(10, 10, 10) * Time.deltaTime;
+            isHuging = true;
+        }
+        else
+        {
+            isHuging = false;
         }
     }
 
@@ -271,17 +181,6 @@ public class Taurus : BossEnemy
     void RushAttack()
     {
         rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
-        ////フェイントするとき
-        //if (isFeint)
-        //{
-        //    stopTime += Time.deltaTime;
-        //    if (stopTime >= 1)
-        //    {
-        //        Stop();
-        //        stopTime = 0;
-        //        mode = Mode.WAIT;
-        //    }
-        //}
 
         //向きに応じて、砂埃の方向を変更
         if (onRight)
@@ -328,9 +227,10 @@ public class Taurus : BossEnemy
             mode = Mode.STAN;
         }
 
-        if (mode == Mode.WAIT && other.gameObject.tag.Contains("Star"))
+        if (other.gameObject.tag == "Star" && !isHuging)
         {
-            HitCount();
+            if (!isHit) return;
+            Damage(1);
         }
     }
 

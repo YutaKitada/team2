@@ -22,8 +22,7 @@ public class WeakPoint : MonoBehaviour
         {
             if (!parent.isHit) return;
 
-            parent.Damage();
-            parent.Stop();
+            parent.Damage(2);
         }
     }
 

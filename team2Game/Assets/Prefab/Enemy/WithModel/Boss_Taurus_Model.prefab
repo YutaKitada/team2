@@ -194,7 +194,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 124
   m_CollisionDetection: 0
 --- !u!136 &583283837
 CapsuleCollider:
@@ -236,14 +236,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2f7148df98cfe46a06b24bcbf3bd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
+  hp: 30
   stanTime: 3
   isHit: 1
   invincibleTime: 3
   downParticle: {fileID: 5725949500956807022, guid: 0f88c19103f50134abd03767b5308e54,
     type: 3}
-  power: 20
+  power: 30
   interval: 5
+  hugingScale: 1.5
   mode: 0
   sandParticle: {fileID: 6430994268695726755, guid: 3740c7bec18d62a4f9bc55911aecbff6,
     type: 3}

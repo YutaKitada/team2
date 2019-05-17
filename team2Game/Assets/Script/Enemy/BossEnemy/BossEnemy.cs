@@ -49,10 +49,10 @@ public class BossEnemy : MonoBehaviour
     /// <summary>
     /// ダメージ
     /// </summary>
-    public virtual void Damage()
+    public virtual void Damage(int damage)
     {
-        hp--;
         isHit = false;
+        hp -=damage;
     }
 
     /// <summary>

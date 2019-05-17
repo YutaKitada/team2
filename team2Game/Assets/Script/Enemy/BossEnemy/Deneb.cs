@@ -136,11 +136,11 @@ public class Deneb : BossEnemy
         Death();
     }
 
-    public override void Damage()
+    public override void Damage(int damage)
     {
         if (!isHit) return;
 
-        base.Damage();
+        base.Damage(damage);
     }
 
     /// <summary>
@@ -372,7 +372,7 @@ public class Deneb : BossEnemy
 
         if (collision.gameObject.tag.Contains("Star"))
         {
-            Damage();
+            Damage(1);
         }
     }
 
