@@ -282,8 +282,7 @@ public class Taurus : BossEnemy
         }
 
         //Playerの方向に向き終わるまでは方向転換中に設定
-        if (transform.rotation == Quaternion.Euler(forward) ||
-            transform.rotation == Quaternion.Euler(-forward))
+        if (GetAngle())
         {
             isChange = false;
         }
@@ -293,5 +292,23 @@ public class Taurus : BossEnemy
         }
 
         yield return null;
+    }
+
+    bool GetAngle()
+    {
+        bool isForward;
+
+        if (transform.rotation == Quaternion.Euler(new Vector3(0, -90, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, 90, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, 270, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, -270, 0)))
+        {
+            isForward = true;
+        }
+        else
+        {
+            isForward = false;
+        }
+        return isForward;
     }
 }
