@@ -17,7 +17,7 @@
 			{
 			Stencil{
 		ref 2
-		Comp equal
+		Comp Equal
 	}
 				Blend SrcAlpha OneMinusSrcAlpha
 				CGPROGRAM
