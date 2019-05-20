@@ -64,6 +64,8 @@ public class BossEnemy : MonoBehaviour
     {
         rigid.velocity = Vector3.zero;
         rigid.angularVelocity = Vector3.zero;
+
+        rigid.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public virtual void Death()

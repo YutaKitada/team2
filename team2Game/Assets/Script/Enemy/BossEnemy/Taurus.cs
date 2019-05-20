@@ -102,6 +102,7 @@ public class Taurus : BossEnemy
                 break;
 
             case Mode.RUSH:
+                MoveFreeze();
                 RushAttack();
                 anim.speed = 3;
                 break;
@@ -192,6 +193,16 @@ public class Taurus : BossEnemy
     }
 
     /// <summary>
+    /// X軸の移動以外を固定
+    /// </summary>
+    void MoveFreeze()
+    {
+        rigid.constraints = RigidbodyConstraints.FreezeRotation 
+            | RigidbodyConstraints.FreezePositionY 
+            | RigidbodyConstraints.FreezePositionZ;
+    }
+
+    /// <summary>
     /// 突進攻撃
     /// </summary>
     void RushAttack()
@@ -256,6 +267,11 @@ public class Taurus : BossEnemy
         if (collision.gameObject.tag == "Stage")
         {
             instantePosition = collision.contacts[0].point;
+        }
+
+        if(collision.gameObject.tag == "Player" && mode != Mode.STAN)
+        {
+            PlayerManager.PlayerDamage(10);
         }
     }
 

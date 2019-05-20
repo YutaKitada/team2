@@ -89,7 +89,7 @@ public class ChangeDirection : MonoBehaviour
         //レイがオブジェクトに当たらなくなったら、ステージ以外に当たったら方向反転
         isChange = !Physics.Raycast(ray, out hit, MaxDistance);
 
-        if (isChange || (hit.transform.tag != "Stage" || hit.transform.tag != "Ice"))
+        if (isChange /*|| (hit.transform.tag != "Stage" || hit.transform.tag != "Ice")*/)
         {
             enemy.direction_Left = !enemy.direction_Left;
         }
