@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private bool isDamage;                      //ダメージを受けているか否か
 
+    private float damageTimer;
+
     [HideInInspector]
     public bool gravityArea;//重力反転エリアに入っているかどうか
     private bool gravityStop;//重力無効判定用
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
 
         //ダメージを受けていない
         isDamage = false;
+        damageTimer = 2;
 
         //アニメーション用
         animator = GetComponent<Animator>();
@@ -85,8 +88,15 @@ public class PlayerController : MonoBehaviour
         //アニメーションの処理
         Animation();
 
+        damageTimer += Time.deltaTime;
+        if(damageTimer >= 2)
+        {
+            
+            isDamage = false;
+        }
         //移動処理
         Move();
+
 
         UIManager.debugtext = "\n" + "JumpCount:" + jumpCount
              + "\n" + "isJump:" + isJump
@@ -361,6 +371,7 @@ public class PlayerController : MonoBehaviour
                 {
                     rigid.AddForce(new Vector3(1, 3), ForceMode.Impulse);
                 }
+                damageTimer = 0;
             }
 
         }
