@@ -252,8 +252,7 @@ public class Deneb : BossEnemy
         }
 
         //方向転換し終えたら、モード移行までの待機時間
-        if (transform.rotation == Quaternion.Euler(forward)
-            || transform.rotation == Quaternion.Euler(-forward))
+        if (GetAngle())
         {
             //指定した経過時間を過ぎたらモードを移行
             intervalElapsedTime += Time.deltaTime * speed;
@@ -269,6 +268,24 @@ public class Deneb : BossEnemy
                 yield break;
             }
         }
+    }
+
+    bool GetAngle()
+    {
+        bool isForward;
+
+        if (transform.rotation == Quaternion.Euler(new Vector3(0, -90, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, 90, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, 270, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, -270, 0)))
+        {
+            isForward = true;
+        }
+        else
+        {
+            isForward = false;
+        }
+        return isForward;
     }
 
     /// <summary>

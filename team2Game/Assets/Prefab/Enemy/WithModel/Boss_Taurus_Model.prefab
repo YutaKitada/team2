@@ -151,7 +151,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583283836}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0, y: -2.08, z: 0}
   m_LocalScale: {x: 150, y: 150, z: 150}
   m_Children:
@@ -160,7 +160,7 @@ Transform:
   - {fileID: 2125948024}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &583283841
 Animator:
   serializedVersion: 3
@@ -204,12 +204,12 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583283836}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.006171092
-  m_Height: 0.01640178
+  m_Radius: 0.0061710915
+  m_Height: 0.020400614
   m_Direction: 1
-  m_Center: {x: -3.4554722e-17, y: 0.018083055, z: 0.007763829}
+  m_Center: {x: 0, y: 0.016083658, z: 0.0077638295}
 --- !u!136 &583283838
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -220,10 +220,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.01
+  m_Radius: 0.010925181
   m_Height: 0.023804583
   m_Direction: 1
-  m_Center: {x: -9.621934e-18, y: 0.011267405, z: 0.0019999996}
+  m_Center: {x: 0, y: 0.011267405, z: 0.0029251806}
 --- !u!114 &583283839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +248,7 @@ MonoBehaviour:
   mode: 0
   sandParticle: {fileID: 6430994268695726755, guid: 3740c7bec18d62a4f9bc55911aecbff6,
     type: 3}
+  originBlowVector: {x: -75, y: 3, z: 0}
 --- !u!1 &607839546
 GameObject:
   m_ObjectHideFlags: 0
