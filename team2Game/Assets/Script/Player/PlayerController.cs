@@ -423,6 +423,8 @@ public class PlayerController : MonoBehaviour
         {
             isIce = true;//Iceに触れている
             isJump = false;
+            //ジャンプカウントを0に
+            jumpCount = 0;
         }
         else
         {
