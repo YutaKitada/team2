@@ -49,6 +49,9 @@ public class Taurus : BossEnemy
     Vector3 startScale;//スケールの初期値
     bool isHuging = false;//巨大化中か
 
+    [SerializeField]
+    Vector3 originBlowVector;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -102,6 +105,7 @@ public class Taurus : BossEnemy
                 break;
 
             case Mode.RUSH:
+                MoveFreeze();
                 RushAttack();
                 anim.speed = 3;
                 break;
@@ -192,11 +196,26 @@ public class Taurus : BossEnemy
     }
 
     /// <summary>
+    /// X軸の移動以外を固定
+    /// </summary>
+    void MoveFreeze()
+    {
+        rigid.constraints = RigidbodyConstraints.FreezeRotation 
+            | RigidbodyConstraints.FreezePositionY 
+            | RigidbodyConstraints.FreezePositionZ;
+    }
+
+    /// <summary>
     /// 突進攻撃
     /// </summary>
     void RushAttack()
     {
         rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        if (Mathf.Abs(rigid.velocity.x) <= 10)
+        {
+            if (OnRight) rigid.velocity = new Vector3(-10, 0);
+            else rigid.velocity = new Vector3(10, 0);
+        }
 
         GenerateSandParticle();
     }
@@ -223,6 +242,7 @@ public class Taurus : BossEnemy
             {
                 //その場で待機状態に移行
                 PlayerManager.PlayerDamage(10);
+                Blow();
 
                 if (mode == Mode.RUSH)
                 {
@@ -256,6 +276,11 @@ public class Taurus : BossEnemy
         if (collision.gameObject.tag == "Stage")
         {
             instantePosition = collision.contacts[0].point;
+        }
+
+        if(collision.gameObject.tag == "Player" && mode != Mode.STAN)
+        {
+            Blow();
         }
     }
 
@@ -310,5 +335,18 @@ public class Taurus : BossEnemy
             isForward = false;
         }
         return isForward;
+    }
+
+    /// <summary>
+    /// プレイヤーに当たったときに吹き飛ばす
+    /// </summary>
+    void Blow()
+    {
+        var blowVector = Vector3.zero;
+
+        if (OnRight) blowVector = originBlowVector;
+        else blowVector = new Vector3(-originBlowVector.x, originBlowVector.y);
+
+        target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
     }
 }

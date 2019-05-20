@@ -342,7 +342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 583283836, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 583283842, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -387,6 +387,50 @@ PrefabInstance:
     - target: {fileID: 583283842, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283837, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Radius
+      value: 0.0061710915
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283837, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Height
+      value: 0.020400614
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283837, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283837, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Center.y
+      value: 0.016083658
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283837, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0077638295
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283837, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283838, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Radius
+      value: 0.010925181
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283838, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283838, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0029251806
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283839, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: originBlowVector.x
+      value: -75
+      objectReference: {fileID: 0}
+    - target: {fileID: 583283839, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}
+      propertyPath: originBlowVector.y
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91984eb25e202e7458c2813a4f76e2aa, type: 3}

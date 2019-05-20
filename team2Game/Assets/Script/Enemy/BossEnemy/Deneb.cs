@@ -274,16 +274,17 @@ public class Deneb : BossEnemy
     {
         bool isForward;
 
-        if(transform.rotation==Quaternion.Euler(new Vector3(0,-90,0))
-            || transform.rotation==Quaternion.Euler(new Vector3(0,90,0))
+        if (transform.rotation == Quaternion.Euler(new Vector3(0, -90, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, 90, 0))
             || transform.rotation == Quaternion.Euler(new Vector3(0, 270, 0))
             || transform.rotation == Quaternion.Euler(new Vector3(0, -270, 0)))
         {
             isForward = true;
-            return isForward;
         }
-
-        isForward = false;
+        else
+        {
+            isForward = false;
+        }
         return isForward;
     }
 
