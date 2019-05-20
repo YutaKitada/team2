@@ -304,23 +304,45 @@ public class WishManager : MonoBehaviour
         isChase = true;
 
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] bosss = GameObject.FindGameObjectsWithTag("BossEnemy");
+
         GameObject enemy = null;
 
         float distance = -1;
 
-        foreach (var n in enemys)
+        if(enemys != null)
         {
-            if (distance == -1)
+            foreach (var n in enemys)
             {
-                distance = Vector3.Distance(player.transform.position, n.transform.position);
-                enemy = n;
-            }
-            else if (distance >= Vector3.Distance(player.transform.position, n.transform.position))
-            {
-                distance = Vector3.Distance(player.transform.position, n.transform.position);
-                enemy = n;
+                if (distance == -1)
+                {
+                    distance = Vector3.Distance(player.transform.position, n.transform.position);
+                    enemy = n;
+                }
+                else if (distance >= Vector3.Distance(player.transform.position, n.transform.position))
+                {
+                    distance = Vector3.Distance(player.transform.position, n.transform.position);
+                    enemy = n;
+                }
             }
         }
+        if(bosss != null)
+        {
+            foreach (var n in bosss)
+            {
+                if (distance == -1)
+                {
+                    distance = Vector3.Distance(player.transform.position, n.transform.position);
+                    enemy = n;
+                }
+                else if (distance >= Vector3.Distance(player.transform.position, n.transform.position))
+                {
+                    distance = Vector3.Distance(player.transform.position, n.transform.position);
+                    enemy = n;
+                }
+            }
+        }
+        
 
         if (!PlayerManager.haveStar && !star.GetComponent<StarMovement>().returnPlayer)
         {
