@@ -89,7 +89,8 @@ public class PlayerController : MonoBehaviour
         Move();
 
         UIManager.debugtext = "\n" + "JumpCount:" + jumpCount
-             + "\n" + "isJump:" + isJump;
+             + "\n" + "isJump:" + isJump
+             + "\n" + "isIce:" + isIce;
     }
 
     //移動処理メソッド
@@ -197,7 +198,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && !isJump)
         {
             //ジャンプする前に一旦移動量を0にする
-            rigid.velocity = Vector3.zero;
+            rigid.velocity = new Vector3(rigid.velocity.x,0);
             if (Input.GetAxisRaw("Vertical") <= -0.7f)
             {
 
@@ -404,6 +405,10 @@ public class PlayerController : MonoBehaviour
             isIce = true;//Iceに触れている
             isJump = false;
         }
+        else
+        {
+            isIce = false;
+        }
 
         animator.SetTrigger("Landing");
 
@@ -431,11 +436,6 @@ public class PlayerController : MonoBehaviour
             speed = 10;         //スピードを10に
             jumpPower = 10;     //ジャンプのパワーを10に
             inWater = false;    //水の中ではない
-        }
-        //追加丹下
-        if (other.tag == "Ice")
-        {
-            isIce = false;//Iceに触れていない
         }
         if (other.tag == "Gravity")
         {
