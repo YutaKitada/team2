@@ -12,15 +12,6 @@ public class Deneb : BossEnemy
 
     float t = 0;//ベジェ曲線移動の割合
 
-    /// <summary>
-    /// 左右のどちらにいるか：true=右、false=左
-    /// </summary>
-    public bool OnRight
-    {
-        get;
-        set;
-    }
-
     bool isMove;//移動中か
     bool isWait;//待機中か
 

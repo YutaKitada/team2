@@ -19074,6 +19074,7 @@ MonoBehaviour:
   jumpPower: 10
   addGravity: 10
   gravityArea: 0
+  normalRotation: 0
 --- !u!114 &88817065242869046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19318,11 +19319,11 @@ PrefabInstance:
     - target: {fileID: 13700000, guid: 52eb700a89b1b65429edf05c56499eae, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3339227e71fd5584dbfc751f85b4c35c, type: 2}
+      objectReference: {fileID: 2100000, guid: b22c3d704754e50408a9e234f9cc8678, type: 2}
     - target: {fileID: 13700000, guid: 52eb700a89b1b65429edf05c56499eae, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 3339227e71fd5584dbfc751f85b4c35c, type: 2}
+      objectReference: {fileID: 2100000, guid: b22c3d704754e50408a9e234f9cc8678, type: 2}
     - target: {fileID: 13700000, guid: 52eb700a89b1b65429edf05c56499eae, type: 3}
       propertyPath: m_Bones.Array.data[0]
       value: 

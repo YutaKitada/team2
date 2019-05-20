@@ -38,12 +38,13 @@ public class BossEnemy : MonoBehaviour
         protected set;
     } = false;
 
-    /// <summary>
-    /// 向き
-    /// </summary>
-    public virtual void Direction()
-    {
+    [SerializeField]
+    float scale = 100;
 
+    public bool OnRight
+    {
+        get;
+        set;
     }
 
     /// <summary>
@@ -75,6 +76,8 @@ public class BossEnemy : MonoBehaviour
             IsDead = true;
             if (anim != null)
             {
+                AnimReverse();
+
                 anim.SetBool("isDead", true);
                 anim.speed = 1;
             }
@@ -84,5 +87,20 @@ public class BossEnemy : MonoBehaviour
     public virtual void OnCollisionEnter(Collision other)
     {
 
+    }
+
+    /// <summary>
+    /// アニメーション反転させるためのscaleいじり
+    /// </summary>
+    void AnimReverse()
+    {
+        if (OnRight)
+        {
+            transform.localScale = new Vector3(-scale, scale, scale);
+        }
+        else
+        {
+            transform.localScale = new Vector3(scale, scale, scale);
+        }
     }
 }
