@@ -30,13 +30,7 @@ public class Taurus : BossEnemy
 
     Vector3 targetPosition;//突進開始時のプレイヤーの位置
 
-    bool isChange = false;//方向転換中か
-
-    bool OnRight
-    {
-        get;
-        set;
-    }//プレイヤーより右側にいるか
+    bool isChangeNow = false;//方向転換中か
 
     [SerializeField]
     GameObject sandParticle;
@@ -51,6 +45,11 @@ public class Taurus : BossEnemy
 
     [SerializeField]
     Vector3 originBlowVector;
+
+    bool isTurn = false;
+    int rushTurn = 0;
+
+    float speed = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -94,6 +93,8 @@ public class Taurus : BossEnemy
             return;
         }
 
+        if (hp <= maxHp / 2) speed = 1.5f;
+
         switch (mode)//状態に応じた処理を実行
         {
             case Mode.WAIT:
@@ -101,13 +102,12 @@ public class Taurus : BossEnemy
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
                 SetOnRight();
-                anim.speed = 1;
+                anim.speed = 1 * speed;
                 break;
 
             case Mode.RUSH:
-                MoveFreeze();
-                RushAttack();
-                anim.speed = 3;
+                if(!isTurn)RushAttack();
+                else TurnRush();
                 break;
 
             case Mode.STAN:
@@ -131,7 +131,7 @@ public class Taurus : BossEnemy
         if (transform.position.x > target.position.x) OnRight = true;//右
         if (transform.position.x < target.position.x) OnRight = false;//左
     }
-
+    
     /// <summary>
     /// 砂埃のパーティクル生成
     /// </summary>
@@ -153,9 +153,9 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushPrepare()
     {
-        intervalElapsedTime += Time.deltaTime;
+        intervalElapsedTime += Time.deltaTime * speed;
         HugingScale();
-        instanteTime += Time.deltaTime;
+        instanteTime += Time.deltaTime * speed;
         if (instanteTime >= 1)
         {
             GenerateSandParticle();
@@ -166,7 +166,7 @@ public class Taurus : BossEnemy
         if (intervalElapsedTime < interval) return;
         else
         {
-            if (isChange || isHuging) return;
+            if (isChangeNow || isHuging) return;
 
             //突進に必要な情報を得る
             targetPosition = target.position;//突進開始時のプレイヤーの位置に向かう
@@ -210,7 +210,9 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushAttack()
     {
-        rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        MoveFreeze();
+
+        rigid.AddForce(transform.forward * power * speed, ForceMode.Acceleration);
         if (Mathf.Abs(rigid.velocity.x) <= 10)
         {
             if (OnRight) rigid.velocity = new Vector3(-10, 0);
@@ -218,6 +220,14 @@ public class Taurus : BossEnemy
         }
 
         GenerateSandParticle();
+        anim.speed = 3 * speed;
+    }
+
+    void TurnRush()
+    {
+        Stop();
+        StartCoroutine(DirectionCoroutine());
+        anim.speed = 1 * speed;
     }
 
     /// <summary>
@@ -225,7 +235,7 @@ public class Taurus : BossEnemy
     /// </summary>
     void NowStan()
     {
-        stanElapsedTime += Time.deltaTime;
+        stanElapsedTime += Time.deltaTime * speed;
         if (stanElapsedTime >= stanTime)
         {
             stanElapsedTime = 0;
@@ -244,9 +254,16 @@ public class Taurus : BossEnemy
                 PlayerManager.PlayerDamage(10);
                 Blow();
 
-                if (mode == Mode.RUSH)
+                if (hp <= maxHp / 2 && mode == Mode.RUSH)
                 {
-                    mode = Mode.WAIT;
+                    BlowUp();
+                }
+                else
+                {
+                    if (mode == Mode.RUSH)
+                    {
+                        mode = Mode.WAIT;
+                    }
                 }
             }
         }
@@ -254,7 +271,22 @@ public class Taurus : BossEnemy
         //突進中に壁に当たったらスタン状態に移行
         if (other.gameObject.name.Contains("Wall") && mode == Mode.RUSH)
         {
-            mode = Mode.STAN;
+            if (hp <= maxHp / 2)
+            {
+                rushTurn++;
+                OnRight = !OnRight;
+                if (rushTurn >= 3)
+                {
+                    mode = Mode.STAN;
+                    rushTurn = 0;
+                    return;
+                }
+                isTurn = true;
+            }
+            else
+            {
+                mode = Mode.STAN;
+            }
         }
 
         if (other.gameObject.tag == "Star" && !isHuging)
@@ -294,12 +326,12 @@ public class Taurus : BossEnemy
 
         while (true)
         {
-            rate += Time.deltaTime * 3;
+            rate += Time.deltaTime * 3 * speed;
             if (OnRight)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
             }
-            if (!OnRight)
+            else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
             }
@@ -309,11 +341,13 @@ public class Taurus : BossEnemy
         //Playerの方向に向き終わるまでは方向転換中に設定
         if (GetAngle())
         {
-            isChange = false;
+            isChangeNow = false;
+
+            if (mode == Mode.RUSH) isTurn = false;
         }
         else
         {
-            isChange = true;
+            isChangeNow = true;
         }
 
         yield return null;
@@ -346,6 +380,19 @@ public class Taurus : BossEnemy
 
         if (OnRight) blowVector = originBlowVector;
         else blowVector = new Vector3(-originBlowVector.x, originBlowVector.y);
+
+        target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
+    }
+    
+    /// <summary>
+    /// 打ち上げ
+    /// </summary>
+    void BlowUp()
+    {
+        var blowVector = Vector3.zero;
+
+        if (OnRight) blowVector = new Vector3(-25, 20);
+        else blowVector = new Vector3(25, 20);
 
         target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
     }
