@@ -51,6 +51,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image wishYButton;                          //コマンド入力可能時に表示するYボタン
 
+    [SerializeField]
+    private GameObject circleObject;                   //コマンドをミスした時に表示するオブジェクト
+    private List<GameObject> circleList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,7 +85,8 @@ public class UIManager : MonoBehaviour
             answerButtonList.Add(Instantiate(buttonObject, buttonParent.transform));
             wishButtonList.Add(Instantiate(buttonObject, buttonParent.transform));
             answerButtonList[i].transform.localPosition = new Vector3(buttonPositionX, 0);
-            wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, -60);
+            //wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, -60);
+            wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, 0);
             buttonPositionX += 30;
         }
 
@@ -90,6 +95,8 @@ public class UIManager : MonoBehaviour
 
         //Yボタンを非表示に
         wishYButton.enabled = false;
+
+        circleList = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -236,6 +243,7 @@ public class UIManager : MonoBehaviour
                 {
                     if(wishText.Length-1 >= wishTextNumber)
                     {
+
                         switch (wishText.Substring(wishTextNumber, 1))
                         {
                             case "A":
@@ -251,10 +259,14 @@ public class UIManager : MonoBehaviour
                                 wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[3];
                                 break;
                         }
-                        if(wishButtonList[i].GetComponent<Image>().sprite != answerButtonList[i].GetComponent<Image>().sprite)
+                        if (wishButtonList[i].GetComponent<Image>().sprite != answerButtonList[i].GetComponent<Image>().sprite)
                         {
                             mistakeObject.SetActive(true);
                             mistakeObject.transform.position = wishButtonList[i].transform.position;
+                        }
+                        else
+                        {
+                            circleList.Add(Instantiate(circleObject, wishButtonList[i].transform.position, Quaternion.identity, buttonParent.transform));
                         }
                         wishTextNumber++;
                         space = true;
@@ -270,6 +282,11 @@ public class UIManager : MonoBehaviour
                 wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[4];
 
                 mistakeObject.SetActive(false);
+                
+            }
+            foreach(var n in circleList)
+            {
+                Destroy(n.gameObject);
             }
         }
     }
