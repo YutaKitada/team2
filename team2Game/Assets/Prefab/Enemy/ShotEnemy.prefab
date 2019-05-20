@@ -138,11 +138,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 10
+  isChase: 0
   hp: 1
   downParticle: {fileID: 1639172340994352, guid: d6b24f7075ddc214386b55682843cecf,
     type: 3}
-  shotTime: 3
+  direction_Left: 1
+  direction_Up: 1
+  shotTime: 2
   bullet: {fileID: 875391469329009295, guid: 60264191918903448ae2c94bea189602, type: 3}
+  range1: 5
+  range2: 5
 --- !u!54 &4899987920516949914
 Rigidbody:
   m_ObjectHideFlags: 0
