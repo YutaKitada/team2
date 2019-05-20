@@ -242,6 +242,7 @@ MonoBehaviour:
   invincibleTime: 3
   downParticle: {fileID: 5725949500956807022, guid: 0f88c19103f50134abd03767b5308e54,
     type: 3}
+  scale: 225
   power: 30
   interval: 5
   hugingScale: 1.5
