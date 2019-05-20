@@ -125,12 +125,12 @@ public class PlayerThrow : MonoBehaviour
                         if (GameManager.player.GetComponent<PlayerController>().normalRotation)
                         {
                             //真下に投げる
-                            starRigid.AddForce(new Vector3(0, throwPower), ForceMode.Impulse);
+                            starRigid.AddForce(new Vector3(0, -throwPower), ForceMode.Impulse);
                         }
                         else
                         {
                             //真下に投げる
-                            starRigid.AddForce(new Vector3(0, -throwPower), ForceMode.Impulse);
+                            starRigid.AddForce(new Vector3(0, throwPower), ForceMode.Impulse);
                         }
                        
                     }

@@ -25,10 +25,13 @@ public class PlayerController : MonoBehaviour
     private Animator animator;                  //アニメーション用
 
     private int jumpCount;                      //2段ジャンプ用カウンター
+    private bool jumpLimit;
 
     private bool isIce;                         //Iceに当たっているかどうか//追加丹下
 
     private bool isDamage;                      //ダメージを受けているか否か
+
+    private float damageTimer;
 
     [HideInInspector]
     public bool gravityArea;//重力反転エリアに入っているかどうか
@@ -59,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
         //ダメージを受けていない
         isDamage = false;
+        damageTimer = 2;
 
         //アニメーション用
         animator = GetComponent<Animator>();
@@ -67,6 +71,7 @@ public class PlayerController : MonoBehaviour
         gravityStop = false;
 
         normalRotation = true;
+        jumpLimit = false;
     }
 
     void FixedUpdate()
@@ -85,11 +90,19 @@ public class PlayerController : MonoBehaviour
         //アニメーションの処理
         Animation();
 
+        damageTimer += Time.deltaTime;
+        if(damageTimer >= 1)
+        {
+            
+            isDamage = false;
+        }
         //移動処理
         Move();
 
+
         UIManager.debugtext = "\n" + "JumpCount:" + jumpCount
-             + "\n" + "isJump:" + isJump;
+             + "\n" + "isJump:" + isJump
+             + "\n" + "isIce:" + isIce;
     }
 
     //移動処理メソッド
@@ -194,10 +207,13 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         //ジャンプボタンを押したら
-        if (Input.GetButtonDown("Jump") && !isJump)
+        if (Input.GetButtonDown("Jump") && !isJump && !jumpLimit)
         {
+            Debug.Log("JUMP");
+            //ジャンプカウントを1増やす
+            jumpCount++;
             //ジャンプする前に一旦移動量を0にする
-            rigid.velocity = Vector3.zero;
+            rigid.velocity = new Vector3(rigid.velocity.x,0);
             if (Input.GetAxisRaw("Vertical") <= -0.7f)
             {
 
@@ -212,8 +228,6 @@ public class PlayerController : MonoBehaviour
                     //上方向に力を与える
                     rigid.AddForce(new Vector3(0, -jumpPower * 1.5f), ForceMode.Impulse);
                 }
-                //ジャンプカウントを1増やす
-                jumpCount++;
             }
             else
             {
@@ -228,8 +242,8 @@ public class PlayerController : MonoBehaviour
                     rigid.AddForce(new Vector3(0, -jumpPower), ForceMode.Impulse);
                 }
                 SoundManager.PlaySE(6);
-                //ジャンプカウントを1増やす
-                jumpCount++;
+                ////ジャンプカウントを1増やす
+                //jumpCount++;
             }
             
             //ジャンプカウントが2以上であれば
@@ -238,9 +252,14 @@ public class PlayerController : MonoBehaviour
                 //ジャンプをできなくする
                 isJump = true;
             }
+
+            jumpLimit = true;
         }
 
-
+        if(Input.GetButtonUp("Jump") && jumpLimit)
+        {
+            jumpLimit = false;
+        }
     }
 
     private void Animation()
@@ -360,6 +379,7 @@ public class PlayerController : MonoBehaviour
                 {
                     rigid.AddForce(new Vector3(1, 3), ForceMode.Impulse);
                 }
+                damageTimer = 0;
             }
 
         }
@@ -403,6 +423,12 @@ public class PlayerController : MonoBehaviour
         {
             isIce = true;//Iceに触れている
             isJump = false;
+            //ジャンプカウントを0に
+            jumpCount = 0;
+        }
+        else
+        {
+            isIce = false;
         }
 
         animator.SetTrigger("Landing");
@@ -431,11 +457,6 @@ public class PlayerController : MonoBehaviour
             speed = 10;         //スピードを10に
             jumpPower = 10;     //ジャンプのパワーを10に
             inWater = false;    //水の中ではない
-        }
-        //追加丹下
-        if (other.tag == "Ice")
-        {
-            isIce = false;//Iceに触れていない
         }
         if (other.tag == "Gravity")
         {
