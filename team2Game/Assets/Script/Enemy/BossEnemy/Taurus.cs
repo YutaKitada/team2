@@ -51,6 +51,11 @@ public class Taurus : BossEnemy
 
     float speed = 1;
 
+    Dictionary<int, int> SeInfo;//鳴らすSEのデータ用のディクショナリ
+    Dictionary<int, float> ProbabilityDictionary;
+
+    bool rushBeforePlay = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -161,16 +166,23 @@ public class Taurus : BossEnemy
             GenerateSandParticle();
             instanteTime = 0;
         }
-
-        //待機中の経過時間が規定時間まで過ぎたら突進状態へ移行
-        if (intervalElapsedTime < interval) return;
-        else
+        
+        if (intervalElapsedTime >= interval - 1)
+        {
+            if (!rushBeforePlay)
+            {
+                RandomPlaySE();
+                rushBeforePlay = true;
+            }
+        }
+        if(intervalElapsedTime >= interval)
         {
             if (isChangeNow || isHuging) return;
 
             //突進に必要な情報を得る
             targetPosition = target.position;//突進開始時のプレイヤーの位置に向かう
             intervalElapsedTime = 0;
+            rushBeforePlay = false;
             mode = Mode.RUSH;
         }
     }
@@ -213,6 +225,7 @@ public class Taurus : BossEnemy
         MoveFreeze();
 
         rigid.AddForce(transform.forward * power * speed, ForceMode.Acceleration);
+        SoundManager.PlaySE(14);
         if (Mathf.Abs(rigid.velocity.x) <= 10)
         {
             if (OnRight) rigid.velocity = new Vector3(-10, 0);
@@ -277,6 +290,7 @@ public class Taurus : BossEnemy
                 OnRight = !OnRight;
                 if (rushTurn >= 3)
                 {
+                    SoundManager.PlaySE(15);
                     mode = Mode.STAN;
                     rushTurn = 0;
                     return;
@@ -285,6 +299,7 @@ public class Taurus : BossEnemy
             }
             else
             {
+                SoundManager.PlaySE(15);
                 mode = Mode.STAN;
             }
         }
@@ -395,5 +410,63 @@ public class Taurus : BossEnemy
         else blowVector = new Vector3(25, 20);
 
         target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
+    }
+
+    /// <summary>
+    /// ランダムでSEを再生
+    /// </summary>
+    void RandomPlaySE()
+    {
+        InitializeDictionary();
+        int seID = Choose();
+
+        SoundManager.PlaySE(SeInfo[seID]);
+        Debug.Log(SeInfo[seID]);
+    }
+
+    /// <summary>
+    /// ディクショナリ初期化
+    /// </summary>
+    void InitializeDictionary()
+    {
+        SeInfo = new Dictionary<int, int>();
+        SeInfo.Add(0, 30);
+        SeInfo.Add(1, 31);
+        SeInfo.Add(2, 32);
+        SeInfo.Add(3, 33);
+        SeInfo.Add(4, 34);
+
+        ProbabilityDictionary = new Dictionary<int, float>();
+        ProbabilityDictionary.Add(0, 20.0f);
+        ProbabilityDictionary.Add(1, 20.0f);
+        ProbabilityDictionary.Add(2, 20.0f);
+        ProbabilityDictionary.Add(3, 20.0f);
+        ProbabilityDictionary.Add(4, 20.0f);
+    }
+
+    int Choose()
+    {
+        float total = 0;
+
+        foreach(KeyValuePair<int,float> elem in ProbabilityDictionary)
+        {
+            total += elem.Value;
+        }
+
+        float randomPoint = Random.value * total;
+
+        foreach(KeyValuePair<int, float> elem in ProbabilityDictionary)
+        {
+            if(randomPoint<elem.Value)
+            {
+                return elem.Key;
+            }
+            else
+            {
+                randomPoint -= elem.Value;
+            }
+        }
+
+        return 1;
     }
 }
