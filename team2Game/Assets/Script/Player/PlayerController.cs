@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;                  //アニメーション用
 
     private int jumpCount;                      //2段ジャンプ用カウンター
+    private bool jumpLimit;
 
     private bool isIce;                         //Iceに当たっているかどうか//追加丹下
 
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
         gravityStop = false;
 
         normalRotation = true;
+        jumpLimit = false;
     }
 
     void FixedUpdate()
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
         Animation();
 
         damageTimer += Time.deltaTime;
-        if(damageTimer >= 2)
+        if(damageTimer >= 1)
         {
             
             isDamage = false;
@@ -205,8 +207,11 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         //ジャンプボタンを押したら
-        if (Input.GetButtonDown("Jump") && !isJump)
+        if (Input.GetButtonDown("Jump") && !isJump && !jumpLimit)
         {
+            Debug.Log("JUMP");
+            //ジャンプカウントを1増やす
+            jumpCount++;
             //ジャンプする前に一旦移動量を0にする
             rigid.velocity = new Vector3(rigid.velocity.x,0);
             if (Input.GetAxisRaw("Vertical") <= -0.7f)
@@ -223,8 +228,6 @@ public class PlayerController : MonoBehaviour
                     //上方向に力を与える
                     rigid.AddForce(new Vector3(0, -jumpPower * 1.5f), ForceMode.Impulse);
                 }
-                //ジャンプカウントを1増やす
-                jumpCount++;
             }
             else
             {
@@ -239,8 +242,8 @@ public class PlayerController : MonoBehaviour
                     rigid.AddForce(new Vector3(0, -jumpPower), ForceMode.Impulse);
                 }
                 SoundManager.PlaySE(6);
-                //ジャンプカウントを1増やす
-                jumpCount++;
+                ////ジャンプカウントを1増やす
+                //jumpCount++;
             }
             
             //ジャンプカウントが2以上であれば
@@ -249,9 +252,14 @@ public class PlayerController : MonoBehaviour
                 //ジャンプをできなくする
                 isJump = true;
             }
+
+            jumpLimit = true;
         }
 
-
+        if(Input.GetButtonUp("Jump") && jumpLimit)
+        {
+            jumpLimit = false;
+        }
     }
 
     private void Animation()
@@ -415,6 +423,8 @@ public class PlayerController : MonoBehaviour
         {
             isIce = true;//Iceに触れている
             isJump = false;
+            //ジャンプカウントを0に
+            jumpCount = 0;
         }
         else
         {
