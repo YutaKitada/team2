@@ -19074,6 +19074,7 @@ MonoBehaviour:
   jumpPower: 10
   addGravity: 10
   gravityArea: 0
+  normalRotation: 0
 --- !u!114 &88817065242869046
 MonoBehaviour:
   m_ObjectHideFlags: 0
