@@ -416,6 +416,7 @@ public class PlayerController : MonoBehaviour
             speed = 3;          //スピードを3に
             jumpPower = 5f;     //ジャンプのパワーを5に
             inWater = true;     //水の中である
+            SoundManager.PlaySE(9);
         }
 
         //Iceに触れていたら//追加丹下
@@ -457,6 +458,7 @@ public class PlayerController : MonoBehaviour
             speed = 10;         //スピードを10に
             jumpPower = 10;     //ジャンプのパワーを10に
             inWater = false;    //水の中ではない
+            SoundManager.PlaySE(9);
         }
         if (other.tag == "Gravity")
         {

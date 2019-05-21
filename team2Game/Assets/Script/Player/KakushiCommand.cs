@@ -42,7 +42,12 @@ public class KakushiCommand : MonoBehaviour
                     if (cmdSeq == konamiCommand.Length)
                     {
                         kcnt++;
-                        Instantiate(spaceCancer, GameManager.player.transform.position + new Vector3(0, 15), Quaternion.identity);
+                        int spawn = 50;
+                        while(spawn > 0)
+                        {
+                            Instantiate(spaceCancer, GameManager.player.transform.position + new Vector3(0, 30), Quaternion.identity);
+                            spawn--;
+                        }
                         cmdSeq = 0;
                     }
                 }

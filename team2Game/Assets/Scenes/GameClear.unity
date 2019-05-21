@@ -825,7 +825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonName: AButton
-  nextSceneName: Title
+  nextSceneName: SceneSelect
 --- !u!4 &1877566399
 Transform:
   m_ObjectHideFlags: 0

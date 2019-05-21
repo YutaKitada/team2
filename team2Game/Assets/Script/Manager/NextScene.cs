@@ -29,7 +29,7 @@ public class NextScene : MonoBehaviour
         }
 
         //ボタンを押したら次のシーンへ
-        if (Input.GetButtonDown(buttonName))
+        if (Input.GetButtonDown(buttonName) && !titleScene)
         {
             if(SceneManager.GetActiveScene().name == "Title")
             {

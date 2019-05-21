@@ -55,6 +55,9 @@ public class UIManager : MonoBehaviour
     private GameObject circleObject;                   //コマンドをミスした時に表示するオブジェクト
     private List<GameObject> circleList;
 
+    [SerializeField]
+    private Image fade;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,6 +100,8 @@ public class UIManager : MonoBehaviour
         wishYButton.enabled = false;
 
         circleList = new List<GameObject>();
+
+        
     }
 
     // Update is called once per frame
@@ -107,6 +112,16 @@ public class UIManager : MonoBehaviour
         //ComboUI();
         HPGageUI();
         YButton();
+
+        if (GameManager.debug)
+        {
+            debugUI.enabled = true;
+        }
+        else
+        {
+            debugUI.enabled = false;
+        }
+
         debugUI.text = "FPS;" + FPS.fps
             + "\n" + "isWishNow:" + WishManager.isWishNow
             + "\n" + "WishModeStay:" + PlayerManager.isWishStay
@@ -159,15 +174,21 @@ public class UIManager : MonoBehaviour
         if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode)
         {
             //HPゲージが0以上であれば
-            if (hpGageFillAmount >= 0)
+            if (hpGageFillAmount > 0)
             {
                 hpGageFillAmount -= 5 * Time.deltaTime;   //毎秒5ずつ減っていく
             }
-            //HPゲージが0未満になったらゲームオーバーに
-            else if (hpGageFillAmount < 0)
-            {
-                GameManager.isOver = true;
-            }
+            
+        }
+        //HPゲージが0未満になったらゲームオーバーに
+        if (hpGageFillAmount <= 0)
+        {
+            GameManager.isOver = true;
+        }
+
+        if(hpGageFillAmount <= 20)
+        {
+            fade.color = new Color(0, 0, 0, (20 - hpGageFillAmount) / 20);
         }
     }
 

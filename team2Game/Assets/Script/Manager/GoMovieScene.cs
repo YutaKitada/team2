@@ -39,7 +39,8 @@ public class GoMovieScene : MonoBehaviour
         if(timer >= time)
         {
             image.color -= new Color(0, 0, 0, Time.deltaTime / 2);
-            if(image.color.a < 0)
+            SoundManager.FadeOut();
+            if (image.color.a < 0)
             {
                 SceneManager.LoadScene(backSceneName);
             }
