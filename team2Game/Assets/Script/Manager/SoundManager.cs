@@ -91,6 +91,18 @@ public class SoundManager : MonoBehaviour
     {
         bgm.volume -= 0.005f;
     }
+
+    //再生中のBGMのボリュームを確認
+    public static float BGMVolumeCheck()
+    {
+        return bgm.volume;
+    }
+
+    //再生中のBGMのボリュームを変更
+    public static void SetBGMVolume(float volume)
+    {
+        bgm.volume = volume;
+    }
     
     //現在のBGMを取得
     public static AudioSource GetBGM()

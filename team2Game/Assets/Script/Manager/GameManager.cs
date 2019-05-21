@@ -51,13 +51,7 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
-
-        //BGM確認
-        if (!SoundManager.CheckBGM(1))
-        {
-            SoundManager.PlayBGM(1,0.5f);
-        }
-
+        
         //0が押されたら体力MAX
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
