@@ -1420,6 +1420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8876861116889932786}
   - component: {fileID: 8876861116889932785}
+  - component: {fileID: 7287041554565174849}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -1454,6 +1455,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionMoveSpeed: 5
+--- !u!114 &7287041554565174849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8876861116889932787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbf922f8e129f54da03fecc7425f7d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaceCancer: {fileID: 582827886, guid: 405a590982f204a41930da429617da7b, type: 3}
 --- !u!1 &8961857744398783688
 GameObject:
   m_ObjectHideFlags: 0
