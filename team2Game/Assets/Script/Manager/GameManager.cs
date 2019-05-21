@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         //BGM確認
         if (!SoundManager.CheckBGM(1))
         {
-            SoundManager.PlayBGM(1);
+            SoundManager.PlayBGM(1,0.5f);
         }
 
         //0が押されたら体力MAX
