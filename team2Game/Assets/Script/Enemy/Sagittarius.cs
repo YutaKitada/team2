@@ -13,6 +13,8 @@ public class Sagittarius : Enemy
 
     [SerializeField]
     GameObject bullet;//弾のprefab
+    GameObject allow;
+    Transform parent;
 
     [SerializeField]
     float range1 = 5;
@@ -26,6 +28,8 @@ public class Sagittarius : Enemy
 
     bool changeNow = false;
 
+    Animator anim;
+
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -38,6 +42,16 @@ public class Sagittarius : Enemy
         rotation = Quaternion.identity;
 
         maxSpeed = power / 10f;
+
+        anim = GetComponent<Animator>();
+
+        parent = transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform
+            .GetChild(0).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform
+            .GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
+
+        //子オブジェクトの位置に弾を生成
+        allow = Instantiate(bullet, parent.position, transform.rotation);
+        allow.transform.parent = parent;
     }
 
     // Update is called once per frame
@@ -72,42 +86,17 @@ public class Sagittarius : Enemy
         elapsedTime += Time.deltaTime;
         if (elapsedTime >= shotTime)
         {
-            //子オブジェクトの位置に弾を生成
-            Instantiate(bullet, transform.GetChild(0).position, transform.rotation);
+            allow.GetComponent<Bullet>().IsShoot = true;
+            allow.GetComponent<Rigidbody>().useGravity = true;
+            anim.SetTrigger("shoot");
             elapsedTime = 0;
             isWithinShot = false;
+            
+            allow = Instantiate(bullet, parent.position, transform.rotation);
+            allow.transform.parent = parent;
         }
     }
-
-    //public override void Direction()
-    //{
-    //    //プレイヤーがいなければ何もしない
-    //    if (target == null) return;
-    //    else
-    //    {
-    //        distance.x = target.position.x - transform.position.x;
-    //        if (distance.x < 0)
-    //        {
-    //            direction_Left = true;
-    //        }
-    //        else if (distance.x >= 0)
-    //        {
-    //            direction_Left = false;
-    //        }
-    //    }
-
-    //    if(direction_Left)
-    //    {
-    //        rotation = Quaternion.Euler(forward);
-    //    }
-    //    else
-    //    {
-    //        rotation = Quaternion.Euler(-forward);
-    //    }
-
-    //    transform.rotation = rotation;
-    //}
-
+    
     private void OnDrawGizmosSelected()
     {
         if (!Application.isPlaying) return;
