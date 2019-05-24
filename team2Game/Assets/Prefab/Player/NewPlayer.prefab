@@ -19179,6 +19179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   returnPlayer: 0
   returnPower: 10
+  trigger: {fileID: 3121263117682733491}
 --- !u!1 &2583407015176895831
 GameObject:
   m_ObjectHideFlags: 0

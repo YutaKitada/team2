@@ -17,6 +17,9 @@ public class StarMovement : MonoBehaviour
 
     private bool inWater;               //水の中にいるか否か
 
+    [SerializeField]
+    private Collider trigger;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,7 @@ public class StarMovement : MonoBehaviour
         returnX = 0;
         inWater = false;
         rigid.useGravity = false;
+        trigger.enabled = false;
     }
 
     // Update is called once per frame
@@ -51,8 +55,15 @@ public class StarMovement : MonoBehaviour
                 //rigid.AddForce(returnVector * returnPower);
                 rigid.velocity = returnVector * returnPower;
             }
+        }
 
-            
+        if (WishManager.isTackleStar)
+        {
+            trigger.enabled = true;
+        }
+        else
+        {
+            trigger.enabled = false;
         }
 
     }

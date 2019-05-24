@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         }
         
         //0が押されたら体力MAX
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.Alpha0) && debug)
         {
             UIManager.hpGageFillAmount = 100;
         }
