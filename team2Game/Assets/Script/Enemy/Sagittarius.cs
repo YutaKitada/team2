@@ -24,6 +24,8 @@ public class Sagittarius : Enemy
     bool isWithinShot = false;//射程圏内か
     bool isShot = false;//射程圏内に入ったときに撃たせるためのbool
 
+    bool changeNow = false;
+
     private void Awake()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -41,10 +43,11 @@ public class Sagittarius : Enemy
     // Update is called once per frame
     void Update()
     {
-        Direction();
         SetWIthin();
         Shot();
         Death();
+
+        StartCoroutine(DirectionCoroutine());
     }
 
     /// <summary>
@@ -55,8 +58,8 @@ public class Sagittarius : Enemy
         rangeVector1 = new Vector3(transform.position.x - range1, transform.position.y);//左側
         rangeVector2 = new Vector3(transform.position.x + range2, transform.position.y);//右側
 
-        if (target.position.x >= rangeVector1.x
-            && target.position.x <= rangeVector2.x)
+        if ((target.position.x >= rangeVector1.x
+            && target.position.x <= rangeVector2.x) && !changeNow)
         {
             isWithinShot = true;
         }
@@ -76,34 +79,34 @@ public class Sagittarius : Enemy
         }
     }
 
-    public override void Direction()
-    {
-        //プレイヤーがいなければ何もしない
-        if (target == null) return;
-        else
-        {
-            distance.x = target.position.x - transform.position.x;
-            if (distance.x < 0)
-            {
-                direction_Left = true;
-            }
-            else if (distance.x >= 0)
-            {
-                direction_Left = false;
-            }
-        }
+    //public override void Direction()
+    //{
+    //    //プレイヤーがいなければ何もしない
+    //    if (target == null) return;
+    //    else
+    //    {
+    //        distance.x = target.position.x - transform.position.x;
+    //        if (distance.x < 0)
+    //        {
+    //            direction_Left = true;
+    //        }
+    //        else if (distance.x >= 0)
+    //        {
+    //            direction_Left = false;
+    //        }
+    //    }
 
-        if(direction_Left)
-        {
-            rotation = Quaternion.Euler(forward);
-        }
-        else
-        {
-            rotation = Quaternion.Euler(-forward);
-        }
+    //    if(direction_Left)
+    //    {
+    //        rotation = Quaternion.Euler(forward);
+    //    }
+    //    else
+    //    {
+    //        rotation = Quaternion.Euler(-forward);
+    //    }
 
-        transform.rotation = rotation;
-    }
+    //    transform.rotation = rotation;
+    //}
 
     private void OnDrawGizmosSelected()
     {
@@ -112,5 +115,42 @@ public class Sagittarius : Enemy
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(rangeVector1, rangeVector1 + Vector3.up * 3);
         Gizmos.DrawLine(rangeVector2, rangeVector2 + Vector3.up * 3);
+    }
+
+    IEnumerator DirectionCoroutine()
+    {
+        float rate = 0;
+
+        while (true)
+        {
+            rate += Time.deltaTime * 3;
+            if(transform.position.x > target.position.x)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
+            }
+            if (transform.position.x < target.position.x)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
+            }
+            break;
+        }
+
+        if (GetAngle())
+            changeNow = false;
+        else changeNow = true;
+
+        yield return null;
+    }
+
+    bool GetAngle()
+    {
+        bool isForward;
+
+        if (transform.rotation == Quaternion.Euler(forward)
+            || transform.rotation == Quaternion.Euler(-forward))
+            isForward = true;
+        else isForward = false;
+
+        return isForward;
     }
 }
