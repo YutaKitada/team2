@@ -41,6 +41,8 @@ public class WishManager : MonoBehaviour
     public static bool isTackleStar;
     public static bool isChase;
 
+    public static int wishUseNumber;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -98,6 +100,8 @@ public class WishManager : MonoBehaviour
         isMeteorShower = false;
         isTackleStar = false;
         isChase = false;
+
+        wishUseNumber = 0;
     }
 
     // Update is called once per frame
@@ -187,6 +191,7 @@ public class WishManager : MonoBehaviour
             {
                 commandSuccess = false;
                 isWishNow = true;
+                wishUseNumber++;
             }
         }
 

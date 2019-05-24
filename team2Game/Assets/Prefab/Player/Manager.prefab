@@ -179,7 +179,7 @@ RectTransform:
   - {fileID: 2042218450613466085}
   - {fileID: 718776510553227841}
   m_Father: {fileID: 8876861116231963462}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -517,6 +517,49 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!1 &1657637753836035220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1205208143401690992}
+  - component: {fileID: 4755448551551987916}
+  m_Layer: 0
+  m_Name: EnemyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1205208143401690992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657637753836035220}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8876861116231963462}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4755448551551987916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657637753836035220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3753658bd1925eb46a75bca3d4031c5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1943448132685208324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,7 +1399,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8876861116231963462}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8876861115621477045
 MonoBehaviour:
@@ -1404,6 +1447,7 @@ Transform:
   - {fileID: 8876861115599123765}
   - {fileID: 8876861116862013556}
   - {fileID: 8876861116889932786}
+  - {fileID: 1205208143401690992}
   - {fileID: 8876861115621477046}
   - {fileID: 939242204}
   m_Father: {fileID: 0}
@@ -1484,7 +1528,6 @@ MonoBehaviour:
   wishYButton: {fileID: 7202423426293591346}
   circleObject: {fileID: 3098298678180186031, guid: a9b8eb9fb8a2ed54881e53cca9eaac22,
     type: 3}
-  fade: {fileID: 4143993292066885386}
 --- !u!1 &8876861116889932787
 GameObject:
   m_ObjectHideFlags: 0
