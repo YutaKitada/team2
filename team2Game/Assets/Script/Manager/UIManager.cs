@@ -55,8 +55,8 @@ public class UIManager : MonoBehaviour
     private GameObject circleObject;                   //コマンドをミスした時に表示するオブジェクト
     private List<GameObject> circleList;
 
-    [SerializeField]
-    private Image fade;
+    //[SerializeField]
+    //private Image fade;
 
     // Start is called before the first frame update
     void Start()
@@ -186,14 +186,14 @@ public class UIManager : MonoBehaviour
             GameManager.isOver = true;
         }
 
-        if(hpGageFillAmount <= 20)
-        {
-            fade.color = new Color(0, 0, 0, (20 - hpGageFillAmount) / 20);
-        }
-        else
-        {
-            fade.color = new Color(0, 0, 0, 0);
-        }
+        //if(hpGageFillAmount <= 20)
+        //{
+        //    fade.color = new Color(0, 0, 0, (20 - hpGageFillAmount) / 20);
+        //}
+        //else
+        //{
+        //    fade.color = new Color(0, 0, 0, 0);
+        //}
     }
 
     private void AnswerUI()
