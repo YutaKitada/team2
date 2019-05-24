@@ -39,8 +39,16 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsShoot)
+        if (IsShoot)
             BulletMove();
+        else
+            Stop();
+    }
+
+    void Stop()
+    {
+        rigid.velocity = Vector3.zero;
+        rigid.angularVelocity = Vector3.zero;
     }
 
     /// <summary>
@@ -59,5 +67,7 @@ public class Bullet : MonoBehaviour
         {
             PlayerManager.PlayerDamage(10);
         }
+
+        Destroy(gameObject);
     }
 }

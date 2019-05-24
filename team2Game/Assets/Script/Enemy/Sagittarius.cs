@@ -13,6 +13,8 @@ public class Sagittarius : Enemy
 
     [SerializeField]
     GameObject bullet;//弾のprefab
+    GameObject allow;
+    Transform parent;
 
     [SerializeField]
     float range1 = 5;
@@ -27,7 +29,6 @@ public class Sagittarius : Enemy
     bool changeNow = false;
 
     Animator anim;
-    GameObject allow;
 
     private void Awake()
     {
@@ -44,8 +45,13 @@ public class Sagittarius : Enemy
 
         anim = GetComponent<Animator>();
 
+        parent = transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform
+            .GetChild(0).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform
+            .GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
+
         //子オブジェクトの位置に弾を生成
-        allow = Instantiate(bullet, transform.GetChild(0).position, transform.rotation);
+        allow = Instantiate(bullet, parent.position, transform.rotation);
+        allow.transform.parent = parent;
     }
 
     // Update is called once per frame
@@ -81,11 +87,13 @@ public class Sagittarius : Enemy
         if (elapsedTime >= shotTime)
         {
             allow.GetComponent<Bullet>().IsShoot = true;
+            allow.GetComponent<Rigidbody>().useGravity = true;
             anim.SetTrigger("shoot");
             elapsedTime = 0;
             isWithinShot = false;
-
-            allow = Instantiate(bullet, transform.GetChild(0).position, transform.rotation);
+            
+            allow = Instantiate(bullet, parent.position, transform.rotation);
+            allow.transform.parent = parent;
         }
     }
     
