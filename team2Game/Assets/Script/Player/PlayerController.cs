@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
         Animation();
 
         damageTimer += Time.deltaTime;
-        if(damageTimer >= 1)
+        if(damageTimer >= 0.5f)
         {
             
             isDamage = false;
@@ -209,14 +209,12 @@ public class PlayerController : MonoBehaviour
         //ジャンプボタンを押したら
         if (Input.GetButtonDown("Jump") && !isJump && !jumpLimit)
         {
-            Debug.Log("JUMP");
             //ジャンプカウントを1増やす
             jumpCount++;
             //ジャンプする前に一旦移動量を0にする
             rigid.velocity = new Vector3(rigid.velocity.x,0);
             if (Input.GetAxisRaw("Vertical") <= -0.7f)
             {
-
                 SoundManager.PlaySE(4);
                 if (!gravityArea)
                 {
