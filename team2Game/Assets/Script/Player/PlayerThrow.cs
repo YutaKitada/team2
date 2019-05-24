@@ -64,11 +64,11 @@ public class PlayerThrow : MonoBehaviour
                 //タイマー初期化
                 stopTimer = 0;
 
-                ////ゲージが一定値以下の場合は増やす
-                //if (UIManager.hpGageFillAmount <= 20)
-                //{
-                //    UIManager.hpGageFillAmount = 20;
-                //}
+                //ゲージが一定値以下の場合は増やす
+                if (UIManager.hpGageFillAmount <= 20)
+                {
+                    UIManager.hpGageFillAmount = 20;
+                }
 
 
                 if (PlayerManager.isWishMode)
