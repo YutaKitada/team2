@@ -725,11 +725,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118015359, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1118015364, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 2.68
       objectReference: {fileID: 0}
     - target: {fileID: 1118015364, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: m_LocalPosition.y
@@ -783,6 +783,14 @@ PrefabInstance:
     - target: {fileID: 1656799264, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_Name
       value: Leo_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656799264, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656799264, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 1656799270, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.x
