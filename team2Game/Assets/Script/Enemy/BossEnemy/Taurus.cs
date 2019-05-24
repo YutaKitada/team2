@@ -423,8 +423,8 @@ public class Taurus : BossEnemy
     {
         var blowVector = Vector3.zero;
 
-        if (OnRight) blowVector = new Vector3(-25, 20);
-        else blowVector = new Vector3(25, 20);
+        if (OnRight) blowVector = new Vector3(-25, 5);
+        else blowVector = new Vector3(25, 5);
 
         target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
     }
