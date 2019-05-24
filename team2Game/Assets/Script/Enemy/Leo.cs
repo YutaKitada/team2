@@ -5,10 +5,6 @@ using UnityEngine;
 public class Leo : Enemy
 {
     [SerializeField]
-    float attackInterval = 0.5f;
-    float intervalElapsedTime;
-
-    [SerializeField]
     float maxDistance = 2;
 
     bool isAttack = false;//攻撃中か
@@ -85,6 +81,10 @@ public class Leo : Enemy
         Gizmos.DrawRay(transform.position, transform.forward * maxDistance);
     }
 
+    /// <summary>
+    /// 終了検知を使用した攻撃
+    /// </summary>
+    /// <returns></returns>
     IEnumerator AttackCoroutine()
     {
         if (ToForwardObject() != target && !isAttack) yield break;
@@ -101,6 +101,11 @@ public class Leo : Enemy
         anim.SetBool("isAttack", isAttack);
     }
 
+    /// <summary>
+    /// アニメーションの終了検知
+    /// </summary>
+    /// <param name="animationName"></param>
+    /// <returns></returns>
     IEnumerator FinishAnimation(string animationName)
     {
         bool finish = false;
