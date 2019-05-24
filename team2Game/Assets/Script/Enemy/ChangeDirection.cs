@@ -39,8 +39,6 @@ public class ChangeDirection : MonoBehaviour
         {
             isReverse = true;
         }
-
-        transformCenter = transform.position + centerPosition;
     }
 
     private void Update()
@@ -71,32 +69,37 @@ public class ChangeDirection : MonoBehaviour
         }
     }
 
+    void DirectionChange()
+    {
+        if (enemy.direction_Left)
+        {
+            if (!isReverse)
+                ray = new Ray(transformCenter, leftRayDirection);
+            else
+                ray = new Ray(transformCenter, rightRayDirection);
+        }
+        else
+        {
+            if (!isReverse)
+                ray = new Ray(transformCenter, rightRayDirection);
+            else
+                ray = new Ray(transformCenter, leftRayDirection);
+        }
+
+        //レイがオブジェクトに当たらなくなったら方向反転
+        isChange = !Physics.Raycast(ray, out hit, MaxDistance);
+
+        if (isChange || hit.transform.tag != "Stage" /*|| hit.transform.tag != "Ice")*/)
+        {
+            enemy.direction_Left = !enemy.direction_Left;
+        }
+    }
+
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag.Contains("Stage"))
+        if (collision.gameObject.tag == "Stage" || collision.gameObject.tag == "Ice")
         {
-            if (enemy.direction_Left)
-            {
-                if(!isReverse)
-                    ray = new Ray(transformCenter, transformCenter + leftRayDirection);
-                else
-                    ray = new Ray(transformCenter, transformCenter + rightRayDirection);
-            }
-            else
-            {
-                if(!isReverse)
-                    ray = new Ray(transformCenter, transformCenter + rightRayDirection);
-                else
-                    ray = new Ray(transformCenter, transformCenter + leftRayDirection);
-            }
-
-            //レイがオブジェクトに当たらなくなったら方向反転
-            isChange = !Physics.Raycast(ray, out hit, MaxDistance);
-
-            if (isChange || hit.transform.tag != "Stage")
-            {
-                enemy.direction_Left = !enemy.direction_Left;
-            }
+            DirectionChange();
         }
     }
 
@@ -112,7 +115,7 @@ public class ChangeDirection : MonoBehaviour
     {
         //敵に当たるか、水中でステージタグに当たった場合反転
         if(collision.gameObject.tag.Contains("Enemy")
-            || (collision.gameObject.tag.Contains("Stage") && inWater)
+            || (collision.gameObject.tag == "Stage" && inWater)
             || collision.gameObject.name.Contains("Wall"))
         {
             enemy.direction_Left = !enemy.direction_Left;

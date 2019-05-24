@@ -10,14 +10,24 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private List<AudioClip> bgmList;
     public static List<AudioClip> soundList_BGM;
+    [SerializeField]
+    private List<AudioClip> voiceList;
+    public static List<AudioClip> soundList_VOICE;
 
     public static AudioSource se;
     public static AudioSource bgm;
+    public static AudioSource voice;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (GameObject.Find("SoundManager") != null && GameObject.Find("SoundManager") != gameObject)
+        {
+            Destroy(gameObject);
+        }
         BGM_SE_Load();
+        DontDestroyOnLoad(gameObject);
+        
     }
 
     // Update is called once per frame
@@ -33,12 +43,18 @@ public class SoundManager : MonoBehaviour
     }
 
     //BGMを再生
-    public static void PlayBGM(int bgmNumber)
+    public static void PlayBGM(int bgmNumber,float volume)
     {
         bgm.Stop();
-        bgm.volume = 1f;
+        bgm.volume = volume;
         bgm.clip = soundList_BGM[bgmNumber];
         bgm.Play();
+    }
+
+    //VOICEを再生
+    public static void PlayVOICE(int voiceNumber)
+    {
+        voice.PlayOneShot(soundList_VOICE[voiceNumber]);
     }
 
     //BGMを止める
@@ -50,6 +66,10 @@ public class SoundManager : MonoBehaviour
     //現在のBGMが指定したBGMと一緒か否か
     public static bool CheckBGM(int bgmNumber)
     {
+        if(bgm.clip == null)
+        {
+            return false;
+        }
         if (bgm.clip == soundList_BGM[bgmNumber])
         {
             return true;
@@ -60,10 +80,28 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    //VOICEが再生中か否か
+    public static bool CheckPlayVOICE()
+    {
+        return voice.isPlaying;
+    }
+
     //BGMをフェードアウトさせる
     public static void FadeOut()
     {
         bgm.volume -= 0.005f;
+    }
+
+    //再生中のBGMのボリュームを確認
+    public static float BGMVolumeCheck()
+    {
+        return bgm.volume;
+    }
+
+    //再生中のBGMのボリュームを変更
+    public static void SetBGMVolume(float volume)
+    {
+        bgm.volume = volume;
     }
     
     //現在のBGMを取得
@@ -77,9 +115,11 @@ public class SoundManager : MonoBehaviour
     {
         soundList_SE = seList;
         soundList_BGM = bgmList;
+        soundList_VOICE = voiceList;
 
         AudioSource[] audioSources = GetComponents<AudioSource>();
         se = audioSources[0];
         bgm = audioSources[1];
+        voice = audioSources[2];
     }
 }

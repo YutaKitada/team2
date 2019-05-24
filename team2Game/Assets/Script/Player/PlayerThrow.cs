@@ -64,11 +64,11 @@ public class PlayerThrow : MonoBehaviour
                 //タイマー初期化
                 stopTimer = 0;
 
-                //ゲージが一定値以下の場合は増やす
-                if (UIManager.hpGageFillAmount <= 20)
-                {
-                    UIManager.hpGageFillAmount = 20;
-                }
+                ////ゲージが一定値以下の場合は増やす
+                //if (UIManager.hpGageFillAmount <= 20)
+                //{
+                //    UIManager.hpGageFillAmount = 20;
+                //}
 
 
                 if (PlayerManager.isWishMode)
@@ -122,8 +122,17 @@ public class PlayerThrow : MonoBehaviour
                     //下投げの場合
                     else
                     {
-                        //真下に投げる
-                        starRigid.AddForce(new Vector3(0, -throwPower), ForceMode.Impulse);
+                        if (GameManager.player.GetComponent<PlayerController>().normalRotation)
+                        {
+                            //真下に投げる
+                            starRigid.AddForce(new Vector3(0, -throwPower), ForceMode.Impulse);
+                        }
+                        else
+                        {
+                            //真下に投げる
+                            starRigid.AddForce(new Vector3(0, throwPower), ForceMode.Impulse);
+                        }
+                       
                     }
 
                     //投げた瞬間の場所を格納
@@ -144,8 +153,16 @@ public class PlayerThrow : MonoBehaviour
         {
             if (!PlayerManager.isWishMode)
             {
-                //StarはPlayerの3マス上に
-                GameManager.star.transform.position = transform.position + new Vector3(0, 2.5f);
+                if (!GameManager.player.GetComponent<PlayerController>().normalRotation)
+                {
+                    //StarはPlayerの3マス上に
+                    GameManager.star.transform.position = transform.position - new Vector3(0, 2.5f);
+                }
+                else
+                {
+                    //StarはPlayerの3マス上に
+                    GameManager.star.transform.position = transform.position + new Vector3(0, 2.5f);
+                }
                 //Starのvelocityを0に
                 starRigid.velocity = Vector3.zero;
 
@@ -225,4 +242,6 @@ public class PlayerThrow : MonoBehaviour
             SoundManager.PlaySE(2);
         }
     }
+
+    
 }

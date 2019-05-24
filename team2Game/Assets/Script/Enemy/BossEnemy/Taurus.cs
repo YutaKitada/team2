@@ -30,13 +30,7 @@ public class Taurus : BossEnemy
 
     Vector3 targetPosition;//突進開始時のプレイヤーの位置
 
-    bool isChange = false;//方向転換中か
-
-    bool OnRight
-    {
-        get;
-        set;
-    }//プレイヤーより右側にいるか
+    bool isChangeNow = false;//方向転換中か
 
     [SerializeField]
     GameObject sandParticle;
@@ -48,6 +42,19 @@ public class Taurus : BossEnemy
 
     Vector3 startScale;//スケールの初期値
     bool isHuging = false;//巨大化中か
+
+    [SerializeField]
+    Vector3 originBlowVector;
+
+    bool isTurn = false;
+    int rushTurn = 0;
+
+    float speed = 1;
+
+    Dictionary<int, int> SeInfo;//鳴らすSEのデータ用のディクショナリ
+    Dictionary<int, float> ProbabilityDictionary;
+
+    bool rushBeforePlay = false;
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +98,8 @@ public class Taurus : BossEnemy
             return;
         }
 
+        if (hp <= maxHp / 2) speed = 1.5f;
+
         switch (mode)//状態に応じた処理を実行
         {
             case Mode.WAIT:
@@ -98,12 +107,12 @@ public class Taurus : BossEnemy
                 StartCoroutine(DirectionCoroutine());
                 RushPrepare();
                 SetOnRight();
-                anim.speed = 1;
+                anim.speed = 1 * speed;
                 break;
 
             case Mode.RUSH:
-                RushAttack();
-                anim.speed = 3;
+                if(!isTurn)RushAttack();
+                else TurnRush();
                 break;
 
             case Mode.STAN:
@@ -127,7 +136,7 @@ public class Taurus : BossEnemy
         if (transform.position.x > target.position.x) OnRight = true;//右
         if (transform.position.x < target.position.x) OnRight = false;//左
     }
-
+    
     /// <summary>
     /// 砂埃のパーティクル生成
     /// </summary>
@@ -149,24 +158,31 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushPrepare()
     {
-        intervalElapsedTime += Time.deltaTime;
+        intervalElapsedTime += Time.deltaTime * speed;
         HugingScale();
-        instanteTime += Time.deltaTime;
+        instanteTime += Time.deltaTime * speed;
         if (instanteTime >= 1)
         {
             GenerateSandParticle();
             instanteTime = 0;
         }
-
-        //待機中の経過時間が規定時間まで過ぎたら突進状態へ移行
-        if (intervalElapsedTime < interval) return;
-        else
+        
+        if (intervalElapsedTime >= interval - 1)
         {
-            if (isChange || isHuging) return;
+            if (!rushBeforePlay)
+            {
+                RandomPlaySE();
+                rushBeforePlay = true;
+            }
+        }
+        if(intervalElapsedTime >= interval)
+        {
+            if (isChangeNow || isHuging) return;
 
             //突進に必要な情報を得る
             targetPosition = target.position;//突進開始時のプレイヤーの位置に向かう
             intervalElapsedTime = 0;
+            rushBeforePlay = false;
             mode = Mode.RUSH;
         }
     }
@@ -192,13 +208,39 @@ public class Taurus : BossEnemy
     }
 
     /// <summary>
+    /// X軸の移動以外を固定
+    /// </summary>
+    void MoveFreeze()
+    {
+        rigid.constraints = RigidbodyConstraints.FreezeRotation 
+            | RigidbodyConstraints.FreezePositionY 
+            | RigidbodyConstraints.FreezePositionZ;
+    }
+
+    /// <summary>
     /// 突進攻撃
     /// </summary>
     void RushAttack()
     {
-        rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+        MoveFreeze();
+
+        rigid.AddForce(transform.forward * power * speed, ForceMode.Acceleration);
+        SoundManager.PlaySE(14);
+        if (Mathf.Abs(rigid.velocity.x) <= 10)
+        {
+            if (OnRight) rigid.velocity = new Vector3(-10, 0);
+            else rigid.velocity = new Vector3(10, 0);
+        }
 
         GenerateSandParticle();
+        anim.speed = 3 * speed;
+    }
+
+    void TurnRush()
+    {
+        Stop();
+        StartCoroutine(DirectionCoroutine());
+        anim.speed = 1 * speed;
     }
 
     /// <summary>
@@ -206,7 +248,7 @@ public class Taurus : BossEnemy
     /// </summary>
     void NowStan()
     {
-        stanElapsedTime += Time.deltaTime;
+        stanElapsedTime += Time.deltaTime * speed;
         if (stanElapsedTime >= stanTime)
         {
             stanElapsedTime = 0;
@@ -223,10 +265,18 @@ public class Taurus : BossEnemy
             {
                 //その場で待機状態に移行
                 PlayerManager.PlayerDamage(10);
+                Blow();
 
-                if (mode == Mode.RUSH)
+                if (hp <= maxHp / 2 && mode == Mode.RUSH)
                 {
-                    mode = Mode.WAIT;
+                    BlowUp();
+                }
+                else
+                {
+                    if (mode == Mode.RUSH)
+                    {
+                        mode = Mode.WAIT;
+                    }
                 }
             }
         }
@@ -234,7 +284,24 @@ public class Taurus : BossEnemy
         //突進中に壁に当たったらスタン状態に移行
         if (other.gameObject.name.Contains("Wall") && mode == Mode.RUSH)
         {
-            mode = Mode.STAN;
+            if (hp <= maxHp / 2)
+            {
+                rushTurn++;
+                OnRight = !OnRight;
+                if (rushTurn >= 3)
+                {
+                    SoundManager.PlaySE(15);
+                    mode = Mode.STAN;
+                    rushTurn = 0;
+                    return;
+                }
+                isTurn = true;
+            }
+            else
+            {
+                SoundManager.PlaySE(15);
+                mode = Mode.STAN;
+            }
         }
 
         if (other.gameObject.tag == "Star" && !isHuging)
@@ -257,6 +324,11 @@ public class Taurus : BossEnemy
         {
             instantePosition = collision.contacts[0].point;
         }
+
+        if(collision.gameObject.tag == "Player" && mode != Mode.STAN)
+        {
+            Blow();
+        }
     }
 
     /// <summary>
@@ -269,12 +341,12 @@ public class Taurus : BossEnemy
 
         while (true)
         {
-            rate += Time.deltaTime * 3;
+            rate += Time.deltaTime * 3 * speed;
             if (OnRight)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(forward), rate);
             }
-            if (!OnRight)
+            else
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-forward), rate);
             }
@@ -282,16 +354,119 @@ public class Taurus : BossEnemy
         }
 
         //Playerの方向に向き終わるまでは方向転換中に設定
-        if (transform.rotation == Quaternion.Euler(forward) ||
-            transform.rotation == Quaternion.Euler(-forward))
+        if (GetAngle())
         {
-            isChange = false;
+            isChangeNow = false;
+
+            if (mode == Mode.RUSH) isTurn = false;
         }
         else
         {
-            isChange = true;
+            isChangeNow = true;
         }
 
         yield return null;
+    }
+
+    bool GetAngle()
+    {
+        bool isForward;
+
+        if (transform.rotation == Quaternion.Euler(new Vector3(0, -90, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, 90, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, 270, 0))
+            || transform.rotation == Quaternion.Euler(new Vector3(0, -270, 0)))
+        {
+            isForward = true;
+        }
+        else
+        {
+            isForward = false;
+        }
+        return isForward;
+    }
+
+    /// <summary>
+    /// プレイヤーに当たったときに吹き飛ばす
+    /// </summary>
+    void Blow()
+    {
+        var blowVector = Vector3.zero;
+
+        if (OnRight) blowVector = originBlowVector;
+        else blowVector = new Vector3(-originBlowVector.x, originBlowVector.y);
+
+        target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
+    }
+    
+    /// <summary>
+    /// 打ち上げ
+    /// </summary>
+    void BlowUp()
+    {
+        var blowVector = Vector3.zero;
+
+        if (OnRight) blowVector = new Vector3(-25, 20);
+        else blowVector = new Vector3(25, 20);
+
+        target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
+    }
+
+    /// <summary>
+    /// ランダムでSEを再生
+    /// </summary>
+    void RandomPlaySE()
+    {
+        InitializeDictionary();
+        int seID = Choose();
+
+        SoundManager.PlaySE(SeInfo[seID]);
+        Debug.Log(SeInfo[seID]);
+    }
+
+    /// <summary>
+    /// ディクショナリ初期化
+    /// </summary>
+    void InitializeDictionary()
+    {
+        SeInfo = new Dictionary<int, int>();
+        SeInfo.Add(0, 30);
+        SeInfo.Add(1, 31);
+        SeInfo.Add(2, 32);
+        SeInfo.Add(3, 33);
+        SeInfo.Add(4, 34);
+
+        ProbabilityDictionary = new Dictionary<int, float>();
+        ProbabilityDictionary.Add(0, 20.0f);
+        ProbabilityDictionary.Add(1, 20.0f);
+        ProbabilityDictionary.Add(2, 20.0f);
+        ProbabilityDictionary.Add(3, 20.0f);
+        ProbabilityDictionary.Add(4, 20.0f);
+    }
+
+    int Choose()
+    {
+        float total = 0;
+
+        foreach(KeyValuePair<int,float> elem in ProbabilityDictionary)
+        {
+            total += elem.Value;
+        }
+
+        float randomPoint = Random.value * total;
+
+        foreach(KeyValuePair<int, float> elem in ProbabilityDictionary)
+        {
+            if(randomPoint<elem.Value)
+            {
+                return elem.Key;
+            }
+            else
+            {
+                randomPoint -= elem.Value;
+            }
+        }
+
+        return 1;
     }
 }

@@ -51,6 +51,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image wishYButton;                          //コマンド入力可能時に表示するYボタン
 
+    [SerializeField]
+    private GameObject circleObject;                   //コマンドをミスした時に表示するオブジェクト
+    private List<GameObject> circleList;
+
+    [SerializeField]
+    private Image fade;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,7 +88,8 @@ public class UIManager : MonoBehaviour
             answerButtonList.Add(Instantiate(buttonObject, buttonParent.transform));
             wishButtonList.Add(Instantiate(buttonObject, buttonParent.transform));
             answerButtonList[i].transform.localPosition = new Vector3(buttonPositionX, 0);
-            wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, -60);
+            //wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, -60);
+            wishButtonList[i].transform.localPosition = new Vector3(buttonPositionX, 0);
             buttonPositionX += 30;
         }
 
@@ -90,6 +98,10 @@ public class UIManager : MonoBehaviour
 
         //Yボタンを非表示に
         wishYButton.enabled = false;
+
+        circleList = new List<GameObject>();
+
+        
     }
 
     // Update is called once per frame
@@ -100,6 +112,16 @@ public class UIManager : MonoBehaviour
         //ComboUI();
         HPGageUI();
         YButton();
+
+        if (GameManager.debug)
+        {
+            debugUI.enabled = true;
+        }
+        else
+        {
+            debugUI.enabled = false;
+        }
+
         debugUI.text = "FPS;" + FPS.fps
             + "\n" + "isWishNow:" + WishManager.isWishNow
             + "\n" + "WishModeStay:" + PlayerManager.isWishStay
@@ -110,7 +132,7 @@ public class UIManager : MonoBehaviour
             + "\n" + "isInvincible:" + PlayerManager.isInvincible
             + "\n" + "isStop:" + PlayerManager.isStop
             + "\n" + "isGameStop:" + GameManager.isGameStop
-            + "\n" +  "isTackleStar:"+ WishManager.isTackleStar;
+            + "\n" +  "isTackleStar:"+ WishManager.isTackleStar + debugtext;
     }
 
     //private void ComboUI()
@@ -152,15 +174,25 @@ public class UIManager : MonoBehaviour
         if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode)
         {
             //HPゲージが0以上であれば
-            if (hpGageFillAmount >= 0)
+            if (hpGageFillAmount > 0)
             {
                 hpGageFillAmount -= 5 * Time.deltaTime;   //毎秒5ずつ減っていく
             }
-            //HPゲージが0未満になったらゲームオーバーに
-            else if (hpGageFillAmount < 0)
-            {
-                GameManager.isOver = true;
-            }
+            
+        }
+        //HPゲージが0未満になったらゲームオーバーに
+        if (hpGageFillAmount <= 0)
+        {
+            GameManager.isOver = true;
+        }
+
+        if(hpGageFillAmount <= 20)
+        {
+            fade.color = new Color(0, 0, 0, (20 - hpGageFillAmount) / 20);
+        }
+        else
+        {
+            fade.color = new Color(0, 0, 0, 0);
         }
     }
 
@@ -236,6 +268,7 @@ public class UIManager : MonoBehaviour
                 {
                     if(wishText.Length-1 >= wishTextNumber)
                     {
+
                         switch (wishText.Substring(wishTextNumber, 1))
                         {
                             case "A":
@@ -251,10 +284,14 @@ public class UIManager : MonoBehaviour
                                 wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[3];
                                 break;
                         }
-                        if(wishButtonList[i].GetComponent<Image>().sprite != answerButtonList[i].GetComponent<Image>().sprite)
+                        if (wishButtonList[i].GetComponent<Image>().sprite != answerButtonList[i].GetComponent<Image>().sprite)
                         {
                             mistakeObject.SetActive(true);
                             mistakeObject.transform.position = wishButtonList[i].transform.position;
+                        }
+                        else
+                        {
+                            circleList.Add(Instantiate(circleObject, wishButtonList[i].transform.position, Quaternion.identity, buttonParent.transform));
                         }
                         wishTextNumber++;
                         space = true;
@@ -270,6 +307,11 @@ public class UIManager : MonoBehaviour
                 wishButtonList[i].GetComponent<Image>().sprite = buttonSprites[4];
 
                 mistakeObject.SetActive(false);
+                
+            }
+            foreach(var n in circleList)
+            {
+                Destroy(n.gameObject);
             }
         }
     }

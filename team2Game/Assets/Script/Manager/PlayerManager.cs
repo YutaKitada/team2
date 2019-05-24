@@ -114,6 +114,12 @@ public class PlayerManager : MonoBehaviour
 
             throwDirection = throwDirection.normalized;
             effectDirection = effectDirection.normalized;
+
+            if (!GameManager.player.GetComponent<PlayerController>().normalRotation)
+            {
+                throwDirection = new Vector3(throwDirection.x, -throwDirection.y, throwDirection.z);
+                effectDirection = new Vector3(effectDirection.x, -effectDirection.y, effectDirection.z);
+            }
         }
         else if (playerDirection == PlayerDirection.RIGHT)
         {
@@ -143,6 +149,12 @@ public class PlayerManager : MonoBehaviour
             effectDirection = Vector3.Lerp(new Vector3(2f, -1), new Vector3(0.75f, -1), directionPlus);
             throwDirection = throwDirection.normalized;
             effectDirection = effectDirection.normalized;
+
+            if (!GameManager.player.GetComponent<PlayerController>().normalRotation)
+            {
+                throwDirection = new Vector3(throwDirection.x, -throwDirection.y, throwDirection.z);
+                effectDirection = new Vector3(effectDirection.x, -effectDirection.y, effectDirection.z);
+            }
         }
         //Debug.Log(direction);
     }

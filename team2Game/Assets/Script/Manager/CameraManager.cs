@@ -159,5 +159,16 @@ public class CameraManager : MonoBehaviour
                     break;
             }
         }
+
+        if (PlayerManager.isWishMode)
+        {
+            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -3);
+            GetComponent<Camera>().fieldOfView = 60;
+        }
+        else
+        {
+            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
+            GetComponent<Camera>().fieldOfView = 90;
+        }
     }
 }

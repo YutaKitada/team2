@@ -66,6 +66,13 @@ public class StarEffect : MonoBehaviour
                     }
                 }
 
+                if (WishManager.isChase)
+                {
+                    effect.SetActive(true);
+                    effect.transform.rotation = Quaternion.LookRotation(transform.position + new Vector3(WishManager.star.GetComponent<Rigidbody>().velocity.normalized.x, WishManager.star.GetComponent<Rigidbody>().velocity.normalized.y));
+
+                }
+
             }
             else if (PlayerManager.isWishMode)
             {
