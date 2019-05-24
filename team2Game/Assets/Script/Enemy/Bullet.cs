@@ -79,6 +79,10 @@ public class Bullet : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        Destroy(gameObject);
+        if (!other.gameObject.name.Contains("Sagittarius") && !other.gameObject.name.Contains("Allow"))
+        {
+            Destroy(gameObject);
+            Debug.Log(other.gameObject.name);
+        }
     }
 }
