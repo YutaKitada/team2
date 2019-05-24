@@ -12,12 +12,15 @@
 			Tags{
 				"RenderType" = "Transparent"
 				"Queue" = "Geometry"
+			//"Queue" = "Geometory+1"
 			}
+			ZTest Always
 			Pass
 			{
 			Stencil{
 		ref 2
 		Comp Equal
+			//ZTest Always
 	}
 				Blend SrcAlpha OneMinusSrcAlpha
 				CGPROGRAM

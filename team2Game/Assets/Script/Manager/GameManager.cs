@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
 
     public static bool isGameStop;     //ゲームの動きを止める
 
-    [SerializeField]
-    private bool DEBUG = false;
+    //[SerializeField]
+    //private bool DEBUG = false;
     public static bool debug;
 
     
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         //Star取得
         star = GameObject.FindGameObjectWithTag("Star");
 
-        debug = DEBUG;
+        debug = false;
     }
 
     void Start()
@@ -51,13 +51,7 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
-
-        //BGM確認
-        if (!SoundManager.CheckBGM(1))
-        {
-            SoundManager.PlayBGM(1);
-        }
-
+        
         //0が押されたら体力MAX
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
@@ -70,7 +64,10 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
 
-        
+        if(Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.Y))
+        {
+            debug = !debug;
+        }
 
         if (maxCombo < combo)
         {

@@ -43,10 +43,10 @@ public class SoundManager : MonoBehaviour
     }
 
     //BGMを再生
-    public static void PlayBGM(int bgmNumber)
+    public static void PlayBGM(int bgmNumber,float volume)
     {
         bgm.Stop();
-        bgm.volume = 1f;
+        bgm.volume = volume;
         bgm.clip = soundList_BGM[bgmNumber];
         bgm.Play();
     }
@@ -90,6 +90,18 @@ public class SoundManager : MonoBehaviour
     public static void FadeOut()
     {
         bgm.volume -= 0.005f;
+    }
+
+    //再生中のBGMのボリュームを確認
+    public static float BGMVolumeCheck()
+    {
+        return bgm.volume;
+    }
+
+    //再生中のBGMのボリュームを変更
+    public static void SetBGMVolume(float volume)
+    {
+        bgm.volume = volume;
     }
     
     //現在のBGMを取得

@@ -89,6 +89,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4870077b53ad1b649a902a81d82b0c56, type: 3}
   - {fileID: 8300000, guid: f01a773b7a1799b4e9a71b090a53ddc8, type: 3}
   - {fileID: 8300000, guid: 398cb66eaf4071245b32db25306b9089, type: 3}
+  - {fileID: 8300000, guid: a40ae4977ba13da4b9f845daf4f22ec8, type: 3}
+  - {fileID: 8300000, guid: aca63e1440e683147aa2eea373bac793, type: 3}
+  - {fileID: 8300000, guid: 5b2c3be8820244648b1cb1eb2adf05f6, type: 3}
+  - {fileID: 8300000, guid: 741abbd1779e4454f974a3e4c570de7e, type: 3}
+  - {fileID: 8300000, guid: c0e16ac1137a05a42b86c918f3951eb8, type: 3}
+  - {fileID: 8300000, guid: 0e8d27c8c07a1204989d82c5c1ffdf13, type: 3}
+  - {fileID: 8300000, guid: 8770c60b49f9c284c90cb32e39b04531, type: 3}
+  - {fileID: 8300000, guid: 2049db63d80030f4dbc9849902c5e20d, type: 3}
   voiceList:
   - {fileID: 8300000, guid: 37e80e08210b56844be87b4efbf4483a, type: 3}
   - {fileID: 8300000, guid: fb6268685203664419782cd9c40c53bf, type: 3}

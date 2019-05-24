@@ -9,6 +9,7 @@
 	}
 		SubShader
 		{
+			
 			Tags{
 				"RenderType" = "Transparent"
 				"Queue" = "Geometry"
@@ -16,9 +17,12 @@
 			Pass
 			{
 			Stencil{
-		ref 2
-		Comp always
-		Pass replace
+		Ref 2
+		// ステンシルは常に成功
+		Comp Always
+			// ステンシルに成功したら2に置き換える
+			Pass Replace
+			
 	}
 				Blend SrcAlpha OneMinusSrcAlpha
 				CGPROGRAM
@@ -60,6 +64,8 @@
 					fixed4 tex = tex2D(_Texture,i.uv)*_Color;
 					return tex;
 				}
+
+					
 				ENDCG
 			}
 		}
