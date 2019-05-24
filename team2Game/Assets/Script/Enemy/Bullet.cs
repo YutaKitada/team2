@@ -19,6 +19,12 @@ public class Bullet : MonoBehaviour
     Vector3 initialPosition;//初期位置
     Vector3 shootVector;//弾の方向
 
+    public bool IsShoot
+    {
+        get;
+        set;
+    } = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +39,8 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        BulletMove();
+        if(IsShoot)
+            BulletMove();
     }
 
     /// <summary>
@@ -42,7 +49,6 @@ public class Bullet : MonoBehaviour
     void BulletMove()
     {
         rigid.AddForce(shootVector, ForceMode.Impulse);
-        rigid.velocity /= 2f;
 
         Destroy(gameObject, 2);
     }
@@ -53,7 +59,5 @@ public class Bullet : MonoBehaviour
         {
             PlayerManager.PlayerDamage(10);
         }
-
-        Destroy(gameObject);
     }
 }
