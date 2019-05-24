@@ -51,10 +51,13 @@ public class Taurus : BossEnemy
 
     float speed = 1;
 
+    bool isPlaySe = false;
     Dictionary<int, int> SeInfo;//鳴らすSEのデータ用のディクショナリ
     Dictionary<int, float> ProbabilityDictionary;
 
     bool rushBeforePlay = false;
+
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -78,6 +81,8 @@ public class Taurus : BossEnemy
         startScale = transform.localScale;
 
         maxHp = hp;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -158,6 +163,8 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushPrepare()
     {
+        if (isHuging) return;
+
         intervalElapsedTime += Time.deltaTime * speed;
         HugingScale();
         instanteTime += Time.deltaTime * speed;
@@ -177,7 +184,7 @@ public class Taurus : BossEnemy
         }
         if(intervalElapsedTime >= interval)
         {
-            if (isChangeNow || isHuging) return;
+            if (isChangeNow) return;
 
             //突進に必要な情報を得る
             targetPosition = target.position;//突進開始時のプレイヤーの位置に向かう
@@ -225,7 +232,13 @@ public class Taurus : BossEnemy
         MoveFreeze();
 
         rigid.AddForce(transform.forward * power * speed, ForceMode.Acceleration);
-        SoundManager.PlaySE(14);
+
+        if (!isPlaySe)
+        {
+            audioSource.PlayOneShot(audioSource.clip);
+            isPlaySe = true;
+        }
+
         if (Mathf.Abs(rigid.velocity.x) <= 10)
         {
             if (OnRight) rigid.velocity = new Vector3(-10, 0);
@@ -288,11 +301,13 @@ public class Taurus : BossEnemy
             {
                 rushTurn++;
                 OnRight = !OnRight;
+                audioSource.Stop();
+                isPlaySe = false;
                 if (rushTurn >= 3)
                 {
                     SoundManager.PlaySE(15);
-                    mode = Mode.STAN;
                     rushTurn = 0;
+                    mode = Mode.STAN;
                     return;
                 }
                 isTurn = true;
@@ -300,6 +315,8 @@ public class Taurus : BossEnemy
             else
             {
                 SoundManager.PlaySE(15);
+                audioSource.Stop();
+                isPlaySe = false;
                 mode = Mode.STAN;
             }
         }
@@ -421,7 +438,6 @@ public class Taurus : BossEnemy
         int seID = Choose();
 
         SoundManager.PlaySE(SeInfo[seID]);
-        Debug.Log(SeInfo[seID]);
     }
 
     /// <summary>
