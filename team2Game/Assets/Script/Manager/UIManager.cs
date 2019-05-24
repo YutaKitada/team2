@@ -190,6 +190,10 @@ public class UIManager : MonoBehaviour
         {
             fade.color = new Color(0, 0, 0, (20 - hpGageFillAmount) / 20);
         }
+        else
+        {
+            fade.color = new Color(0, 0, 0, 0);
+        }
     }
 
     private void AnswerUI()
