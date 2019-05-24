@@ -86,8 +86,14 @@ public class Sagittarius : Enemy
         elapsedTime += Time.deltaTime;
         if (elapsedTime >= shotTime)
         {
+            if (allow == null)
+            {
+                allow = Instantiate(bullet, parent.position, transform.rotation);
+                allow.transform.parent = parent;
+                return;
+            }
+
             allow.GetComponent<Bullet>().IsShoot = true;
-            allow.GetComponent<Rigidbody>().useGravity = true;
             anim.SetTrigger("shoot");
             elapsedTime = 0;
             isWithinShot = false;
