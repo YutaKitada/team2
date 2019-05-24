@@ -723,6 +723,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sagittarius_Model
       objectReference: {fileID: 0}
+    - target: {fileID: 1118015359, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1118015364, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -778,11 +782,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100056, guid: d675d608421781b45a5eb7610d2397b5, type: 3}
       propertyPath: m_Name
-      value: leo_Atack
+      value: Leo_Model
       objectReference: {fileID: 0}
     - target: {fileID: 100056, guid: d675d608421781b45a5eb7610d2397b5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400056, guid: d675d608421781b45a5eb7610d2397b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -790,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400056, guid: d675d608421781b45a5eb7610d2397b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3.99
       objectReference: {fileID: 0}
     - target: {fileID: 400056, guid: d675d608421781b45a5eb7610d2397b5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -844,6 +848,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: cb2ef67884731394ab692f358ce1896d, type: 2}
+    - target: {fileID: 13700000, guid: d675d608421781b45a5eb7610d2397b5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 19c6ea4050b74a14497ae11090f4f6a7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d675d608421781b45a5eb7610d2397b5, type: 3}
 --- !u!1 &1485007686
@@ -969,7 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19843e9eee7cca48ad5b1de704ba845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerPosition: {x: 0, y: -0.5, z: 0}
+  centerPosition: {x: 0, y: 0.5, z: 0}
 --- !u!114 &1656799267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,6 +997,7 @@ MonoBehaviour:
     type: 3}
   direction_Left: 1
   direction_Up: 1
+  attackInterval: 0.5
   maxDistance: 2
 --- !u!54 &1656799268
 Rigidbody:

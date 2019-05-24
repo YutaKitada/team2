@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Leo : Enemy
 {
-    float attackInterval = 1.5f;
+    [SerializeField]
+    float attackInterval = 0.5f;
     float intervalElapsedTime;
 
     [SerializeField]
     float maxDistance = 2;
 
     bool isAttack = false;//攻撃中か
+
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,8 @@ public class Leo : Enemy
         maxSpeed = power / 10f;
         changeDirection = GetComponent<ChangeDirection>();
         changeDirection.MaxDistance = maxDistance;
+
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,7 +41,7 @@ public class Leo : Enemy
         }
         Direction();
         SetTarget();
-        Attack();
+        StartCoroutine(AttackCoroutine());
         Death();
     }
 
@@ -52,31 +57,6 @@ public class Leo : Enemy
         else
         {
             state = State.NORMAL;
-        }
-    }
-
-    /// <summary>
-    /// 攻撃処理
-    /// </summary>
-    void Attack()
-    {
-        //正面のオブジェクトがプレイヤー以外であれば、return
-        if (ToForwardObject() != target && !isAttack) return;
-
-        isAttack = true;//攻撃中に変更
-
-        //時間でダメージを与える
-        intervalElapsedTime += Time.deltaTime;
-        if (intervalElapsedTime >= attackInterval)
-        {
-            //正面にまだプレイヤーがいる場合のみダメージを与える
-            if (ToForwardObject() == target)
-            {
-                PlayerManager.PlayerDamage(10);
-            }
-            //経過時間を戻して、攻撃中ではなくす
-            intervalElapsedTime = 0;
-            isAttack = false;
         }
     }
 
@@ -103,5 +83,38 @@ public class Leo : Enemy
 
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, transform.forward * maxDistance);
+    }
+
+    IEnumerator AttackCoroutine()
+    {
+        if (ToForwardObject() != target && !isAttack) yield break;
+
+        isAttack = true;
+        anim.SetBool("isAttack", isAttack);
+
+        var finish = StartCoroutine(FinishAnimation("attack"));
+        yield return finish;
+
+        if(ToForwardObject() == target)
+            PlayerManager.PlayerDamage(10);
+        isAttack = false;
+        anim.SetBool("isAttack", isAttack);
+    }
+
+    IEnumerator FinishAnimation(string animationName)
+    {
+        bool finish = false;
+        while(!finish)
+        {
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Attack"))
+            {
+                finish = true;
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
     }
 }
