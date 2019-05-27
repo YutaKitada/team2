@@ -9,6 +9,13 @@ public class StateManager : MonoBehaviour
     //現在のモーション
     private IMove currentMove = null;
 
+    Helth helth;
+
+    private void Awake()
+    {
+        helth = GetComponent<Helth>();
+    }
+
     /// <summary>
     /// モーションの追加
     /// </summary>
@@ -37,6 +44,10 @@ public class StateManager : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        if(helth.dead)
+        {
+            return;
+        }
         if(currentMove == null)
         {
             return;

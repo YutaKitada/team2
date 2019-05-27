@@ -10,6 +10,8 @@ public class CircleRotate : MonoBehaviour
     //移動中用
     private bool isMove;
     private float radius;
+    [SerializeField]
+    private int bgmNumber = 0;
 
 
     // Start is called before the first frame update
@@ -30,13 +32,15 @@ public class CircleRotate : MonoBehaviour
             isMove = true;
             isDown = true;
             isUp = false;
-            
+            SoundManager.PlaySE(bgmNumber);
+
         }
         if (LeftStick.Instance.IsBottom() && !isDown)
         {
             isMove = true;
             isUp = true;
             isDown = false;
+            SoundManager.PlaySE(bgmNumber);
         }
         Rote();
     }
@@ -59,6 +63,7 @@ public class CircleRotate : MonoBehaviour
 
         if (isUp)
         {
+            
             radius += 4;   transform.Rotate(new Vector3(radius / 5.5f, 0, 0));
             //radius+=2;     transform.Rotate(new Vector3(radius / 10.5f, 0, 0));
             // radius ++;    transform.Rotate(new Vector3(radius / 20.5f, 0, 0));

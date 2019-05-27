@@ -29,8 +29,10 @@ public class RouletteImage : MonoBehaviour
     void Start()
     {
         //stageList[0][0]が最初に選んでいるものとする
-        currentGroupIndex = storageGroup;
-        currentStageIndex = storageStage;
+        //currentGroupIndex = storageGroup;
+        //currentStageIndex = storageStage;
+        currentGroupIndex = 0;
+        currentStageIndex = 0;
 
         StageListInit();
         upCount = false;

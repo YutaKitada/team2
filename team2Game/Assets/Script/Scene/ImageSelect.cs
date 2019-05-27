@@ -66,30 +66,14 @@ public class ImageSelect : MonoBehaviour
         storageStage = currentStageIndex;
 
         Clamp();
-
-        MoveHorizon();
+        
         MoveVertical();
 
         TestFunc1();
         TestFunc2();
     }
 
-    //選択の横移動
-    private void MoveHorizon()
-    {
-        if (LeftStick.Instance.IsRightDown() && !isRight)
-        {
-            isLeft = false;
-            //選択しているStageを変更する
-            currentStageIndex++;
-        }
-        if (LeftStick.Instance.IsLeftDown() && !isLeft)
-        {
-            isRight = false;
-            //選択しているStageを変更する
-            currentStageIndex--;
-        }
-    }
+    
 
     //選択の縦移動
     private void MoveVertical()
@@ -97,14 +81,12 @@ public class ImageSelect : MonoBehaviour
         if (LeftStick.Instance.IsTopDown() && !isTop)
         {
             isBottom = false;
-            //選択しているGroupを変更する
-            currentGroupIndex++;
+            currentStageIndex--;
         }
         if (LeftStick.Instance.IsBottomDown() && !isBottom)
         {
             isTop = false;
-            //選択しているGroupを変更する
-            currentGroupIndex--;
+            currentStageIndex++;
         }
     }
 
@@ -116,7 +98,7 @@ public class ImageSelect : MonoBehaviour
             foreach (var stage in group)
             {
                 Image image = stage.GetComponent<Image>();
-                image.color = Color.white;
+                image.transform.localScale = new Vector3(0, 0, 0);
             }
         }
     }
@@ -125,7 +107,7 @@ public class ImageSelect : MonoBehaviour
     private void TestFunc2()
     {
         Image image = stageList[currentGroupIndex][currentStageIndex].GetComponent<Image>();
-        image.color = Color.red;
+        image.transform.localScale = new Vector3(1, 1, 1);
         currentStageName = image.transform.GetChild(0).gameObject.name;
 
     }
@@ -133,24 +115,14 @@ public class ImageSelect : MonoBehaviour
     //選択範囲を決める
     private void Clamp()
     {
-
         //上下
-        if (currentGroupIndex >= transform.childCount - 1)
-        {
-            isTop = true;
-        }
-        if (currentGroupIndex <= 0)
+        if (currentStageIndex >= transform.GetChild(0).childCount-1)
         {
             isBottom = true;
         }
-        //左右
-        if (currentStageIndex >= 2)
-        {
-            isRight = true;
-        }
         if (currentStageIndex <= 0)
         {
-            isLeft = true;
+            isTop = true;
         }
     }
 }
