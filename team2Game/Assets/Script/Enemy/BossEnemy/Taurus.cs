@@ -59,6 +59,11 @@ public class Taurus : BossEnemy
 
     AudioSource audioSource;
 
+    [SerializeField]
+    Vector3 leftRangeVector = Vector3.zero;
+    [SerializeField]
+    Vector3 rightRangeVector = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -123,7 +128,7 @@ public class Taurus : BossEnemy
             case Mode.STAN:
                 Stop();
                 NowStan();
-                anim.speed = 0;
+                anim.speed = 1;
                 break;
 
             default:
@@ -138,8 +143,15 @@ public class Taurus : BossEnemy
     /// </summary>
     void SetOnRight()
     {
-        if (transform.position.x > target.position.x) OnRight = true;//右
-        if (transform.position.x < target.position.x) OnRight = false;//左
+        //ステージ右端にいるか、ステージ左端からプレイヤーが間にいれば
+        if ((transform.position.x > target.position.x && target.position.x > leftRangeVector.x)
+            || rightRangeVector.x - 1 <= transform.position.x)
+            OnRight = true;//右
+
+        //ステージ左端にいるか、ステージ右端からプレイヤーが間にいれば
+        if ((transform.position.x < target.position.x && target.position.x < rightRangeVector.x) 
+            || leftRangeVector.x + 1 >= transform.position.x)
+            OnRight = false;//左
     }
     
     /// <summary>
@@ -256,19 +268,17 @@ public class Taurus : BossEnemy
         anim.speed = 1 * speed;
     }
 
-    /// <summary>
-    /// スタン中の処理
-    /// </summary>
     void NowStan()
     {
-        stanElapsedTime += Time.deltaTime * speed;
-        if (stanElapsedTime >= stanTime)
+        stanElapsedTime += Time.deltaTime;
+        if(stanElapsedTime >= stanTime)
         {
+            anim.SetTrigger("stand");
             stanElapsedTime = 0;
             mode = Mode.WAIT;
         }
     }
-
+    
     public override void OnCollisionEnter(Collision other)
     {
         if (mode != Mode.STAN)
@@ -307,6 +317,7 @@ public class Taurus : BossEnemy
                 {
                     SoundManager.PlaySE(15);
                     rushTurn = 0;
+                    anim.SetTrigger("down");
                     mode = Mode.STAN;
                     return;
                 }
@@ -317,6 +328,7 @@ public class Taurus : BossEnemy
                 SoundManager.PlaySE(15);
                 audioSource.Stop();
                 isPlaySe = false;
+                anim.SetTrigger("down");
                 mode = Mode.STAN;
             }
         }
@@ -484,5 +496,16 @@ public class Taurus : BossEnemy
         }
 
         return 1;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!Application.isPlaying) return;
+        
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawCube(leftRangeVector, new Vector3(1,1,1));
+        Gizmos.DrawCube(rightRangeVector, new Vector3(1, 1, 1));
+        
     }
 }
