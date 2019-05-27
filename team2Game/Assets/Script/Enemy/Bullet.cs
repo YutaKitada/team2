@@ -29,6 +29,8 @@ public class Bullet : MonoBehaviour
 
     Transform parent;
 
+    bool isPlaySE = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,10 @@ public class Bullet : MonoBehaviour
 
         if (IsShoot)
         {
+            if (!isPlaySE)
+            {
+                SoundManager.PlaySE(25);
+            }
             BulletMove();
         }
         else
