@@ -294,7 +294,7 @@ public class WishManager : MonoBehaviour
 
         if(showerTimer < 0)
         {
-            Instantiate(wishStar, player.transform.position + new Vector3(Random.Range(-20, 0), 20), Quaternion.identity);
+            Instantiate(wishStar, player.transform.position + new Vector3(Random.Range(-10,20), 20), Quaternion.identity);
             showerTimer = 0.5f;
         }
     }

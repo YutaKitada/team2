@@ -45,10 +45,13 @@ public class SoundManager : MonoBehaviour
     //BGMを再生
     public static void PlayBGM(int bgmNumber,float volume)
     {
-        bgm.Stop();
-        bgm.volume = volume;
-        bgm.clip = soundList_BGM[bgmNumber];
-        bgm.Play();
+        if (CheckBGM(bgmNumber))
+        {
+            bgm.Stop();
+            bgm.volume = volume;
+            bgm.clip = soundList_BGM[bgmNumber];
+            bgm.Play();
+        }
     }
 
     //VOICEを再生
