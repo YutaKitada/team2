@@ -244,6 +244,13 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushAttack()
     {
+        if (isHuging)
+        {
+            anim.speed = 0;
+            Stop();
+            return;
+        }
+
         MoveFreeze();
 
         rigid.AddForce(transform.forward * power * speed, ForceMode.Acceleration);
