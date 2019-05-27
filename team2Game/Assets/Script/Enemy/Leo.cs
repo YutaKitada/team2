@@ -122,4 +122,23 @@ public class Leo : Enemy
             }
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Star")
+        {
+            rigid.constraints = RigidbodyConstraints.FreezeAll;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+
+        if (collision.gameObject.tag == "Star")
+        {
+            rigid.constraints = 
+                RigidbodyConstraints.FreezePositionZ |
+                RigidbodyConstraints.FreezeRotation;
+        }
+    }
 }
