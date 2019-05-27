@@ -64,6 +64,8 @@ public class Taurus : BossEnemy
     [SerializeField]
     Vector3 rightRangeVector = Vector3.zero;
 
+    Camera main;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,6 +90,8 @@ public class Taurus : BossEnemy
         maxHp = hp;
 
         audioSource = GetComponent<AudioSource>();
+
+        main = Camera.main;
     }
 
     // Update is called once per frame
@@ -318,6 +322,7 @@ public class Taurus : BossEnemy
                     SoundManager.PlaySE(15);
                     rushTurn = 0;
                     anim.SetTrigger("down");
+                    main.GetComponent<ShakeCamera>().Shake();
                     mode = Mode.STAN;
                     return;
                 }
@@ -329,6 +334,7 @@ public class Taurus : BossEnemy
                 audioSource.Stop();
                 isPlaySe = false;
                 anim.SetTrigger("down");
+                main.GetComponent<ShakeCamera>().Shake();
                 mode = Mode.STAN;
             }
         }
@@ -505,7 +511,8 @@ public class Taurus : BossEnemy
         Gizmos.color = Color.red;
 
         Gizmos.DrawCube(leftRangeVector, new Vector3(1,1,1));
-        Gizmos.DrawCube(rightRangeVector, new Vector3(1, 1, 1));
-        
+        Gizmos.DrawCube(rightRangeVector, new Vector3(1, 1, 1));     
     }
+
+
 }

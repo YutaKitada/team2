@@ -17,6 +17,8 @@ public class GoalScript : MonoBehaviour
 
     private void Update()
     {
+        
+
         if(animator.speed > 1)
         {
             animator.speed -= Time.deltaTime * 5;
@@ -35,7 +37,7 @@ public class GoalScript : MonoBehaviour
         }
         if(collision.transform.tag == "Star")
         {
-            animator.speed *=3;
+            animator.speed += 3;
         }
     }
 }

@@ -71,6 +71,8 @@ public class BossEnemy : MonoBehaviour
 
     public virtual void Death()
     {
+        if (IsDead) return;
+
         if (hp <= 0)
         {
             IsDead = true;
@@ -78,7 +80,7 @@ public class BossEnemy : MonoBehaviour
             {
                 AnimReverse();
 
-                anim.SetBool("isDead", true);
+                anim.SetTrigger("isDead");
                 anim.speed = 1;
             }
         }
