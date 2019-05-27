@@ -50,6 +50,9 @@ public class Deneb : BossEnemy
     bool isShoot = false;//横から星が飛んできたか
     bool isInstante = false;//攻撃モード中に星を上に生成したか
 
+    [SerializeField]
+    GameObject hitParticle;
+
     public enum Mode//状態
     {
         NORMAL,
@@ -374,6 +377,9 @@ public class Deneb : BossEnemy
         if (collision.gameObject.tag.Contains("Star"))
         {
             Damage(1);
+
+            if(!isHit)
+                Instantiate(hitParticle, collision.contacts[0].point, Quaternion.identity);
         }
     }
 

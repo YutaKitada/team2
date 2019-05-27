@@ -11,6 +11,9 @@ public class Leo : Enemy
 
     Animator anim;
 
+    [SerializeField]
+    GameObject hitParticle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -128,6 +131,12 @@ public class Leo : Enemy
         if (collision.gameObject.tag == "Star" || collision.gameObject.tag == "Player")
         {
             rigid.constraints = RigidbodyConstraints.FreezeAll;
+        }
+
+        if (collision.gameObject.tag == "Star")
+        {
+            if(hp >= 1)
+                Instantiate(hitParticle, collision.contacts[0].point, Quaternion.identity);
         }
     }
 
