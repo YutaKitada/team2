@@ -41,7 +41,7 @@ public class Deneb : BossEnemy
     float instantInterval = 5;
     float instantElapsedTime = 0;//上記に関する経過時間
 
-    MeshRenderer meshRenderer;
+    SkinnedMeshRenderer skinnedMeshRenderer;
 
     GameObject[] starArray;//上から生成した星を格納する配列
     GameObject star;//横から生成した星を格納する変数
@@ -73,7 +73,7 @@ public class Deneb : BossEnemy
         isMove = false;
         isWait = true;
 
-        meshRenderer = GetComponent<MeshRenderer>();
+        skinnedMeshRenderer = transform.GetChild(0).transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
 
         starArray = new GameObject[3];
     }
@@ -85,7 +85,7 @@ public class Deneb : BossEnemy
 
         if (IsDead)
         {
-            meshRenderer.enabled = true;
+            skinnedMeshRenderer.enabled = true;
 
             //死亡してから、アニメーションが終わるまでのおおよその時間経過でパーティクル生成、
             //かつ、return以下の処理を行わない
@@ -135,13 +135,13 @@ public class Deneb : BossEnemy
         if (isHit || IsDead) return;
 
         invincibleElapsedTime += Time.deltaTime * speed;
-        meshRenderer.enabled = !meshRenderer.enabled;
+        skinnedMeshRenderer.enabled = !skinnedMeshRenderer.enabled;
 
         if (invincibleElapsedTime >= invincibleTime)
         {
             invincibleElapsedTime = 0;
             isHit = true;
-            meshRenderer.enabled = true;
+            skinnedMeshRenderer.enabled = true;
         }
     }
 

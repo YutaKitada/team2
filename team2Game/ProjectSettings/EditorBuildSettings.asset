@@ -36,6 +36,24 @@ EditorBuildSettings:
     path: Assets/Scenes/stage1-3.unity
     guid: c47c2ff89755e81479fa924dbd5e4dea
   - enabled: 1
+    path: Assets/Scenes/stage2-1.unity
+    guid: ecdd6d5a4aa03d944823e827a0571a5d
+  - enabled: 1
+    path: Assets/Scenes/stage2-2.unity
+    guid: e741635f88426c2449021c9f28f59540
+  - enabled: 1
+    path: Assets/Scenes/stage2-3.unity
+    guid: e5ea19c19a8548d4a84d8a2bd8fdd625
+  - enabled: 1
+    path: Assets/Scenes/stage3-1.unity
+    guid: 2288b710791a04f44b5908a6d09fd5aa
+  - enabled: 1
+    path: Assets/Scenes/stage3-2.unity
+    guid: 61321fce49bbf1a4898a71370f7d0ac1
+  - enabled: 1
+    path: Assets/Scenes/stage3-3.unity
+    guid: e894d4e9f5cc78c4bacc8d4161d42450
+  - enabled: 1
     path: Assets/Scenes/Kanai/SceneSelect.unity
     guid: 72b2093f8675bf94fba58176b3a6d74e
   m_configObjects: {}

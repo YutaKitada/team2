@@ -41,6 +41,8 @@ public class WishManager : MonoBehaviour
     public static bool isTackleStar;
     public static bool isChase;
 
+    public static int wishUseNumber;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -98,6 +100,8 @@ public class WishManager : MonoBehaviour
         isMeteorShower = false;
         isTackleStar = false;
         isChase = false;
+
+        wishUseNumber = 0;
     }
 
     // Update is called once per frame
@@ -187,6 +191,7 @@ public class WishManager : MonoBehaviour
             {
                 commandSuccess = false;
                 isWishNow = true;
+                wishUseNumber++;
             }
         }
 
@@ -310,6 +315,8 @@ public class WishManager : MonoBehaviour
 
         float distance = -1;
 
+        bool go = false;
+
         if(enemys != null)
         {
             foreach (var n in enemys)
@@ -325,6 +332,7 @@ public class WishManager : MonoBehaviour
                     enemy = n;
                 }
             }
+            go = true;
         }
         if(bosss != null)
         {
@@ -341,10 +349,11 @@ public class WishManager : MonoBehaviour
                     enemy = n;
                 }
             }
+            go = true;
         }
         
 
-        if (!PlayerManager.haveStar && !star.GetComponent<StarMovement>().returnPlayer)
+        if (!PlayerManager.haveStar && !star.GetComponent<StarMovement>().returnPlayer && go)
         {
             star.GetComponent<Rigidbody>().velocity = (enemy.transform.position + new Vector3(0,1) - star.transform.position).normalized * 30;
         }
