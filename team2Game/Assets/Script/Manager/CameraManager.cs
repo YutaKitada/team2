@@ -31,7 +31,10 @@ public class CameraManager : MonoBehaviour
     {
         
         player = GameObject.FindGameObjectWithTag("Player");
-        goalObject = GameObject.Find("Goal");
+        if(GameObject.Find("Goal") != null)
+        {
+            goalObject = GameObject.Find("Goal");
+        }
         cameraMoveDirectionX = CameraMoveDirectionX.NONE;
         cameraMoveDirectionY = CameraMoveDirectionY.NONE;
         transform.position = player.transform.position + cameraPosition;
@@ -170,12 +173,22 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-            float goalDistance = Vector3.Distance(player.transform.position, goalObject.transform.position);
+            if(goalObject != null)
+            {
+                float goalDistance = Vector3.Distance(player.transform.position, goalObject.transform.position);
 
-            Vector3 cameraDistance = Vector3.Lerp(new Vector3(0, 0, -4), new Vector3(0, 0, -9), goalDistance / 9);
+                Vector3 cameraDistance = Vector3.Lerp(new Vector3(0, 0, -4), new Vector3(0, 0, -9), goalDistance / 9);
 
-            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1,cameraDistance.z);
-            GetComponent<Camera>().fieldOfView = 90;
+                transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, cameraDistance.z);
+                GetComponent<Camera>().fieldOfView = 90;
+            }
+            else
+            {
+                transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
+                GetComponent<Camera>().fieldOfView = 90;
+            }
+
+            
         }
     }
 }

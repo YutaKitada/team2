@@ -17,7 +17,7 @@ public class GoalScript : MonoBehaviour
 
     private void Update()
     {
-        
+        animator.speed = Mathf.Clamp(animator.speed, 1, 30);
 
         if(animator.speed > 1)
         {
