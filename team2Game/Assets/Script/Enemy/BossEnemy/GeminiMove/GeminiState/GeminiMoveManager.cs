@@ -28,8 +28,15 @@ public class GeminiMoveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GeminiState();
+        OneDeath();
+        OneAttack();
+    }
+
+    void GeminiState()
+    {
         if (polNoneState.IsEnd() == false &&
-            casnoneState.IsEnd() == false )
+            casnoneState.IsEnd() == false)
         {
             currrentTime += Time.deltaTime;
             Debug.Log("両待機状態");
@@ -40,7 +47,7 @@ public class GeminiMoveManager : MonoBehaviour
                 polNoneState.MoveNum(num);
                 casnoneState.MoveNum(num);
                 //攻撃方法3が選ばれたら片方を4にしてずらす。
-                if(num ==3)
+                if (num == 3)
                 {
                     casnoneState.MoveNum(4);
                 }
@@ -48,6 +55,56 @@ public class GeminiMoveManager : MonoBehaviour
                 //None状態からnum番号へ移行
                 polNoneState.End(true);
                 casnoneState.End(true);
+
+                currrentTime = 0;
+            }
+        }
+        
+    }
+    void OneDeath()
+    {
+        if(casStateManager ==null|| polStateManager ==null)
+        {
+            maxTime = 1;
+        }
+    }
+    void OneAttack()
+    {
+        if (polStateManager == null)
+        {
+            currrentTime += Time.deltaTime;
+            if (currrentTime >= maxTime)
+            {
+                num = Random.Range(0, 4);
+                
+                casnoneState.MoveNum(num);
+                //攻撃方法3が選ばれたら片方を4にしてずらす。
+                if (num == 3)
+                {
+                    casnoneState.MoveNum(4);
+                }
+
+                //None状態からnum番号へ移行
+                
+                casnoneState.End(true);
+
+                currrentTime = 0;
+            }
+        }
+
+        if (casStateManager == null)
+        {
+            currrentTime += Time.deltaTime;
+            if (currrentTime >= maxTime)
+            {
+                num = Random.Range(0, 4);
+
+
+                polNoneState.MoveNum(num);
+                
+                //None状態からnum番号へ移行
+
+                polNoneState.End(true);
 
                 currrentTime = 0;
             }

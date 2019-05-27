@@ -18,6 +18,8 @@ public class ChangeScene : MonoBehaviour
     //　読み込み率を表示するスライダー
     [SerializeField]
     private Slider slider;
+    [SerializeField]
+    private int bgmNumber = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,7 @@ public class ChangeScene : MonoBehaviour
         //ボタンがクリックされたときに「シーンを読み込む機能」が呼ばれるように登録
         if (Input.GetButtonDown("AButton") || Input.GetKeyDown(KeyCode.Z)) 
         {
+            SoundManager.PlaySE(bgmNumber);
             loadSceneName = RouletteImage.currentStageName;
             NextScene();
         }

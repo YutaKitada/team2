@@ -697,61 +697,61 @@ PrefabInstance:
         type: 3}
       propertyPath: comboNumberSprites.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: ce090317a4135c5458d0c1404213476c,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[1]
       value: 
-      objectReference: {fileID: 21300002, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: 94cdc3a426e791e42bc49498dcc15d7b,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[2]
       value: 
-      objectReference: {fileID: 21300004, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: 2e33398ed302d8c4f9e780dd062e5bb6,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[3]
       value: 
-      objectReference: {fileID: 21300006, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: 48f9c5999e2f9544f9f6756020883306,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[4]
       value: 
-      objectReference: {fileID: 21300008, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: 606368e9530b7d841bfa1377e5b88222,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[5]
       value: 
-      objectReference: {fileID: 21300010, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: 1e88b6c54a4dad44f8327778f4630010,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[6]
       value: 
-      objectReference: {fileID: 21300012, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: f6ac462897d5f214dac7c55ba0be884d,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[7]
       value: 
-      objectReference: {fileID: 21300014, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: 7a9552eba36c2f144a2ec18aa0e2bbea,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[8]
       value: 
-      objectReference: {fileID: 21300016, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: efb7bb58febaade4486238da981497b7,
         type: 3}
     - target: {fileID: 8717625968167718618, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
       propertyPath: comboNumberSprites.Array.data[9]
       value: 
-      objectReference: {fileID: 21300018, guid: b2f4a45ec7a9afa478950ef67a4c0970,
+      objectReference: {fileID: 21300000, guid: 969c94b4a71cef14cb4b69963f2e7a58,
         type: 3}
     - target: {fileID: 1748064410427857876, guid: b93046dbb77854b4b8c9e1de5b83e565,
         type: 3}
@@ -1176,16 +1176,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comboNumberSprites:
-  - {fileID: 21300000, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300002, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300004, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300006, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300008, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300010, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300012, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300014, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300016, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300018, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
+  - {fileID: 21300000, guid: ce090317a4135c5458d0c1404213476c, type: 3}
+  - {fileID: 21300000, guid: 94cdc3a426e791e42bc49498dcc15d7b, type: 3}
+  - {fileID: 21300000, guid: 2e33398ed302d8c4f9e780dd062e5bb6, type: 3}
+  - {fileID: 21300000, guid: 48f9c5999e2f9544f9f6756020883306, type: 3}
+  - {fileID: 21300000, guid: 606368e9530b7d841bfa1377e5b88222, type: 3}
+  - {fileID: 21300000, guid: 1e88b6c54a4dad44f8327778f4630010, type: 3}
+  - {fileID: 21300000, guid: f6ac462897d5f214dac7c55ba0be884d, type: 3}
+  - {fileID: 21300000, guid: 7a9552eba36c2f144a2ec18aa0e2bbea, type: 3}
+  - {fileID: 21300000, guid: efb7bb58febaade4486238da981497b7, type: 3}
+  - {fileID: 21300000, guid: 969c94b4a71cef14cb4b69963f2e7a58, type: 3}
   numberPosition_onePlace: {fileID: 1154369922}
   numberPosition_tenPlace: {fileID: 1892620870}
   numberPosition_hundredPlace: {fileID: 1781222724}
@@ -1688,16 +1688,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comboNumberSprites:
-  - {fileID: 21300000, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300002, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300004, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300006, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300008, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300010, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300012, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300014, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300016, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
-  - {fileID: 21300018, guid: b2f4a45ec7a9afa478950ef67a4c0970, type: 3}
+  - {fileID: 21300000, guid: ce090317a4135c5458d0c1404213476c, type: 3}
+  - {fileID: 21300000, guid: 94cdc3a426e791e42bc49498dcc15d7b, type: 3}
+  - {fileID: 21300000, guid: 2e33398ed302d8c4f9e780dd062e5bb6, type: 3}
+  - {fileID: 21300000, guid: 48f9c5999e2f9544f9f6756020883306, type: 3}
+  - {fileID: 21300000, guid: 606368e9530b7d841bfa1377e5b88222, type: 3}
+  - {fileID: 21300000, guid: 1e88b6c54a4dad44f8327778f4630010, type: 3}
+  - {fileID: 21300000, guid: f6ac462897d5f214dac7c55ba0be884d, type: 3}
+  - {fileID: 21300000, guid: 7a9552eba36c2f144a2ec18aa0e2bbea, type: 3}
+  - {fileID: 21300000, guid: efb7bb58febaade4486238da981497b7, type: 3}
+  - {fileID: 21300000, guid: 969c94b4a71cef14cb4b69963f2e7a58, type: 3}
   numberPosition_onePlace: {fileID: 1967891313}
   numberPosition_tenPlace: {fileID: 1967891312}
   numberPosition_hundredPlace: {fileID: 1967891311}

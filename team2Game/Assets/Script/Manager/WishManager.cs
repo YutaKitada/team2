@@ -315,6 +315,8 @@ public class WishManager : MonoBehaviour
 
         float distance = -1;
 
+        bool go = false;
+
         if(enemys != null)
         {
             foreach (var n in enemys)
@@ -330,6 +332,7 @@ public class WishManager : MonoBehaviour
                     enemy = n;
                 }
             }
+            go = true;
         }
         if(bosss != null)
         {
@@ -346,10 +349,11 @@ public class WishManager : MonoBehaviour
                     enemy = n;
                 }
             }
+            go = true;
         }
         
 
-        if (!PlayerManager.haveStar && !star.GetComponent<StarMovement>().returnPlayer)
+        if (!PlayerManager.haveStar && !star.GetComponent<StarMovement>().returnPlayer && go)
         {
             star.GetComponent<Rigidbody>().velocity = (enemy.transform.position + new Vector3(0,1) - star.transform.position).normalized * 30;
         }
