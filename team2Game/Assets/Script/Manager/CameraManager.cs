@@ -24,11 +24,14 @@ public class CameraManager : MonoBehaviour
     enum CameraMoveDirectionY { UP, DOWN, NONE };
     private CameraMoveDirectionY cameraMoveDirectionY;
 
+    private GameObject goalObject;
+
     // Start is called before the first frame update
     void Start()
     {
         
         player = GameObject.FindGameObjectWithTag("Player");
+        goalObject = GameObject.Find("Goal");
         cameraMoveDirectionX = CameraMoveDirectionX.NONE;
         cameraMoveDirectionY = CameraMoveDirectionY.NONE;
         transform.position = player.transform.position + cameraPosition;
@@ -162,12 +165,16 @@ public class CameraManager : MonoBehaviour
 
         if (PlayerManager.isWishMode)
         {
-            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -3);
+            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
             GetComponent<Camera>().fieldOfView = 60;
         }
         else
         {
-            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
+            float goalDistance = Vector3.Distance(player.transform.position, goalObject.transform.position);
+
+            Vector3 cameraDistance = Vector3.Lerp(new Vector3(0, 0, -4), new Vector3(0, 0, -9), goalDistance / 9);
+
+            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1,cameraDistance.z);
             GetComponent<Camera>().fieldOfView = 90;
         }
     }
