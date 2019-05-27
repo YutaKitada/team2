@@ -771,6 +771,8 @@ MonoBehaviour:
   direction_Left: 1
   direction_Up: 1
   maxDistance: 2
+  hitParticle: {fileID: 6120655306622782852, guid: 1555cb10d71cfb14994056d6a237ff51,
+    type: 3}
 --- !u!1 &1713896686
 GameObject:
   m_ObjectHideFlags: 0

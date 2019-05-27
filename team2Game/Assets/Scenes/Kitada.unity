@@ -20627,22 +20627,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8876861115621477045, guid: 794521008e6b53e40bebcc279aa97a2b,
-        type: 3}
-      propertyPath: wishProductionList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8876861115621477045, guid: 794521008e6b53e40bebcc279aa97a2b,
-        type: 3}
-      propertyPath: wishNumber_Debug
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8876861115621477045, guid: 794521008e6b53e40bebcc279aa97a2b,
-        type: 3}
-      propertyPath: wishProductionList.Array.data[0]
-      value: 
-      objectReference: {fileID: 7147429639797735572, guid: e9ff81088351fbc4b829bebbf29f8a32,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794521008e6b53e40bebcc279aa97a2b, type: 3}
 --- !u!1001 &1846398035

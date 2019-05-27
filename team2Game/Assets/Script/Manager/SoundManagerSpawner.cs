@@ -10,7 +10,7 @@ public class SoundManagerSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GameObject.Find("SoundManager(Clone)") == null)
+        if (GameObject.Find("SoundManager2(Clone)") == null)
         {
             Instantiate(soundManager);
         }

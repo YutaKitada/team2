@@ -772,6 +772,8 @@ MonoBehaviour:
     type: 3}
   shootPositionY: -3
   instantInterval: 5
+  hitParticle: {fileID: 6120655306622782852, guid: 1555cb10d71cfb14994056d6a237ff51,
+    type: 3}
 --- !u!1 &1824074618
 GameObject:
   m_ObjectHideFlags: 0

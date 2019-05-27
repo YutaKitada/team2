@@ -55,6 +55,13 @@ public class UIManager : MonoBehaviour
     private GameObject circleObject;                   //コマンドをミスした時に表示するオブジェクト
     private List<GameObject> circleList;
 
+    [SerializeField]
+    private GameObject ui;
+    [SerializeField]
+    private List<Sprite> wishSprites;
+    [SerializeField]
+    private Image wishImage;
+
     //[SerializeField]
     //private Image fade;
 
@@ -112,6 +119,8 @@ public class UIManager : MonoBehaviour
         //ComboUI();
         HPGageUI();
         YButton();
+        ClearUI();
+        ChangeWish();
 
         if (GameManager.debug)
         {
@@ -133,6 +142,50 @@ public class UIManager : MonoBehaviour
             + "\n" + "isStop:" + PlayerManager.isStop
             + "\n" + "isGameStop:" + GameManager.isGameStop
             + "\n" +  "isTackleStar:"+ WishManager.isTackleStar + debugtext;
+    }
+
+    private void ChangeWish()
+    {
+        if(Input.GetAxisRaw("Vertical_Jyuji") < 0)
+        {
+            WishManager.wishNum = 1;
+            wishImage.sprite = wishSprites[0];
+            wishImage.enabled = true;
+        }
+        else if(Input.GetAxisRaw("Horizontal_Jyuji") > 0)
+        {
+            WishManager.wishNum = 2;
+            wishImage.sprite = wishSprites[1];
+            wishImage.enabled = true;
+        }
+        else if(Input.GetAxisRaw("Vertical_Jyuji") > 0)
+        {
+            WishManager.wishNum = 3;
+            wishImage.sprite = wishSprites[2];
+            wishImage.enabled = true;
+        }
+        else if (Input.GetAxisRaw("Horizontal_Jyuji") < 0)
+        {
+            WishManager.wishNum = 4;
+            wishImage.sprite = wishSprites[3];
+            wishImage.enabled = true;
+        }
+        else
+        {
+            wishImage.enabled = false;
+        }
+    }
+
+    private void ClearUI()
+    {
+        if (WishManager.wishProductionFlag)
+        {
+            ui.SetActive(false);
+        }
+        else
+        {
+            ui.SetActive(true);
+        }
     }
 
     //private void ComboUI()
@@ -171,7 +224,7 @@ public class UIManager : MonoBehaviour
         }
 
         //タイマーが規定値を超えた、もしくは願い事コマンド入力状態でなければ
-        if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode)
+        if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode && !WishManager.wishProductionFlag)
         {
             //HPゲージが0以上であれば
             if (hpGageFillAmount > 0)
@@ -245,6 +298,7 @@ public class UIManager : MonoBehaviour
             {
                 answerButtonList[i].GetComponent<Image>().sprite = buttonSprites[4];
             }
+            answerText = "";
         }
     }
 

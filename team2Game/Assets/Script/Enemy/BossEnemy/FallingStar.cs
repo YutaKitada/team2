@@ -74,6 +74,7 @@ public class FallingStar : MonoBehaviour
             PlayerManager.PlayerDamage(10);
         }
 
+        SoundManager.PlaySE(21);
         RemoveObjects();
     }
 }

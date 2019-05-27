@@ -43,9 +43,6 @@ public class Taurus : BossEnemy
     Vector3 startScale;//スケールの初期値
     bool isHuging = false;//巨大化中か
 
-    [SerializeField]
-    Vector3 originBlowVector;
-
     bool isTurn = false;
     int rushTurn = 0;
 
@@ -59,12 +56,15 @@ public class Taurus : BossEnemy
 
     AudioSource audioSource;
 
-    [SerializeField]
+    [SerializeField, Header("ステージの左端")]
     Vector3 leftRangeVector = Vector3.zero;
-    [SerializeField]
+    [SerializeField, Header("ステージの右端")]
     Vector3 rightRangeVector = Vector3.zero;
 
     Camera main;
+
+    [SerializeField]
+    GameObject hitParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +80,6 @@ public class Taurus : BossEnemy
         //全ての経過時間を0
         stanElapsedTime = 0;
         invincibleElapsedTime = 0;
-
         instanteTime = 0;
 
         anim = GetComponent<Animator>();
@@ -245,6 +244,13 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushAttack()
     {
+        if (isHuging)
+        {
+            anim.speed = 0;
+            Stop();
+            return;
+        }
+
         MoveFreeze();
 
         rigid.AddForce(transform.forward * power * speed, ForceMode.Acceleration);
@@ -292,7 +298,6 @@ public class Taurus : BossEnemy
             {
                 //その場で待機状態に移行
                 PlayerManager.PlayerDamage(10);
-                Blow();
 
                 if (hp <= maxHp / 2 && mode == Mode.RUSH)
                 {
@@ -300,6 +305,7 @@ public class Taurus : BossEnemy
                 }
                 else
                 {
+                    Blow();
                     if (mode == Mode.RUSH)
                     {
                         mode = Mode.WAIT;
@@ -342,6 +348,8 @@ public class Taurus : BossEnemy
         if (other.gameObject.tag == "Star" && !isHuging)
         {
             Damage(1);
+
+            Instantiate(hitParticle, other.contacts[0].point, Quaternion.identity);
         }
     }
 
@@ -426,12 +434,8 @@ public class Taurus : BossEnemy
     /// </summary>
     void Blow()
     {
-        var blowVector = Vector3.zero;
-
-        if (OnRight) blowVector = originBlowVector;
-        else blowVector = new Vector3(-originBlowVector.x, originBlowVector.y);
-
-        target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
+        if (OnRight) target.GetComponent<PlayerController>().Damage(new Vector3(-5, 3));
+        else target.GetComponent<PlayerController>().Damage(new Vector3(5, 3));
     }
     
     /// <summary>
@@ -439,12 +443,8 @@ public class Taurus : BossEnemy
     /// </summary>
     void BlowUp()
     {
-        var blowVector = Vector3.zero;
-
-        if (OnRight) blowVector = new Vector3(-25, 5);
-        else blowVector = new Vector3(25, 5);
-
-        target.GetComponent<Rigidbody>().AddForce(blowVector, ForceMode.Impulse);
+        if (OnRight) target.GetComponent<PlayerController>().Damage(new Vector3(-5, 15));
+        else target.GetComponent<PlayerController>().Damage(new Vector3(5, 15));
     }
 
     /// <summary>

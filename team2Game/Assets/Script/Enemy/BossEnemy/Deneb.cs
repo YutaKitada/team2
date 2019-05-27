@@ -50,6 +50,9 @@ public class Deneb : BossEnemy
     bool isShoot = false;//横から星が飛んできたか
     bool isInstante = false;//攻撃モード中に星を上に生成したか
 
+    [SerializeField]
+    GameObject hitParticle;
+
     public enum Mode//状態
     {
         NORMAL,
@@ -295,6 +298,7 @@ public class Deneb : BossEnemy
                     //0から順に格納
                     starArray[i + 1] = Instantiate(fallingStar, fallPosition + new Vector3(i * 6, Random.Range(-3f, 3f), 0), Quaternion.Euler(0, 90, 90));
                 }
+                SoundManager.PlaySE(20);
                 isInstante = true;
             }
 
@@ -304,6 +308,7 @@ public class Deneb : BossEnemy
                 //生成した星が全て消えた時1つだけ生成
                 if (GetStarObjects() && !isShoot)
                 {
+                    SoundManager.PlaySE(11);
                     star = Instantiate(shootingStar, GetShootPosition(), Quaternion.Euler(0, 90, 90));
                     isShoot = true;
                 }
@@ -374,6 +379,9 @@ public class Deneb : BossEnemy
         if (collision.gameObject.tag.Contains("Star"))
         {
             Damage(1);
+
+            if(!isHit)
+                Instantiate(hitParticle, collision.contacts[0].point, Quaternion.identity);
         }
     }
 

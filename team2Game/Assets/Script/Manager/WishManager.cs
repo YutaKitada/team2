@@ -31,7 +31,7 @@ public class WishManager : MonoBehaviour
     
     [SerializeField]
     private int wishNumber_Debug = 1;
-    private int wishNum;
+    public static int wishNum;
 
     [SerializeField]
     private GameObject wishStar;
@@ -42,6 +42,7 @@ public class WishManager : MonoBehaviour
     private GameObject wishProductionObject;
     private float wishProductionTimer;
     private bool wishProduction;
+    public static bool wishProductionFlag;
 
     public static bool isMeteorShower;
     public static bool isTackleStar;
@@ -100,7 +101,7 @@ public class WishManager : MonoBehaviour
 
         showerTimer = 0;
 
-        wishNum = 0;
+        wishNum = 1;
 
         isMeteorShower = false;
         isTackleStar = false;
@@ -109,6 +110,7 @@ public class WishManager : MonoBehaviour
         wishUseNumber = 0;
         wishProductionTimer = 0;
         wishProduction = false;
+        wishProductionFlag = false;
     }
 
     // Update is called once per frame
@@ -140,7 +142,6 @@ public class WishManager : MonoBehaviour
                 }
                 else
                 {
-                    wishNum = Random.Range(1, 4);
                     UIManager.answerText = wishDatas[wishNum][1];
                 }
                 
@@ -194,10 +195,12 @@ public class WishManager : MonoBehaviour
             UIManager.wishText = wishCommand;
             commandInput = false;
             GameManager.isGameStop = false;
+            
             if(!wishProduction && commandSuccess)
             {
                 wishProduction = true;
-                wishProductionObject = Instantiate(wishProductionList[wishNumber_Debug - 1], player.transform.position + new Vector3(-3.5f, 0, -1), Quaternion.identity);
+                wishProductionFlag = true;
+                wishProductionObject = Instantiate(wishProductionList[wishNum-1], player.transform.position + new Vector3(-3.5f, -1.5f, -1), Quaternion.identity);
             }
             if (wishProduction)
             {
@@ -213,7 +216,7 @@ public class WishManager : MonoBehaviour
             wishUseNumber++;
             wishProductionTimer = 0;
             wishProduction = false;
-            PlayerManager.isWishMode = false;       //願い事モードを切る
+            wishProductionFlag = false;
         }
 
         if (isWishNow)
@@ -257,15 +260,17 @@ public class WishManager : MonoBehaviour
                 ReturnStar();
                 break;
             case 2:
-                StopCombo();
-                EternalCombo();
-                EverCombo();
+                //StopCombo();
+                //EternalCombo();
+                //EverCombo();
+                Tackle();
                 break;
             case 3:
                 Shower();
                 break;
             case 4:
-                Tackle();
+                
+                ChaseStar();
                 break;
             case 5:
                 ChaseStar();
