@@ -91,9 +91,9 @@ public class PlayerController : MonoBehaviour
         Animation();
 
         damageTimer += Time.deltaTime;
-        if(damageTimer >= 0.5f)
+        if (damageTimer >= 0.5f)
         {
-            
+
             isDamage = false;
         }
         //移動処理
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Playerの向きを左に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.LEFT;
-                    
+
 
                 }
                 //右に移動していれば
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Playerの向きを右に
                     PlayerManager.playerDirection = PlayerManager.PlayerDirection.RIGHT;
-                    
+
 
                 }
             }
@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(PlayerManager.playerDirection == PlayerManager.PlayerDirection.LEFT)
+        if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.LEFT)
         {
             transform.LookAt(transform.position + new Vector3(-1, 0));
             if (!normalRotation)
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
                 transform.Rotate(new Vector3(180, 0));
             }
         }
-        else if(PlayerManager.playerDirection == PlayerManager.PlayerDirection.RIGHT)
+        else if (PlayerManager.playerDirection == PlayerManager.PlayerDirection.RIGHT)
         {
             transform.LookAt(transform.position + new Vector3(1, 0));
             if (!normalRotation)
@@ -188,18 +188,18 @@ public class PlayerController : MonoBehaviour
 
         if (gravityArea)
         {
-            if(rigid.velocity.y >= 5)
+            if (rigid.velocity.y >= 5)
             {
                 normalRotation = false;
             }
         }
         else
         {
-                if (rigid.velocity.y <= -5)
-                {
-                    normalRotation = true;
-                }
-            
+            if (rigid.velocity.y <= -5)
+            {
+                normalRotation = true;
+            }
+
         }
     }
 
@@ -212,7 +212,7 @@ public class PlayerController : MonoBehaviour
             //ジャンプカウントを1増やす
             jumpCount++;
             //ジャンプする前に一旦移動量を0にする
-            rigid.velocity = new Vector3(rigid.velocity.x,0);
+            rigid.velocity = new Vector3(rigid.velocity.x, 0);
             if (Input.GetAxisRaw("Vertical") <= -0.7f)
             {
                 SoundManager.PlaySE(4);
@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour
                 ////ジャンプカウントを1増やす
                 //jumpCount++;
             }
-            
+
             //ジャンプカウントが2以上であれば
             if (jumpCount >= 2)
             {
@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour
             jumpLimit = true;
         }
 
-        if(Input.GetButtonUp("Jump") && jumpLimit)
+        if (Input.GetButtonUp("Jump") && jumpLimit)
         {
             jumpLimit = false;
         }
@@ -324,6 +324,23 @@ public class PlayerController : MonoBehaviour
         //else Move();
     }
 
+    public void Damage(Vector3 hitVector)
+    {
+        if (!isDamage)
+        {
+            //ダメージを受けた時の効果音の再生
+            SoundManager.PlaySE(5);
+            //ダメージを受けた
+            isDamage = true;
+
+            //一旦移動量を0に
+            rigid.velocity = Vector3.zero;
+            //右であれば
+            rigid.AddForce(hitVector, ForceMode.Impulse);
+            damageTimer = 0;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         ////ステージに当たった場合
@@ -379,8 +396,54 @@ public class PlayerController : MonoBehaviour
                 }
                 damageTimer = 0;
             }
-
         }
+
+        //Enemyに当たった場合
+        if (collision.transform.tag == "BossEnemy")
+        {
+            //ダメージを10受ける
+            PlayerManager.PlayerDamage(10);
+
+            //Vector3 direciton = (collision.transform.position - transform.position).normalized;
+
+            //if (direciton.x > 0)
+            //{
+            //    rigid.AddForce(new Vector3(-10, 5), ForceMode.Impulse);
+            //    isMoveStop = true;
+            //}
+            //else if (direciton.x < 0)
+            //{
+            //    rigid.AddForce(new Vector3(10, 5), ForceMode.Impulse);
+            //    isMoveStop = true;
+            //}
+            //ダメージをまだ受けていない場合
+            if (!isDamage)
+            {
+                //ダメージを受けた時の効果音の再生
+                SoundManager.PlaySE(5);
+                //ダメージを受けた
+                isDamage = true;
+
+                //一旦移動量を0に
+                rigid.velocity = Vector3.zero;
+
+                //当たった場所は自身の右か左かを取得
+                Vector3 hitVector = (collision.transform.position - transform.position).normalized;
+                //右であれば
+                if (hitVector.x >= 0)
+                {
+                    rigid.AddForce(new Vector3(-1, 3) * 2, ForceMode.Impulse);
+                }
+                //左であれば
+                else
+                {
+                    rigid.AddForce(new Vector3(1, 3) * 2, ForceMode.Impulse);
+                }
+                damageTimer = 0;
+            }
+        }
+
+
         rigid.useGravity = false;
     }
 
@@ -463,7 +526,7 @@ public class PlayerController : MonoBehaviour
             gravityArea = false;
             //GravityStop = false;
             rigid.useGravity = true;
-            
+
         }
     }
 

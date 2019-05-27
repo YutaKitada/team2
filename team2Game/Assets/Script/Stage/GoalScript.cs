@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GoalScript : MonoBehaviour
 {
-    [SerializeField]
-    private string sceneName = "GameClear";
-
     private Animator animator;
 
     private void Start()
@@ -17,6 +14,8 @@ public class GoalScript : MonoBehaviour
 
     private void Update()
     {
+        animator.speed = Mathf.Clamp(animator.speed, 1, 30);
+
         if(animator.speed > 1)
         {
             animator.speed -= Time.deltaTime * 5;
@@ -31,11 +30,11 @@ public class GoalScript : MonoBehaviour
     {
         if(collision.transform.tag == "Player")
         {
-            SceneManager.LoadScene(sceneName);
+            GameManager.isClear = true;
         }
         if(collision.transform.tag == "Star")
         {
-            animator.speed *=3;
+            animator.speed += 3;
         }
     }
 }

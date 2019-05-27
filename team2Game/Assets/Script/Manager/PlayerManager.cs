@@ -170,6 +170,5 @@ public class PlayerManager : MonoBehaviour
             //無敵状態に
             isInvincible = true;
         }
-        
     }
 }
