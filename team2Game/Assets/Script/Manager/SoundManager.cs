@@ -69,7 +69,7 @@ public class SoundManager : MonoBehaviour
     //現在のBGMが指定したBGMと一緒か否か
     public static bool CheckBGM(int bgmNumber)
     {
-        if(bgm == null)
+        if(bgm.clip == null)
         {
             return false;
         }
