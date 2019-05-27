@@ -50,7 +50,7 @@ public class RollBallAttack : MonoBehaviour　, IMove
         if (currentTime >=maxTime)
         {
             Instantiate(rollRock,
-                    transform.position + new Vector3(3 * sabunVec.x, 1, 0),
+                    transform.position + new Vector3(4 * sabunVec.x, 1.5f, 0),
                     new Quaternion(0, 0, 0, 0));
             currentTime = 0;
             isEndFlag = true;

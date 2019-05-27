@@ -14,7 +14,7 @@ public class ThrowAttack : MonoBehaviour, IMove
 
 
     [SerializeField]
-    private float maxTime =1;    //アニメーションに合わせて投げる
+    private float maxTime =0.8f;    //アニメーションに合わせて投げる
     private float saveTime;
 
     [SerializeField]
@@ -75,7 +75,7 @@ public class ThrowAttack : MonoBehaviour, IMove
         if(saveTime >= maxTime)
         {
             Instantiate(snowBall,
-                    transform.position + new Vector3(2 * sabunVec.x, 3, 0),
+                    transform.position + new Vector3(3 * sabunVec.x, 9, 0),
                     new Quaternion(0, 0, 0, 0));
             saveTime = 0;
             currntInterval = 0;
