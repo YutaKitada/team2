@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //移動制限がかかっていない場合
-        if (!PlayerManager.isStop && !isMoveStop && !isDamage)
+        if (!PlayerManager.isStop && !isMoveStop && !isDamage && !WishManager.wishProductionFlag)
         {
             if (!gravityArea) rigid.AddForce(new Vector3(0, -addGravity));
             else rigid.AddForce(new Vector3(0, addGravity));
@@ -85,10 +85,22 @@ public class PlayerController : MonoBehaviour
 
             //ジャンプ処理
             Jump();
+
+            //移動処理
+            Move();
+
+            //アニメーションの処理
+            Animation();
+        }
+        if (PlayerManager.isWishMode)
+        {
+            if (!animator.GetBool("Squat"))
+            {
+                animator.SetBool("Run", false);
+                animator.SetBool("Squat", true);
+            }
         }
 
-        //アニメーションの処理
-        Animation();
 
         damageTimer += Time.deltaTime;
         if (damageTimer >= 0.5f)
@@ -96,8 +108,7 @@ public class PlayerController : MonoBehaviour
 
             isDamage = false;
         }
-        //移動処理
-        Move();
+        
 
 
         UIManager.debugtext = "\n" + "JumpCount:" + jumpCount
