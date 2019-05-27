@@ -27,6 +27,8 @@ public class Bullet : MonoBehaviour
 
     bool shootNow = false;
 
+    Transform parent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,11 @@ public class Bullet : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         targetPosition = target.position;
         initialPosition = transform.position;
+
+
+        parent = transform.parent.transform.parent.transform.parent.transform.parent.transform.parent
+            .transform.parent.transform.parent.transform.parent.transform.parent
+            .transform.parent.transform.parent.transform.parent;
     }
 
     // Update is called once per frame
@@ -42,7 +49,6 @@ public class Bullet : MonoBehaviour
     {
         if (!shootNow)
             shootVector = targetPosition - initialPosition + new Vector3(0, 1, 0);
-        Debug.Log(shootVector);
 
         if (IsShoot)
         {
@@ -68,7 +74,9 @@ public class Bullet : MonoBehaviour
         shootNow = true;
         transform.parent = null;
         rigid.AddForce(shootVector, ForceMode.Impulse);
-        rigid.velocity /= 2;        
+        rigid.velocity /= 2;
+
+        Destroy(gameObject, 2);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,7 +84,12 @@ public class Bullet : MonoBehaviour
         if(other.gameObject.tag=="Player")
         {
             PlayerManager.PlayerDamage(10);
-            Destroy(this.gameObject);
+            if (parent.GetComponent<Enemy>().direction_Left)
+                other.GetComponent<PlayerController>().Damage(new Vector3(-5, 3));
+            else
+                other.GetComponent<PlayerController>().Damage(new Vector3(5, 3));
+
+            Destroy(gameObject);
         }
 
         if (!other.gameObject.name.Contains("Sagittarius") && !other.gameObject.name.Contains("Allow"))
