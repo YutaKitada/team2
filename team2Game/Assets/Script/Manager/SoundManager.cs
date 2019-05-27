@@ -45,7 +45,7 @@ public class SoundManager : MonoBehaviour
     //BGMを再生
     public static void PlayBGM(int bgmNumber,float volume)
     {
-        if (CheckBGM(bgmNumber))
+        if (!CheckBGM(bgmNumber))
         {
             bgm.Stop();
             bgm.volume = volume;
