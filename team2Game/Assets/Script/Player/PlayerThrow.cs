@@ -73,7 +73,8 @@ public class PlayerThrow : MonoBehaviour
 
                 if (PlayerManager.isWishMode)
                 {
-                    //PlayerManager.isWishMode = false;       //願い事モードを切る
+                    PlayerManager.isWishMode = false;       //願い事モードを切る
+                    
                 }
                 else
                 {
