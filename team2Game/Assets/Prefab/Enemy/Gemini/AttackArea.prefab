@@ -104,4 +104,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3772af096ed71945b3b13d604115e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vector3: {x: 5, y: 2, z: 0}
+  vector3: {x: 100, y: 5, z: 0}
+  bgmNumber: 3

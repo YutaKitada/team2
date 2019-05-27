@@ -17,6 +17,8 @@ public class RollBallAttack : MonoBehaviour　, IMove
     private float currentTime;
     [SerializeField]
     private float maxTime = 0.6f;
+    [SerializeField]
+    private int seNumber = 0;
 
     public void Initialize()
     {
@@ -49,6 +51,7 @@ public class RollBallAttack : MonoBehaviour　, IMove
         
         if (currentTime >=maxTime)
         {
+            SoundManager.PlaySE(seNumber);
             Instantiate(rollRock,
                     transform.position + new Vector3(4 * sabunVec.x, 1.5f, 0),
                     new Quaternion(0, 0, 0, 0));

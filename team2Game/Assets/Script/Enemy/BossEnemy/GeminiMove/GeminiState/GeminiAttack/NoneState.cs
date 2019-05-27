@@ -29,15 +29,6 @@ public class NoneState : MonoBehaviour , IMove
     
     void IMove.Update()
     {
-        Debug.Log("疲れた");
-        //currrentTime += Time.deltaTime;
-        
-        //if (currrentTime >=maxTime)
-        //{
-        //    num = Random.Range(0, 5);
-        //    currrentTime = 0;
-        //    isEndFlag = true;
-        //}
         
     }
 
