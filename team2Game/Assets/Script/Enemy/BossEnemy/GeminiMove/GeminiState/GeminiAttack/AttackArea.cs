@@ -4,24 +4,14 @@ using UnityEngine;
 
 public class AttackArea : MonoBehaviour
 {
-
-    public bool bingo;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Vector3 vector3;
+    private void OnTriggerStay(Collider col)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    private void OnCollisionStay(Collision col)
-    {
-        if(col.transform.tag =="Player")
+       
+        if (col.transform.tag == "Player")
         {
-            
+            col.transform.GetComponent<PlayerController>().Damage(vector3);
         }
     }
 }
