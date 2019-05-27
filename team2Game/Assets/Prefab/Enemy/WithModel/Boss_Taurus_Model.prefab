@@ -250,7 +250,10 @@ MonoBehaviour:
   mode: 0
   sandParticle: {fileID: 6430994268695726755, guid: 3740c7bec18d62a4f9bc55911aecbff6,
     type: 3}
-  originBlowVector: {x: -75, y: 3, z: 0}
+  leftRangeVector: {x: -15, y: 0, z: 0}
+  rightRangeVector: {x: 9, y: 0, z: 0}
+  hitParticle: {fileID: 6120655306622782852, guid: 1555cb10d71cfb14994056d6a237ff51,
+    type: 3}
 --- !u!82 &517137664412336665
 AudioSource:
   m_ObjectHideFlags: 0
