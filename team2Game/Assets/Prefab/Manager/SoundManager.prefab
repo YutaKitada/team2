@@ -97,6 +97,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0e8d27c8c07a1204989d82c5c1ffdf13, type: 3}
   - {fileID: 8300000, guid: 8770c60b49f9c284c90cb32e39b04531, type: 3}
   - {fileID: 8300000, guid: 2049db63d80030f4dbc9849902c5e20d, type: 3}
+  - {fileID: 8300000, guid: 0572b0f69d6aec742b06d0b23e77e2c5, type: 3}
   voiceList:
   - {fileID: 8300000, guid: 37e80e08210b56844be87b4efbf4483a, type: 3}
   - {fileID: 8300000, guid: fb6268685203664419782cd9c40c53bf, type: 3}
