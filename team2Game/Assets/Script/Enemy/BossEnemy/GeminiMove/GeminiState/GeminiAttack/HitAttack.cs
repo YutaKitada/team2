@@ -15,6 +15,9 @@ public class HitAttack : MonoBehaviour , IMove
     private float curretTime; //経過時間
     private Animator anime;
 
+    [SerializeField]
+    private GameObject attackArea;
+
     private bool isEndFlag;　　　　//モーション終了判断
 
     public void Initialize()
@@ -64,6 +67,11 @@ public class HitAttack : MonoBehaviour , IMove
     void Hit()
     {
         anime.SetTrigger("Panch2");
+        Instantiate(attackArea,
+                    transform.position + new Vector3(transform.position.x+5, 2, 0),
+                    new Quaternion(0, 0, 0, 0));
+
+        Destroy(attackArea);
         Debug.Log("パンチ！！");
     }
 }
