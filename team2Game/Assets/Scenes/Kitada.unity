@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {x: 0, y: 7, z: -9}
-  cameraMoveStop: 2
+  cameraMoveStop: 0
   moveSpeedX: 7
   moveSpeedY: 10
 --- !u!1 &54728582 stripped
