@@ -37,6 +37,12 @@ public class WishManager : MonoBehaviour
     private GameObject wishStar;
     private float showerTimer;
 
+    [SerializeField]
+    private List<GameObject> wishProductionList;
+    private GameObject wishProductionObject;
+    private float wishProductionTimer;
+    private bool wishProduction;
+
     public static bool isMeteorShower;
     public static bool isTackleStar;
     public static bool isChase;
@@ -46,7 +52,6 @@ public class WishManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         wishCommand = "";
 
         commandRestriction = false;
@@ -102,6 +107,8 @@ public class WishManager : MonoBehaviour
         isChase = false;
 
         wishUseNumber = 0;
+        wishProductionTimer = 0;
+        wishProduction = false;
     }
 
     // Update is called once per frame
@@ -187,12 +194,26 @@ public class WishManager : MonoBehaviour
             UIManager.wishText = wishCommand;
             commandInput = false;
             GameManager.isGameStop = false;
-            if (commandSuccess)
+            if(!wishProduction && commandSuccess)
             {
-                commandSuccess = false;
-                isWishNow = true;
-                wishUseNumber++;
+                wishProduction = true;
+                wishProductionObject = Instantiate(wishProductionList[wishNumber_Debug - 1], player.transform.position + new Vector3(-3.5f, 0, -1), Quaternion.identity);
             }
+            if (wishProduction)
+            {
+                wishProductionTimer += Time.deltaTime;
+            }
+        }
+
+        if (commandSuccess && wishProductionTimer >= 5)
+        {
+            Destroy(wishProductionObject);
+            commandSuccess = false;
+            isWishNow = true;
+            wishUseNumber++;
+            wishProductionTimer = 0;
+            wishProduction = false;
+            PlayerManager.isWishMode = false;       //願い事モードを切る
         }
 
         if (isWishNow)
