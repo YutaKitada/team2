@@ -42,6 +42,9 @@ public class ShakeCamera : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// カメラ振動
+    /// </summary>
     public void Shake()
     {
         savePposition = transform.position;

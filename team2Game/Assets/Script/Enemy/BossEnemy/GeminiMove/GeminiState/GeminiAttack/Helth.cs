@@ -15,9 +15,6 @@ public class Helth : MonoBehaviour
     [SerializeField]
     float intervalTime = 1;
     float elapsedTime;
-    private AnimatorStateInfo animInfo;
-    
-    
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +31,12 @@ public class Helth : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Star")
+
+        
+        if (col.gameObject.tag == "Star")
         {
+           
+            
             if(hp <= 0)
             {
                 return;
@@ -44,7 +45,6 @@ public class Helth : MonoBehaviour
             if(hp<=0)
             {
                 dead = true;
-                Debug.Log("ずっと呼ばれている");
                 anime.SetTrigger("IsDead");
             }
         }

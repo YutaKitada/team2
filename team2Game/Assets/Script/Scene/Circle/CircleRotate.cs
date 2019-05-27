@@ -32,7 +32,7 @@ public class CircleRotate : MonoBehaviour
             isMove = true;
             isDown = true;
             isUp = false;
-            SoundManager.PlaySE(bgmNumber);
+            
 
         }
         if (LeftStick.Instance.IsBottom() && !isDown)
@@ -40,7 +40,7 @@ public class CircleRotate : MonoBehaviour
             isMove = true;
             isUp = true;
             isDown = false;
-            SoundManager.PlaySE(bgmNumber);
+            
         }
         Rote();
     }
@@ -58,6 +58,7 @@ public class CircleRotate : MonoBehaviour
                 isMove = false;
                 radius = 0;
                 roulette.UpCount(true);
+                SoundManager.PlaySE(bgmNumber);
             }
         }
 
@@ -73,6 +74,7 @@ public class CircleRotate : MonoBehaviour
                 isMove = false;
                 radius = 0;
                 roulette.DownCount(true);
+                SoundManager.PlaySE(bgmNumber);
             }
         }
     }

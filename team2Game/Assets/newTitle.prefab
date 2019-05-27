@@ -5743,8 +5743,8 @@ GameObject:
   - component: {fileID: 7272317353185538238}
   - component: {fileID: 5448805235119029645}
   - component: {fileID: 1068767085781945060}
-  - component: {fileID: 4960639762035332118}
-  - component: {fileID: 2056069466080802710}
+  - component: {fileID: 1735567671}
+  - component: {fileID: 1735567670}
   m_Layer: 0
   m_Name: star
   m_TagString: Untagged
@@ -5759,15 +5759,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2394519187259901229}
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.26999998, y: -24.2, z: -80.6}
+  m_LocalRotation: {x: 0.6963643, y: 0.6963642, z: 0.12278772, w: -0.12278798}
+  m_LocalPosition: {x: -0.29999995, y: 15.3, z: -78.7}
   m_LocalScale: {x: 226.64622, y: 134.62605, z: 226.64613}
   m_Children:
   - {fileID: 8029658324164587663}
   - {fileID: 7438890853368855683}
   m_Father: {fileID: 2827689487484521566}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: -20, y: 180.00002, z: 90.00001}
 --- !u!33 &5448805235119029645
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5813,26 +5813,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!95 &4960639762035332118
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2394519187259901229}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: a4f7955bd02065f47ad6c97f031c2ba7, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!320 &2056069466080802710
+--- !u!320 &1735567671
 PlayableDirector:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5847,10 +5828,29 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: 114250259521874078, guid: 2cace58fa946e5a4ebd2c65aeb427bdd, type: 2}
-    value: {fileID: 4960639762035332118}
+  - key: {fileID: 114562868910897876, guid: 2cace58fa946e5a4ebd2c65aeb427bdd, type: 2}
+    value: {fileID: 1735567670}
   m_ExposedReferences:
     m_References: []
+--- !u!95 &1735567670
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2394519187259901229}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2560526960289276383
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 9087196f7a8c1524ea462ad53e7e9435
+=======
 guid: 0572b0f69d6aec742b06d0b23e77e2c5
+>>>>>>> origin/YutaKitada
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6

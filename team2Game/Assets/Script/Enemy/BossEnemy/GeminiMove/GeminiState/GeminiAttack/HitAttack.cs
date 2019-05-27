@@ -15,11 +15,14 @@ public class HitAttack : MonoBehaviour , IMove
     private float curretTime; //経過時間
     private Animator anime;
 
+    [SerializeField]
+    private GameObject attackArea;
+
     private bool isEndFlag;　　　　//モーション終了判断
 
     public void Initialize()
     {
-        isEndFlag = true;
+        isEndFlag = false;
         anime = GetComponent<Animator>();
         Debug.Log("力をためている");
         anime.SetTrigger("Tame");
@@ -37,17 +40,20 @@ public class HitAttack : MonoBehaviour , IMove
 
     void IMove.Update()
     {
+        
         sabun = playerPos.transform.position.x - transform.position.x;
         sabunAbs = Mathf.Abs(sabun *-1);
         curretTime += Time.deltaTime;
+        
         if(sabunAbs <=attackRange)
         {
             Hit();
             curretTime = 0;
             isEndFlag = true;
-            
+            return;
         }
-        else if(curretTime >= maxTime)
+
+        if (curretTime >= maxTime)
         {
             Debug.Log("パンチ失敗");
             anime.SetTrigger("NotPanch");
@@ -60,8 +66,12 @@ public class HitAttack : MonoBehaviour , IMove
     /// </summary>
     void Hit()
     {
-        anime.SetTrigger("Panch");
+        anime.SetTrigger("Panch2");
+        Instantiate(attackArea,
+                    transform.position + new Vector3(transform.position.x+5, 2, 0),
+                    new Quaternion(0, 0, 0, 0));
+
+        Destroy(attackArea);
         Debug.Log("パンチ！！");
-        
     }
 }
