@@ -5,6 +5,8 @@ using System;
 
 public class PauseScreen : MonoBehaviour
 {
+
+    //子の動きを停止させる
     [SerializeField]
     private GameObject pauseUIPrefab;     //Pauseのプレハブを入れる
     private GameObject pauseUIInstance;　 //Pauseのプレハブ代入用

@@ -12,17 +12,25 @@ public class ThrowAttack : MonoBehaviour, IMove
     private int throwCountMax = 3;　　 //投げる回数
     private int currentThrowCount; //現在の投げた回数
 
+
+    [SerializeField]
+    private float maxTime =1;    //アニメーションに合わせて投げる
+    private float saveTime;
+
     [SerializeField]
     private GameObject playerPos;　　　　//プレイヤーの位置
     private Vector3 sabunPos;　　　　　　//差分計算用
     private Vector3 sabunVec;      //プレイヤーがいる方向を取得
 
     private bool isEndFlag;　　　　//モーション終了判断
+
+    private Animator anime;
     public void Initialize()
     {
         isEndFlag = false;
         sabunPos = playerPos.transform.position - transform.position;    //プレイヤーの位置－自分の位置
         sabunVec = sabunPos.normalized;
+        anime = GetComponent<Animator>();
     }
 
     public bool IsEnd()
@@ -41,17 +49,18 @@ public class ThrowAttack : MonoBehaviour, IMove
 
     void IMove.Update()
     {
+        //攻撃回数を決めて終わったらNoneの状態にする
+        if (currentThrowCount >= throwCountMax )
+        {
+            isEndFlag = true;
+            return;
+        }
+
         currntInterval += Time.deltaTime;
         if(currntInterval >= interval)
         {
             Throw();
-            currntInterval = 0;
-            currentThrowCount++;
-        }
-        //攻撃回数を決めて終わったらNoneの状態にする
-        if(currentThrowCount >= throwCountMax)
-        {
-            isEndFlag = true;
+           
         }
         
     }
@@ -60,11 +69,19 @@ public class ThrowAttack : MonoBehaviour, IMove
     /// </summary>
     void Throw()
     {
-        gameObject.GetComponent<Renderer>().material.color
-            = Color.blue;
-        Debug.Log("雪投げ");
-        Instantiate(snowBall,
-                    transform.position + new Vector3(1.5f * sabunVec.x, 1, 0),
+        anime.SetBool("Throw2",true);
+        
+        saveTime += Time.deltaTime;
+        if(saveTime >= maxTime)
+        {
+            Instantiate(snowBall,
+                    transform.position + new Vector3(2 * sabunVec.x, 3, 0),
                     new Quaternion(0, 0, 0, 0));
+            saveTime = 0;
+            currntInterval = 0;
+            currentThrowCount++;
+            anime.SetBool("Throw2", false);
+        }
+        
     }
 }
