@@ -23,6 +23,7 @@ public class RollBall : MonoBehaviour
 
     void Update()
     {
+        transform.Rotate(new Vector3(0,0,20*sabunVec.z));
         rigid.velocity = new Vector3(sabunVec.x * speed, rigid.velocity.y);
     }
     /// <summary>
