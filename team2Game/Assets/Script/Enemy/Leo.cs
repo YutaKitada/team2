@@ -125,7 +125,7 @@ public class Leo : Enemy
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Star")
+        if (collision.gameObject.tag == "Star" || collision.gameObject.tag == "Player")
         {
             rigid.constraints = RigidbodyConstraints.FreezeAll;
         }
@@ -134,7 +134,7 @@ public class Leo : Enemy
     private void OnCollisionExit(Collision collision)
     {
 
-        if (collision.gameObject.tag == "Star")
+        if (collision.gameObject.tag == "Star" || collision.gameObject.tag == "Player")
         {
             rigid.constraints = 
                 RigidbodyConstraints.FreezePositionZ |
