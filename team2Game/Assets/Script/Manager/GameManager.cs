@@ -64,6 +64,11 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
 
+        if (isClear)
+        {
+            SceneManager.LoadScene("GameClear");
+        }
+
         if(Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.Y))
         {
             debug = !debug;
