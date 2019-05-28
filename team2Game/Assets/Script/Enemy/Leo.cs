@@ -33,7 +33,7 @@ public class Leo : Enemy
     // Update is called once per frame
     void Update()
     {
-        if (PlayerManager.isWishMode) return;
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
 
         if (!isAttack)
         {

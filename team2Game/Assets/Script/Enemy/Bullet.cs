@@ -49,6 +49,8 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
+
         if (!shootNow)
             shootVector = targetPosition - initialPosition + new Vector3(0, 1, 0);
 
