@@ -45,9 +45,9 @@ public class Sagittarius : Enemy
 
         anim = GetComponent<Animator>();
 
-        parent = transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform
-            .GetChild(0).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform
-            .GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
+        parent = transform.GetChild(1).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0)
+            .transform.GetChild(0).transform.GetChild(1).transform.GetChild(0).transform.GetChild(0)
+            .transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform;
 
         //子オブジェクトの位置に弾を生成
         allow = Instantiate(bullet, parent.position, transform.rotation);
@@ -57,6 +57,8 @@ public class Sagittarius : Enemy
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
+
         SetWIthin();
         Shot();
         Death();

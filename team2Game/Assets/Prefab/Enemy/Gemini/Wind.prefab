@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coefficient: 3
-  windVel: {x: -75, y: 0, z: 0}
+  windVel: {x: -50, y: 0, z: 0}
 --- !u!65 &2042055694281394284
 BoxCollider:
   m_ObjectHideFlags: 0

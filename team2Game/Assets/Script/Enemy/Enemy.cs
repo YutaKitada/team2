@@ -25,6 +25,11 @@ public class Enemy : MonoBehaviour
     protected Vector3 distance;//targetとの距離
     [SerializeField, Header("Playerを追いかけるか")]
     protected bool isChase = false;
+    public bool NowChase
+    {
+        get;
+        protected set;
+    } = false;
 
     protected Vector3 forward = new Vector3(0, -90, 0);//正面
 
@@ -56,6 +61,8 @@ public class Enemy : MonoBehaviour
             {
                 case State.NORMAL:
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+
+                    NowChase = false;
                     break;
 
                 case State.CHASE:
@@ -69,6 +76,8 @@ public class Enemy : MonoBehaviour
                         direction_Left = false;
                     }
                     rigid.AddForce(transform.forward * power, ForceMode.Acceleration);
+
+                    NowChase = true;
                     break;
             }
         }

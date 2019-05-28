@@ -54,7 +54,7 @@ public class Taurus : BossEnemy
 
     bool rushBeforePlay = false;
 
-    AudioSource audioSource;
+    AudioSource audioSource;//突進中のSEを任意のタイミングで止めさせるため
 
     [SerializeField, Header("ステージの左端")]
     Vector3 leftRangeVector = Vector3.zero;
@@ -96,6 +96,12 @@ public class Taurus : BossEnemy
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag)
+        {
+            Stop();
+            return;
+        }
+
         Death();
 
         if (IsDead)

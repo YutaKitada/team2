@@ -19,13 +19,17 @@ public class Bullet : MonoBehaviour
     Vector3 initialPosition;//初期位置
     Vector3 shootVector;//弾の方向
 
-    public bool IsShoot
+    public bool IsShoot//弾が撃たれたか
     {
         get;
         set;
     } = false;
 
     bool shootNow = false;
+
+    Transform parent;
+
+    bool isPlaySE = false;//SEが鳴ったか
 
     // Start is called before the first frame update
     void Start()
@@ -35,17 +39,27 @@ public class Bullet : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         targetPosition = target.position;
         initialPosition = transform.position;
+
+
+        parent = transform.parent.transform.parent.transform.parent.transform.parent.transform.parent
+            .transform.parent.transform.parent.transform.parent.transform.parent
+            .transform.parent.transform.parent.transform.parent;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
+
         if (!shootNow)
             shootVector = targetPosition - initialPosition + new Vector3(0, 1, 0);
-        Debug.Log(shootVector);
 
         if (IsShoot)
         {
+            if (!isPlaySE)
+            {
+                SoundManager.PlaySE(25);
+            }
             BulletMove();
         }
         else
@@ -68,17 +82,26 @@ public class Bullet : MonoBehaviour
         shootNow = true;
         transform.parent = null;
         rigid.AddForce(shootVector, ForceMode.Impulse);
-        rigid.velocity /= 2;        
+        rigid.velocity /= 2;
+
+        Destroy(gameObject, 2);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //Playerに当たったら、ダメージを与え、後ろにノックバックさせる
         if(other.gameObject.tag=="Player")
         {
             PlayerManager.PlayerDamage(10);
-            Destroy(this.gameObject);
+            if (parent.GetComponent<Enemy>().direction_Left)
+                other.GetComponent<PlayerController>().Damage(new Vector3(-5, 3));
+            else
+                other.GetComponent<PlayerController>().Damage(new Vector3(5, 3));
+
+            Destroy(gameObject);
         }
 
+        //他の矢や、射手座の敵以外に当たったら、削除
         if (!other.gameObject.name.Contains("Sagittarius") && !other.gameObject.name.Contains("Allow"))
         {
             Destroy(gameObject);

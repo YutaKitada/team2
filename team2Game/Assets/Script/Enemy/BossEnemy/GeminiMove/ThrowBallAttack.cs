@@ -9,7 +9,8 @@ public class ThrowBallAttack : MonoBehaviour
     private float angle = 45.0f;　　　　//角度45固定
     private Vector3 offset;　　　　　　 //自分の位置
     private Vector3 sabunVec;　　　　　 //プレイヤーがいる方向を取得
-
+    [SerializeField]
+    private int bgmNumber = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +25,16 @@ public class ThrowBallAttack : MonoBehaviour
     /// <param name="other"></param>
     private void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Player" || col.gameObject.tag == "Stage")
+        if(col.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);
+            PlayerManager.PlayerDamage(5);
+            SoundManager.PlaySE(bgmNumber);
+            Destroy(gameObject);
+        }
+        else if(col.gameObject !=gameObject)
+        {
+            SoundManager.PlaySE(bgmNumber);
+            Destroy(gameObject);
         }
        
     }

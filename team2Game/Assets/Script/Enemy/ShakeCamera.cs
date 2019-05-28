@@ -47,6 +47,8 @@ public class ShakeCamera : MonoBehaviour
     /// </summary>
     public void Shake()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
+
         savePposition = transform.position;
         lowRangeY = savePposition.y - 1f;
         maxRangeY = savePposition.y + 1f;

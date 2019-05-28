@@ -27,6 +27,8 @@ public class Cancer : Enemy
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
+
         Move();
         SetTarget();
         Death();
@@ -51,6 +53,8 @@ public class Cancer : Enemy
                     {
                         rigid.AddForce(transform.right * power, ForceMode.Acceleration);
                     }
+
+                    NowChase = false;
                     break;
 
                 case State.CHASE:
@@ -65,6 +69,8 @@ public class Cancer : Enemy
                         direction_Left = false;
                         rigid.AddForce(transform.right * power, ForceMode.Acceleration);
                     }
+
+                    NowChase = true;
                     break;
             }
         }

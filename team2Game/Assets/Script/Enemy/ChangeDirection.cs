@@ -71,6 +71,8 @@ public class ChangeDirection : MonoBehaviour
 
     void DirectionChange()
     {
+        if (enemy.NowChase) return;
+
         if (enemy.direction_Left)
         {
             if (!isReverse)
@@ -89,7 +91,7 @@ public class ChangeDirection : MonoBehaviour
         //レイがオブジェクトに当たらなくなったら方向反転
         isChange = !Physics.Raycast(ray, out hit, MaxDistance);
 
-        if (isChange || hit.transform.tag != "Stage" /*|| hit.transform.tag != "Ice")*/)
+        if (isChange || (hit.transform.tag != "Stage" && hit.transform.tag != "Ice"))
         {
             enemy.direction_Left = !enemy.direction_Left;
         }
