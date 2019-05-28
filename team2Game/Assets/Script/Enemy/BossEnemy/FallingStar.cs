@@ -27,6 +27,8 @@ public class FallingStar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
+
         rigid.velocity += new Vector3(0, -9.8f * Time.deltaTime);
         transform.Rotate(new Vector3(0, 5, 0));
 

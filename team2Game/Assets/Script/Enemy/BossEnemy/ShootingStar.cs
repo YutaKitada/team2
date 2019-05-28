@@ -32,6 +32,8 @@ public class ShootingStar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag) return;
+
         rigid.velocity += new Vector3(speed / 2f, 0);
         transform.Rotate(new Vector3(0, 5, 0));
 
