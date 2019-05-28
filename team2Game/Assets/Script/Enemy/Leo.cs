@@ -128,6 +128,10 @@ public class Leo : Enemy
         }
     }
 
+    /// <summary>
+    /// 押し出されないようにPlayer等に当たるたびに、固定する
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Star" || collision.gameObject.tag == "Player")
@@ -135,6 +139,7 @@ public class Leo : Enemy
             rigid.constraints = RigidbodyConstraints.FreezeAll;
         }
 
+        //星が当たった場所にパーティクルを生成する
         if (collision.gameObject.tag == "Star")
         {
             if(hp >= 1)
@@ -142,9 +147,12 @@ public class Leo : Enemy
         }
     }
 
+    /// <summary>
+    /// 固定化を解除
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionExit(Collision collision)
     {
-
         if (collision.gameObject.tag == "Star" || collision.gameObject.tag == "Player")
         {
             rigid.constraints = 

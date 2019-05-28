@@ -54,7 +54,7 @@ public class Taurus : BossEnemy
 
     bool rushBeforePlay = false;
 
-    AudioSource audioSource;
+    AudioSource audioSource;//突進中のSEを任意のタイミングで止めさせるため
 
     [SerializeField, Header("ステージの左端")]
     Vector3 leftRangeVector = Vector3.zero;

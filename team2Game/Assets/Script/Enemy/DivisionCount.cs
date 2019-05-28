@@ -19,7 +19,6 @@ public class DivisionCount : MonoBehaviour
         {
             isCount = true;
             EnemyManager.DefeatedCount++;
-            Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
         }
     }
 }

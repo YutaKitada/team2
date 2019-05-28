@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     Vector3 initialPosition;//初期位置
     Vector3 shootVector;//弾の方向
 
-    public bool IsShoot
+    public bool IsShoot//弾が撃たれたか
     {
         get;
         set;
@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
 
     Transform parent;
 
-    bool isPlaySE = false;
+    bool isPlaySE = false;//SEが鳴ったか
 
     // Start is called before the first frame update
     void Start()
@@ -89,6 +89,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Playerに当たったら、ダメージを与え、後ろにノックバックさせる
         if(other.gameObject.tag=="Player")
         {
             PlayerManager.PlayerDamage(10);
@@ -100,6 +101,7 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
+        //他の矢や、射手座の敵以外に当たったら、削除
         if (!other.gameObject.name.Contains("Sagittarius") && !other.gameObject.name.Contains("Allow"))
         {
             Destroy(gameObject);

@@ -78,7 +78,6 @@ public class ExplosionEnemy : Enemy
         {
             Instantiate(downParticle, transform.position, Quaternion.identity, parent);
             EnemyManager.DefeatedCount++;
-            Debug.Log("倒した数：" + EnemyManager.DefeatedCount);
             Destroy(gameObject);
         }
     }
