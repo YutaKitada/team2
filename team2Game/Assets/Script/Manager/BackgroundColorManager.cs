@@ -30,7 +30,7 @@ public class BackgroundColorManager : MonoBehaviour
             myImage.color = wishColor;
         }
 
-        if (WishManager.isMeteorShower)
+        if (WishManager.isMeteorShower || WishManager.wishProductionFlag)
         {
             myImage.color = wishColor;
         }

@@ -9,7 +9,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField]
     private Vector3 cameraPosition = new Vector3(0, 4, -8);
 
-    enum CameraMoveStop {NONE,X,Y}
+    enum CameraMoveStop {NONE,X,Y,BOSS}
     [SerializeField]
     private CameraMoveStop cameraMoveStop;
 
@@ -25,6 +25,10 @@ public class CameraManager : MonoBehaviour
     private CameraMoveDirectionY cameraMoveDirectionY;
 
     private GameObject goalObject;
+
+    private bool positionChange;
+
+    private Vector3 firstPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +51,7 @@ public class CameraManager : MonoBehaviour
                 transform.position = new Vector3(0, transform.position.y, transform.position.z);
                 break;
         }
+        positionChange = false;
     }
 
     // Update is called once per frame
@@ -165,11 +170,17 @@ public class CameraManager : MonoBehaviour
                     break;
             }
         }
+        else if(cameraMoveStop == CameraMoveStop.BOSS)
+        {
+            transform.position = cameraPosition;
+        }
+       
 
-        if (PlayerManager.isWishMode)
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag)
         {
             transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
             GetComponent<Camera>().fieldOfView = 60;
+            positionChange = true;
         }
         else
         {
@@ -177,18 +188,64 @@ public class CameraManager : MonoBehaviour
             {
                 float goalDistance = Vector3.Distance(player.transform.position, goalObject.transform.position);
 
-                Vector3 cameraDistance = Vector3.Lerp(new Vector3(0, 0, -4), new Vector3(0, 0, -9), goalDistance / 9);
+                Vector3 cameraDistance = Vector3.Lerp(goalObject.transform.position + cameraPosition - new Vector3(0,0,cameraPosition.z/2), player.transform.position + cameraPosition, goalDistance / 9);
+                switch (cameraMoveStop)
+                {
+                    case CameraMoveStop.Y:
+                        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                        break;
+                    case CameraMoveStop.X:
+                        transform.position = new Vector3(0, transform.position.y, transform.position.z);
+                        break;
+                }
+                if (goalDistance < 9)
+                {
+                    transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, cameraDistance.z);
+                }
+                
 
-                transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, cameraDistance.z);
                 GetComponent<Camera>().fieldOfView = 90;
+                if (positionChange)
+                {
+                    positionChange = false;
+                    cameraMoveDirectionX = CameraMoveDirectionX.NONE;
+                    cameraMoveDirectionY = CameraMoveDirectionY.NONE;
+                    transform.position = player.transform.position + cameraPosition;
+                    switch (cameraMoveStop)
+                    {
+                        case CameraMoveStop.Y:
+                            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                            break;
+                        case CameraMoveStop.X:
+                            transform.position = new Vector3(0, transform.position.y, transform.position.z);
+                            break;
+                    }
+                    GetComponent<Camera>().fieldOfView = 90;
+                }
+
             }
             else
             {
-                transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
-                GetComponent<Camera>().fieldOfView = 90;
+                if (positionChange)
+                {
+                    positionChange = false;
+                    cameraMoveDirectionX = CameraMoveDirectionX.NONE;
+                    cameraMoveDirectionY = CameraMoveDirectionY.NONE;
+                    transform.position = player.transform.position + cameraPosition;
+                    switch (cameraMoveStop)
+                    {
+                        case CameraMoveStop.Y:
+                            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                            break;
+                        case CameraMoveStop.X:
+                            transform.position = new Vector3(0, transform.position.y, transform.position.z);
+                            break;
+                    }
+                    GetComponent<Camera>().fieldOfView = 90;
+                }
+               // transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
+                
             }
-
-            
         }
     }
 }

@@ -178,6 +178,7 @@ RectTransform:
   - {fileID: 1789098869528765484}
   - {fileID: 2042218450613466085}
   - {fileID: 718776510553227841}
+  - {fileID: 5228145098850453336}
   m_Father: {fileID: 8876861116231963462}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1327,6 +1328,80 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &8755097886686041839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5228145098850453336}
+  - component: {fileID: 3494672008856098}
+  - component: {fileID: 276323947451527311}
+  m_Layer: 5
+  m_Name: WishImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5228145098850453336
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8755097886686041839}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 939242204}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000061035, y: 164.2}
+  m_SizeDelta: {x: 266.41, y: 266.41}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3494672008856098
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8755097886686041839}
+  m_CullTransparentMesh: 0
+--- !u!114 &276323947451527311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8755097886686041839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 5e9ef30f230b00447ba645ef86fc6cb1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!1 &8876861115599123760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,8 +1489,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   csvFile: {fileID: 4900000, guid: 764bd0fcbfedc8e4386d1d033c9736d1, type: 3}
-  wishNumber_Debug: 5
+  wishNumber_Debug: 1
   wishStar: {fileID: 712918252764647382, guid: 0cb5b383d2305df4b84d9f4708a8fe40, type: 3}
+  wishProductionList:
+  - {fileID: 7062941209311661491, guid: 1d233c5ff3e9e764d8816cfda8092355, type: 3}
+  - {fileID: 7147429639797735572, guid: e9ff81088351fbc4b829bebbf29f8a32, type: 3}
+  - {fileID: 4993151748088420142, guid: 535e063d95c63ae498450eaa27069ea1, type: 3}
+  - {fileID: 4423421724390530591, guid: fdbef123e86131a4da6543b6f02b6bc6, type: 3}
 --- !u!1 &8876861116231963463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,6 +1608,13 @@ MonoBehaviour:
   wishYButton: {fileID: 7202423426293591346}
   circleObject: {fileID: 3098298678180186031, guid: a9b8eb9fb8a2ed54881e53cca9eaac22,
     type: 3}
+  ui: {fileID: 1069370614}
+  wishSprites:
+  - {fileID: 21300000, guid: bf0aa38ab94b5d44b957d45f0e5b8095, type: 3}
+  - {fileID: 21300000, guid: 5e9ef30f230b00447ba645ef86fc6cb1, type: 3}
+  - {fileID: 21300000, guid: 5a0a103b40fd1ed4c8c98f1bb7d67c37, type: 3}
+  - {fileID: 21300000, guid: 0db4ddc4905963a4fbf4f794f6b1cc6e, type: 3}
+  wishImage: {fileID: 276323947451527311}
 --- !u!1 &8876861116889932787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,9 +1912,9 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8697858112016388265 stripped
+--- !u!114 &8680273292942476419 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4126393122109395491, guid: b93046dbb77854b4b8c9e1de5b83e565,
+  m_CorrespondingSourceObject: {fileID: 4143766725418747401, guid: b93046dbb77854b4b8c9e1de5b83e565,
     type: 3}
   m_PrefabInstance: {fileID: 4753298100495221386}
   m_PrefabAsset: {fileID: 0}
@@ -1837,9 +1924,9 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8680273292942476419 stripped
+--- !u!114 &8697858112016388265 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4143766725418747401, guid: b93046dbb77854b4b8c9e1de5b83e565,
+  m_CorrespondingSourceObject: {fileID: 4126393122109395491, guid: b93046dbb77854b4b8c9e1de5b83e565,
     type: 3}
   m_PrefabInstance: {fileID: 4753298100495221386}
   m_PrefabAsset: {fileID: 0}
@@ -1988,15 +2075,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ecca761c2f1be941b3e0013dcb6dbae, type: 3}
---- !u!1 &5951526176837671118 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1998279786459612454, guid: 3ecca761c2f1be941b3e0013dcb6dbae,
-    type: 3}
-  m_PrefabInstance: {fileID: 5270127897848176104}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3900492669257648112 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9151899436019079704, guid: 3ecca761c2f1be941b3e0013dcb6dbae,
+    type: 3}
+  m_PrefabInstance: {fileID: 5270127897848176104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5951526176837671118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1998279786459612454, guid: 3ecca761c2f1be941b3e0013dcb6dbae,
     type: 3}
   m_PrefabInstance: {fileID: 5270127897848176104}
   m_PrefabAsset: {fileID: 0}

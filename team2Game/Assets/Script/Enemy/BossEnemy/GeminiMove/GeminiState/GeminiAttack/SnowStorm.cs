@@ -14,7 +14,8 @@ public class SnowStorm : MonoBehaviour ,IMove
     private Animator anime;
 
     private bool isEndFlag;　　　　//モーション終了判断
-
+    [SerializeField]
+    private int seNumber = 0;
     public void Initialize()
     {
         isEndFlag = false;
@@ -43,6 +44,7 @@ public class SnowStorm : MonoBehaviour ,IMove
     {
         anime.SetBool("Storm",true);
         currrentTime += Time.deltaTime;
+        SoundManager.PlaySE(seNumber);
         if (currrentTime>=maxTime)
         {
             anime.SetBool("Storm", false);

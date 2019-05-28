@@ -12,6 +12,10 @@ public class RollBall : MonoBehaviour
     private float speed = 10;　　　　　  //ボールスピード  変動可
 
     private Rigidbody rigid;
+    [SerializeField]
+    private int bgmNumber = 0;
+
+    float rotate = 5;
     
     // Start is called before the first frame update
     void Start()
@@ -23,7 +27,8 @@ public class RollBall : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(new Vector3(0,0,20*sabunVec.z));
+        rotate += 10;
+        transform.Rotate(0,0,rotate * sabunVec.z);
         rigid.velocity = new Vector3(sabunVec.x * speed, rigid.velocity.y);
     }
     /// <summary>
@@ -35,7 +40,14 @@ public class RollBall : MonoBehaviour
         //プレイヤーに当たったら死ぬ
         if (col.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);
+            PlayerManager.PlayerDamage(10);
+            SoundManager.PlaySE(bgmNumber);
+            Destroy(gameObject);
+        }
+        if (col.gameObject != gameObject && col.gameObject.tag != "Stage")
+        {
+            SoundManager.PlaySE(bgmNumber);
+            Destroy(gameObject);
         }
     }
 }

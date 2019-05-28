@@ -84,6 +84,8 @@ public class Deneb : BossEnemy
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode) return;
+
         Stop();
 
         if (IsDead)
@@ -298,6 +300,7 @@ public class Deneb : BossEnemy
                     //0から順に格納
                     starArray[i + 1] = Instantiate(fallingStar, fallPosition + new Vector3(i * 6, Random.Range(-3f, 3f), 0), Quaternion.Euler(0, 90, 90));
                 }
+                SoundManager.PlaySE(20);
                 isInstante = true;
             }
 
@@ -307,6 +310,7 @@ public class Deneb : BossEnemy
                 //生成した星が全て消えた時1つだけ生成
                 if (GetStarObjects() && !isShoot)
                 {
+                    SoundManager.PlaySE(11);
                     star = Instantiate(shootingStar, GetShootPosition(), Quaternion.Euler(0, 90, 90));
                     isShoot = true;
                 }

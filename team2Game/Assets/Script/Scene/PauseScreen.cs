@@ -66,7 +66,7 @@ public class PauseScreen : MonoBehaviour
     {
         // ポーズ状態が変更されていたら、Pause/Resumeを呼び出す。
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
             //子オブジェクトの動きを止める　もう一度押されたら再開する
             if (pausing == false)

@@ -96,6 +96,12 @@ public class Taurus : BossEnemy
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode)
+        {
+            Stop();
+            return;
+        }
+
         Death();
 
         if (IsDead)
@@ -244,6 +250,13 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushAttack()
     {
+        if (isHuging)
+        {
+            anim.speed = 0;
+            Stop();
+            return;
+        }
+
         MoveFreeze();
 
         rigid.AddForce(transform.forward * power * speed, ForceMode.Acceleration);

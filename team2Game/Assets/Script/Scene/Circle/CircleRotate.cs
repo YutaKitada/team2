@@ -13,7 +13,6 @@ public class CircleRotate : MonoBehaviour
     [SerializeField]
     private int bgmNumber = 0;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -50,8 +49,6 @@ public class CircleRotate : MonoBehaviour
         if (isDown)
         {
             radius+=4;　 transform.Rotate(new Vector3(-radius / 5.5f, 0, 0));
-            //radius+=2;   transform.Rotate(new Vector3(-radius / 10.5f, 0, 0));
-            //radius ++;   transform.Rotate(new Vector3(-radius / 20.5f, 0, 0));
             if (radius >=40)
             {
                 isDown = false;
@@ -66,8 +63,6 @@ public class CircleRotate : MonoBehaviour
         {
             
             radius += 4;   transform.Rotate(new Vector3(radius / 5.5f, 0, 0));
-            //radius+=2;     transform.Rotate(new Vector3(radius / 10.5f, 0, 0));
-            // radius ++;    transform.Rotate(new Vector3(radius / 20.5f, 0, 0));
             if (radius >= 40)
             {
                 isUp = false;

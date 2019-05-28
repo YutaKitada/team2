@@ -39,7 +39,6 @@ public class GeminiMoveManager : MonoBehaviour
             casnoneState.IsEnd() == false)
         {
             currrentTime += Time.deltaTime;
-            Debug.Log("両待機状態");
 
             if (currrentTime >= maxTime)
             {
@@ -75,14 +74,9 @@ public class GeminiMoveManager : MonoBehaviour
             currrentTime += Time.deltaTime;
             if (currrentTime >= maxTime)
             {
-                num = Random.Range(0, 4);
+                num = Random.Range(0, 3);
                 
                 casnoneState.MoveNum(num);
-                //攻撃方法3が選ばれたら片方を4にしてずらす。
-                if (num == 3)
-                {
-                    casnoneState.MoveNum(4);
-                }
 
                 //None状態からnum番号へ移行
                 
@@ -97,9 +91,7 @@ public class GeminiMoveManager : MonoBehaviour
             currrentTime += Time.deltaTime;
             if (currrentTime >= maxTime)
             {
-                num = Random.Range(0, 4);
-
-
+                num = Random.Range(0, 3);
                 polNoneState.MoveNum(num);
                 
                 //None状態からnum番号へ移行
