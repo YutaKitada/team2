@@ -25,6 +25,8 @@ public class ThrowAttack : MonoBehaviour, IMove
     private bool isEndFlag;　　　　//モーション終了判断
 
     private Animator anime;
+    [SerializeField]
+    private int seNumber = 0;
     public void Initialize()
     {
         isEndFlag = false;
@@ -74,8 +76,9 @@ public class ThrowAttack : MonoBehaviour, IMove
         saveTime += Time.deltaTime;
         if(saveTime >= maxTime)
         {
+            SoundManager.PlaySE(seNumber);
             Instantiate(snowBall,
-                    transform.position + new Vector3(3 * sabunVec.x, 9, 0),
+                    transform.position + new Vector3(4 * sabunVec.x, 9, 0),
                     new Quaternion(0, 0, 0, 0));
             saveTime = 0;
             currntInterval = 0;

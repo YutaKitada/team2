@@ -8,6 +8,9 @@ public class Helth : MonoBehaviour
     [SerializeField]
     private int hp =10;
 
+
+    [SerializeField]
+    private GameObject hitParticl;
     Animator anime;
 
     public bool dead;
@@ -15,6 +18,8 @@ public class Helth : MonoBehaviour
     [SerializeField]
     float intervalTime = 1;
     float elapsedTime;
+    [SerializeField]
+    private int seNumber = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +40,7 @@ public class Helth : MonoBehaviour
         
         if (col.gameObject.tag == "Star")
         {
-           
+            Instantiate(hitParticl, col.contacts[0].point, Quaternion.identity);
             
             if(hp <= 0)
             {
@@ -46,6 +51,7 @@ public class Helth : MonoBehaviour
             {
                 dead = true;
                 anime.SetTrigger("IsDead");
+                SoundManager.PlaySE(seNumber);
             }
         }
 
