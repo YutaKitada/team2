@@ -178,7 +178,7 @@ public class CameraManager : MonoBehaviour
 
         if (PlayerManager.isWishMode || WishManager.wishProductionFlag)
         {
-            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
+            transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -14);
             GetComponent<Camera>().fieldOfView = 60;
             positionChange = true;
         }

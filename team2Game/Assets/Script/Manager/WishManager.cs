@@ -200,7 +200,7 @@ public class WishManager : MonoBehaviour
             {
                 wishProduction = true;
                 wishProductionFlag = true;
-                wishProductionObject = Instantiate(wishProductionList[wishNum-1], player.transform.position + new Vector3(-3.5f, -1.5f, -1), Quaternion.identity);
+                wishProductionObject = Instantiate(wishProductionList[wishNum-1], player.transform.position + new Vector3(-3.5f, -1.5f, -3), Quaternion.identity);
             }
             if (wishProduction)
             {
