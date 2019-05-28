@@ -71,6 +71,8 @@ public class ChangeDirection : MonoBehaviour
 
     void DirectionChange()
     {
+        if (enemy.NowChase) return;
+
         if (enemy.direction_Left)
         {
             if (!isReverse)
