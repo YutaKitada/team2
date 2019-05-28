@@ -23740,7 +23740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93863bc880c2ce347817f365623a874e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPosition: {x: 0, y: 2, z: -15}
+  cameraPosition: {x: 0, y: 2, z: -10}
   cameraMoveStop: 0
   moveSpeedX: 10
   moveSpeedY: 3

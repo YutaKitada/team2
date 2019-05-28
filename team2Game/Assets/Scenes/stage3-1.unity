@@ -5571,6 +5571,10 @@ PrefabInstance:
       propertyPath: maxDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.128
@@ -5578,10 +5582,6 @@ PrefabInstance:
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
-      propertyPath: m_Constraints
-      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
@@ -11395,6 +11395,10 @@ PrefabInstance:
       propertyPath: maxDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.128
@@ -11402,10 +11406,6 @@ PrefabInstance:
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
-      propertyPath: m_Constraints
-      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
@@ -16577,6 +16577,10 @@ PrefabInstance:
       propertyPath: maxDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.128
@@ -16584,10 +16588,6 @@ PrefabInstance:
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
-      propertyPath: m_Constraints
-      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
@@ -38187,7 +38187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93863bc880c2ce347817f365623a874e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPosition: {x: 0, y: 2, z: -15}
+  cameraPosition: {x: 0, y: 2, z: -10}
   cameraMoveStop: 0
   moveSpeedX: 10
   moveSpeedY: 3
@@ -40984,6 +40984,10 @@ PrefabInstance:
       propertyPath: maxDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.128
@@ -40991,10 +40995,6 @@ PrefabInstance:
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
-      propertyPath: m_Constraints
-      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
@@ -43043,6 +43043,10 @@ PrefabInstance:
       propertyPath: maxDistance
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.128
@@ -43050,10 +43054,6 @@ PrefabInstance:
     - target: {fileID: 2070128068, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1656799268, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}
-      propertyPath: m_Constraints
-      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28eec170e3aa0bf48aaf228a7697f3d7, type: 3}

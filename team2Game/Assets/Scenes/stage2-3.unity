@@ -1016,8 +1016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93863bc880c2ce347817f365623a874e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPosition: {x: 0, y: 2, z: -15}
-  cameraMoveStop: 2
+  cameraPosition: {x: 0, y: 2, z: -22}
+  cameraMoveStop: 3
   moveSpeedX: 7
   moveSpeedY: 3
 --- !u!81 &202220314
