@@ -84,6 +84,8 @@ public class Deneb : BossEnemy
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode) return;
+
         Stop();
 
         if (IsDead)

@@ -96,6 +96,12 @@ public class Taurus : BossEnemy
     // Update is called once per frame
     void Update()
     {
+        if (PlayerManager.isWishMode)
+        {
+            Stop();
+            return;
+        }
+
         Death();
 
         if (IsDead)
