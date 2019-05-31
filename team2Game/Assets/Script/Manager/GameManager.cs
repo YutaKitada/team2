@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     //private bool DEBUG = false;
     public static bool debug;
 
+    public static string sceneName;
+
     
     void Awake()
     {
@@ -41,6 +43,8 @@ public class GameManager : MonoBehaviour
         isOver = false;
 
         isGameStop = false;
+
+        sceneName = SceneManager.GetActiveScene().name;
     }
 
     // Update is called once per frame
