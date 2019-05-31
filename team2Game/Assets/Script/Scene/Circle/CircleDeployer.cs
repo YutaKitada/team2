@@ -54,16 +54,5 @@ public class CircleDeployer : MonoBehaviour
             childList[i].transform.position = childPostion;
         }
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

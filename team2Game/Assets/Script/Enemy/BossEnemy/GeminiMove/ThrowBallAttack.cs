@@ -56,7 +56,7 @@ public class ThrowBallAttack : MonoBehaviour
         if (sabunVec.x >= 0)
         {
             float a = (playerPos.y - b * playerPos.x) / (playerPos.x * playerPos.x);
-            for (float x = 0; x <= playerPos.x; x += 0.3f)
+            for (float x = 0; x <= playerPos.x * 2; x += 0.3f)
             {
                 float y = a * x * x + b * x;
                 transform.position = new Vector3(x, y, 0) + offset;
@@ -66,7 +66,7 @@ public class ThrowBallAttack : MonoBehaviour
         else
         {
             float a = (playerPos.y + b * playerPos.x) / (playerPos.x * playerPos.x);
-            for (float x = 0; x >= playerPos.x; x -= 0.3f)
+            for (float x = 0; x >= playerPos.x * 2; x -= 0.3f)
             {
                 float y = a * x * x + (b * x) * -1;
                 transform.position = new Vector3(x, y, 0) + offset;
