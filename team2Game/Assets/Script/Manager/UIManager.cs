@@ -217,14 +217,14 @@ public class UIManager : MonoBehaviour
         hpGage.fillAmount = hpGageFillAmount/100;                //ゲージの数値を挿入
 
         //ゲージが止まっていない、もしくはゲームが止まっていない場合
-        if (!hpGageStop && !GameManager.isGameStop)
+        if (!hpGageStop && !GameManager.isGameStop && !PauseScreen.pausing)
         {
             //HPゲージの減少を止めるタイマーを作動
             hpGageStopTimer += Time.deltaTime;
         }
 
         //タイマーが規定値を超えた、もしくは願い事コマンド入力状態でなければ
-        if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode && !WishManager.wishProductionFlag)
+        if (hpGageStopTimer >= hpGageStopTime && !PlayerManager.isWishMode && !WishManager.wishProductionFlag && !PauseScreen.pausing)
         {
             //HPゲージが0以上であれば
             if (hpGageFillAmount > 0)
