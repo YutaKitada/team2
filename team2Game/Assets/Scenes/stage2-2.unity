@@ -1424,10 +1424,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range1
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range2
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
+      propertyPath: power
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4859,10 +4863,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range1
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range2
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
+      propertyPath: power
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -10298,10 +10306,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range1
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range2
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
+      propertyPath: power
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -11107,10 +11119,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range1
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range2
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
+      propertyPath: power
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -16563,10 +16579,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range1
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
       propertyPath: range2
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118015360, guid: 88837c30a7c5e894aa1c208d0722ae16, type: 3}
+      propertyPath: power
       value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
