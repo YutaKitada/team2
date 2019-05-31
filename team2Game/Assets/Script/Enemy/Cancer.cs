@@ -90,4 +90,22 @@ public class Cancer : Enemy
             state = State.NORMAL;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Player")
+        {
+            rigid.constraints = RigidbodyConstraints.FreezeAll;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.transform.tag == "Player")
+        {
+            rigid.constraints =
+                RigidbodyConstraints.FreezeRotation |
+                RigidbodyConstraints.FreezePositionZ;
+        }
+    }
 }

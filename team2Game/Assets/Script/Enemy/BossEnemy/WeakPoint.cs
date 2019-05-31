@@ -17,6 +17,8 @@ public class WeakPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (parent.IsHuging) return;
+
         //弱点に星が当たったら、ボスにダメージ
         if (other.gameObject.tag.Contains("Star"))
         {
