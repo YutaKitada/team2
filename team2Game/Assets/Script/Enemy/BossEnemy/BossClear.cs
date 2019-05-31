@@ -9,6 +9,9 @@ public class BossClear : MonoBehaviour
     public static int bossEnemyCount;
     float elapsedTime = 0;
 
+    [SerializeField]
+    string sceneName = "GameClear";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +28,7 @@ public class BossClear : MonoBehaviour
         elapsedTime += Time.deltaTime;
         if (elapsedTime >= 1)
         {
-            SceneManager.LoadScene("GameClear");
+            SceneManager.LoadScene(sceneName);
         }
     }
 
