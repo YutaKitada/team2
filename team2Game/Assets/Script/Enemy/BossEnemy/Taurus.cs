@@ -112,6 +112,7 @@ public class Taurus : BossEnemy
             if (deadElapsedTime >= 2)
             {
                 Instantiate(downParticle, transform.position, Quaternion.identity);
+                BossClear.SubCount(2);
                 Destroy(gameObject);
             }
             return;
