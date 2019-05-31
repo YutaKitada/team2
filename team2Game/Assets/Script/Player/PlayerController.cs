@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!gravityArea) rigid.AddForce(new Vector3(0, -addGravity));
             else rigid.AddForce(new Vector3(0, addGravity));
-            Gravity();
+            
 
             //ジャンプ処理
             Jump();
@@ -100,6 +100,16 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Squat", true);
             }
             rigid.velocity = Vector3.zero;
+        }
+
+        if(!GameManager.isGameStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !isMoveStop && !PlayerManager.isStop)
+        {
+            rigid.useGravity = true;
+            Gravity();
+        }
+        else
+        {
+            rigid.useGravity = false;
         }
 
 

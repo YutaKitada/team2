@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {x: 0, y: 7, z: -9}
-  cameraMoveStop: 0
+  cameraMoveStop: 3
   moveSpeedX: 7
   moveSpeedY: 10
 --- !u!1 &54728582 stripped
@@ -20627,6 +20627,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7544194798318474668, guid: 794521008e6b53e40bebcc279aa97a2b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 794521008e6b53e40bebcc279aa97a2b, type: 3}
 --- !u!1001 &1846398035
@@ -24071,15 +24076,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 3121263117682733491, guid: 778e7db57d3e6494c9efa4bf859f49af,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.008318644
+      objectReference: {fileID: 0}
+    - target: {fileID: 3121263117682733491, guid: 778e7db57d3e6494c9efa4bf859f49af,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1936954546067827493, guid: 778e7db57d3e6494c9efa4bf859f49af,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -504.601
+      value: -482.63
       objectReference: {fileID: 0}
     - target: {fileID: 1936954546067827493, guid: 778e7db57d3e6494c9efa4bf859f49af,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -174.42328
+      value: -156.57
       objectReference: {fileID: 0}
     - target: {fileID: 1936954546067827493, guid: 778e7db57d3e6494c9efa4bf859f49af,
         type: 3}
@@ -24190,16 +24205,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3121263117682733491, guid: 778e7db57d3e6494c9efa4bf859f49af,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.008318644
-      objectReference: {fileID: 0}
-    - target: {fileID: 3121263117682733491, guid: 778e7db57d3e6494c9efa4bf859f49af,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 88817065008348535, guid: 778e7db57d3e6494c9efa4bf859f49af,
         type: 3}
