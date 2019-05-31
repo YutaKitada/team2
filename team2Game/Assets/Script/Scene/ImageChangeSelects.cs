@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class ChangeScene : MonoBehaviour
+public class ImageChangeSelects : MonoBehaviour
 {
     [SerializeField, Header("読み込むシーン名")]
     private string loadSceneName = "Stage0";            //初期値(変更可)
@@ -33,7 +33,7 @@ public class ChangeScene : MonoBehaviour
     private void Update()
     {
         //ボタンがクリックされたときに「シーンを読み込む機能」が呼ばれるように登録
-        if (Input.GetButtonDown("AButton") || Input.GetKeyDown(KeyCode.Z)) 
+        if (Input.GetButtonDown("AButton") || Input.GetKeyDown(KeyCode.Z))
         {
             //アクティブクラスで登録したもののアクティブをFalseに変える
             active.ActiveObject(false);
