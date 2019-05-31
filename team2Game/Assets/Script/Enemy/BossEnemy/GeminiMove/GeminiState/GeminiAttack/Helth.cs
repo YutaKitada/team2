@@ -64,8 +64,7 @@ public class Helth : MonoBehaviour
             elapsedTime += Time.deltaTime;
             if(elapsedTime >=intervalTime)
             {
-
-
+                BossClear.SubCount(1);
                 Destroy(gameObject);
             }
         }
