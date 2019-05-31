@@ -27,9 +27,28 @@ public class GoMovieScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!timerStop)
+        {
+            timer += Time.deltaTime;
+        }
+        else if (timerStop)
+        {
+            //image.color = new Color(1, 1, 1, 1);
+        }
+
+        if(timer >= time)
+        {
+            //image.color -= new Color(0, 0, 0, Time.deltaTime / 2);
+            SoundManager.FadeOut();
+            //if (image.color.a < 0)
+            //{
+                SceneManager.LoadScene(backSceneName);
+            //}
+        }
+
         if (Input.GetButtonDown("AButton"))
         {
-            SceneManager.LoadScene(backSceneName);
+            timerStop = true;
         }
     }
 }
