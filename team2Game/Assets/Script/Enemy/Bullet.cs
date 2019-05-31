@@ -59,6 +59,7 @@ public class Bullet : MonoBehaviour
             if (!isPlaySE)
             {
                 SoundManager.PlaySE(25);
+                isPlaySE = true;
             }
             BulletMove();
         }
