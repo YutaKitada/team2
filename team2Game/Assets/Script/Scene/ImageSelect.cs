@@ -68,8 +68,6 @@ public class ImageSelect : MonoBehaviour
         Clamp();
         
         MoveVertical();
-        Debug.Log("isTop"+isTop);
-        Debug.Log("isBottom"+isBottom);
 
         TestFunc1();
         TestFunc2();
@@ -82,7 +80,6 @@ public class ImageSelect : MonoBehaviour
     {
         if (LeftStick.Instance.IsTopDown() && !isTop)
         {
-            Debug.Log("押されてる");
             isBottom = false;
             currentStageIndex--;
         }
