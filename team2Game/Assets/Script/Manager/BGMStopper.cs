@@ -14,7 +14,7 @@ public class BGMStopper : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bgmStop = false;
+        //bgmStop = false;
     }
 
     // Update is called once per frame
