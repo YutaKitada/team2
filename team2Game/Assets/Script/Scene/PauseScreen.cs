@@ -30,8 +30,13 @@ public class PauseScreen : MonoBehaviour
     /// <summary>
     /// 現在Pause中か？
     /// </summary>
-    [SerializeField]
-    private bool pausing = false;
+    //[SerializeField]
+    public static bool pausing = false;
+
+    private void Start()
+    {
+        pausing = false;
+    }
 
     /// <summary>
     /// 無視するGameObject
