@@ -19,11 +19,8 @@ public class BossClear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bossEnemyCount > 0)
-        {
-            Debug.Log(bossEnemyCount);
-            return;
-        }
+        if (bossEnemyCount > 0) return;
+        
 
         elapsedTime += Time.deltaTime;
         if (elapsedTime >= 1)
