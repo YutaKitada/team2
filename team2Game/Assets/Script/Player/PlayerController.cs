@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //移動制限がかかっていない場合
-        if (!PlayerManager.isStop && !isMoveStop && !isDamage && !WishManager.wishProductionFlag && !PlayerManager.isWishMode)
+        if (!PlayerManager.isStop && !isMoveStop && !isDamage && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !GameManager.isOver)
         {
             if (!gravityArea) rigid.AddForce(new Vector3(0, -addGravity));
             else rigid.AddForce(new Vector3(0, addGravity));
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
             rigid.velocity = Vector3.zero;
         }
 
-        if(!GameManager.isGameStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !isMoveStop && !PlayerManager.isStop)
+        if(!GameManager.isGameStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !isMoveStop && !PlayerManager.isStop && !GameManager.isOver)
         {
             rigid.useGravity = true;
             Gravity();
