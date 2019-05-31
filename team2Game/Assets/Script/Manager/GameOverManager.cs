@@ -9,6 +9,8 @@ public class GameOverManager : MonoBehaviour
     private GameObject gameOverImage;
     [SerializeField]
     private GameObject selectObject;
+    [SerializeField]
+    private GameObject ui;
 
     private float timer;
     private Vector3 firstPosition;
@@ -17,7 +19,7 @@ public class GameOverManager : MonoBehaviour
     void Start()
     {
         gameOverImage.transform.localPosition = new Vector3(gameOverImage.transform.localPosition.x, 360);
-
+        
         firstPosition = gameOverImage.transform.localPosition;
     }
 
@@ -26,12 +28,29 @@ public class GameOverManager : MonoBehaviour
     {
         if (GameManager.isOver)
         {
+            if (ui.activeSelf)
+            {
+                ui.SetActive(false);
+                
+            }
             timer += Time.deltaTime;
 
             if(timer <= 3)
             {
                 gameOverImage.transform.localPosition = Vector3.Lerp(firstPosition, new Vector3(gameOverImage.transform.localPosition.x,60), timer/3);
             }
+            else
+            {
+                if (!selectObject.activeSelf)
+                {
+                    selectObject.SetActive(true);
+                }
+                
+            }
+        }
+        else
+        {
+            selectObject.SetActive(false);
         }
     }
 }

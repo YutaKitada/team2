@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //移動制限がかかっていない場合
-        if (!PlayerManager.isStop && !isMoveStop && !isDamage && !WishManager.wishProductionFlag && !PlayerManager.isWishMode)
+        if (!PlayerManager.isStop && !isMoveStop && !isDamage && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !GameManager.isOver)
         {
             if (!gravityArea) rigid.AddForce(new Vector3(0, -addGravity));
             else rigid.AddForce(new Vector3(0, addGravity));
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             //アニメーションの処理
             Animation();
         }
-        if (PlayerManager.isWishMode)
+        if (PlayerManager.isWishMode ||GameManager.isOver)
         {
             if (!animator.GetBool("Squat"))
             {
@@ -100,9 +100,10 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Squat", true);
             }
             rigid.velocity = Vector3.zero;
+
         }
 
-        if(!GameManager.isGameStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !isMoveStop && !PlayerManager.isStop)
+        if(!GameManager.isGameStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !isMoveStop && !PlayerManager.isStop && !GameManager.isOver)
         {
             rigid.useGravity = true;
             Gravity();
@@ -110,6 +111,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             rigid.useGravity = false;
+            rigid.velocity = Vector3.zero;
         }
 
 
@@ -119,9 +121,6 @@ public class PlayerController : MonoBehaviour
 
             isDamage = false;
         }
-        
-
-
         UIManager.debugtext = "\n" + "JumpCount:" + jumpCount
              + "\n" + "isJump:" + isJump
              + "\n" + "isIce:" + isIce;

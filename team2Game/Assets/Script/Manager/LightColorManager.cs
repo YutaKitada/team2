@@ -29,7 +29,7 @@ public class LightColorManager : MonoBehaviour
             myLight.color = wishLightColor;
         }
 
-        if (WishManager.isMeteorShower || WishManager.wishProductionFlag)
+        if (WishManager.isMeteorShower || WishManager.wishProductionFlag|| GameManager.isOver)
         {
             myLight.color = wishLightColor;
         }
