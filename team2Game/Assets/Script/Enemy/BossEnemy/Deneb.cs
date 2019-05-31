@@ -98,6 +98,7 @@ public class Deneb : BossEnemy
             if (deadElapsedTime >= 2)
             {
                 Instantiate(downParticle, transform.position, Quaternion.identity);
+                BossClear.SubCount(1);
                 Destroy(gameObject);
             }
             return;
