@@ -64,6 +64,8 @@ public class Helth : MonoBehaviour
             elapsedTime += Time.deltaTime;
             if(elapsedTime >=intervalTime)
             {
+
+
                 Destroy(gameObject);
             }
         }
