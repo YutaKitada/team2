@@ -375,6 +375,9 @@ public class Deneb : BossEnemy
     {
         if (collision.gameObject.tag.Contains("Player"))
         {
+            if (OnRight) collision.transform.GetComponent<PlayerController>().Damage(new Vector3(-3, 0));
+            else collision.transform.GetComponent<PlayerController>().Damage(new Vector3(3, 0));
+
             PlayerManager.PlayerDamage(10);
         }
 
