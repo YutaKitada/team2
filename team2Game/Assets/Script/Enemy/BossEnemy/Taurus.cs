@@ -41,7 +41,11 @@ public class Taurus : BossEnemy
     Vector3 particleLeft = new Vector3(0, -90);//左側の生成方向
 
     Vector3 startScale;//スケールの初期値
-    bool isHuging = false;//巨大化中か
+    public bool IsHuging
+    {
+        get;
+        private set;
+    }
 
     bool isTurn = false;
     int rushTurn = 0;
@@ -112,6 +116,7 @@ public class Taurus : BossEnemy
             if (deadElapsedTime >= 2)
             {
                 Instantiate(downParticle, transform.position, Quaternion.identity);
+                BossClear.SubCount(2);
                 Destroy(gameObject);
             }
             return;
@@ -184,7 +189,7 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushPrepare()
     {
-        if (isHuging) return;
+        if (IsHuging) return;
 
         intervalElapsedTime += Time.deltaTime * speed;
         HugingScale();
@@ -227,11 +232,11 @@ public class Taurus : BossEnemy
         if (transform.localScale.x <= startScale.x * hugingScale)
         {
             transform.localScale += new Vector3(10, 10, 10) * Time.deltaTime;
-            isHuging = true;
+            IsHuging = true;
         }
         else
         {
-            isHuging = false;
+            IsHuging = false;
         }
     }
 
@@ -250,7 +255,7 @@ public class Taurus : BossEnemy
     /// </summary>
     void RushAttack()
     {
-        if (isHuging)
+        if (IsHuging)
         {
             anim.speed = 0;
             Stop();
@@ -351,7 +356,7 @@ public class Taurus : BossEnemy
             }
         }
 
-        if (other.gameObject.tag == "Star" && !isHuging)
+        if (other.gameObject.tag == "Star" && !IsHuging)
         {
             Damage(1);
 

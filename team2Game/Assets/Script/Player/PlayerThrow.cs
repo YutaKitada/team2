@@ -45,6 +45,7 @@ public class PlayerThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         UIManager.wishTimerFillamount = stopTimer;
 
         //移動制限がかかった場合
@@ -167,8 +168,12 @@ public class PlayerThrow : MonoBehaviour
                 //Starのvelocityを0に
                 starRigid.velocity = Vector3.zero;
 
-                //投げる処理
-                Throw();
+                if(!PlayerManager.isStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !GameManager.isOver)
+                {
+                    //投げる処理
+                    Throw();
+                }
+                
             }
             else
             {

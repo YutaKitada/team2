@@ -12,12 +12,12 @@ public class ImageChangeSelects : MonoBehaviour
 
     //　非同期動作で使用するAsyncOperation
     private AsyncOperation async;
-    //　シーンロード中に表示するUI画面
-    [SerializeField]
-    private GameObject loadUI;
-    //　読み込み率を表示するスライダー
-    [SerializeField]
-    private Slider slider;
+    ////　シーンロード中に表示するUI画面
+    //[SerializeField]
+    //private GameObject loadUI;
+    ////　読み込み率を表示するスライダー
+    //[SerializeField]
+    //private Slider slider;
     [SerializeField]
     private int bgmNumber = 0;
 
@@ -38,7 +38,7 @@ public class ImageChangeSelects : MonoBehaviour
             //アクティブクラスで登録したもののアクティブをFalseに変える
             active.ActiveObject(false);
             SoundManager.PlaySE(bgmNumber);
-            loadSceneName = RouletteImage.currentStageName;
+            loadSceneName = ImageSelect.currentStageName;
             NextScene();
         }
     }
@@ -46,7 +46,7 @@ public class ImageChangeSelects : MonoBehaviour
     public void NextScene()
     {
         //　ロード画面UIをアクティブにする
-        loadUI.SetActive(true);
+        //loadUI.SetActive(true);
         //　コルーチンを開始
         StartCoroutine("LoadData");
     }
@@ -64,7 +64,7 @@ public class ImageChangeSelects : MonoBehaviour
         while (!async.isDone)
         {
             var progressVal = Mathf.Clamp01(async.progress / 0.9f);
-            slider.value = progressVal;
+            //slider.value = progressVal;
             yield return null;
         }
     }
