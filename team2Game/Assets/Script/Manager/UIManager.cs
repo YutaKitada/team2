@@ -178,7 +178,7 @@ public class UIManager : MonoBehaviour
 
     private void ClearUI()
     {
-        if (WishManager.wishProductionFlag)
+        if (WishManager.wishProductionFlag || GameManager.isOver)
         {
             ui.SetActive(false);
         }
