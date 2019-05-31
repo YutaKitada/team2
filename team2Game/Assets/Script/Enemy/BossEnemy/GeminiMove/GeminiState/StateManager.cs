@@ -44,7 +44,7 @@ public class StateManager : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if(helth.dead)
+        if(helth.Dead)
         {
             return;
         }

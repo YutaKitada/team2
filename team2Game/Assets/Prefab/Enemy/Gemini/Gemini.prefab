@@ -985,7 +985,6 @@ GameObject:
   - component: {fileID: 8785300156944471938}
   - component: {fileID: 8785300156944471939}
   - component: {fileID: 8785300156944471936}
-  - component: {fileID: 8785300156944471937}
   - component: {fileID: 8785300156944471942}
   - component: {fileID: 8785300156944471943}
   - component: {fileID: 8785300156944471940}
@@ -994,6 +993,7 @@ GameObject:
   - component: {fileID: 8785300156944471947}
   - component: {fileID: 8785300156944471944}
   - component: {fileID: 8785300156944471945}
+  - component: {fileID: 468215822}
   m_Layer: 0
   m_Name: Castor
   m_TagString: BossEnemy
@@ -1066,19 +1066,6 @@ CapsuleCollider:
   m_Height: 0.03
   m_Direction: 1
   m_Center: {x: 0, y: 0.015, z: -0.0025}
---- !u!135 &8785300156944471937
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8785300156944471950}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.009
-  m_Center: {x: 0, y: 0.036, z: 0}
 --- !u!114 &8785300156944471942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,7 +1176,7 @@ MonoBehaviour:
   hp: 10
   hitParticl: {fileID: 6120655306622782852, guid: 1555cb10d71cfb14994056d6a237ff51,
     type: 3}
-  dead: 0
+  playerVec: {x: 3, y: 0, z: 0}
   intervalTime: 4.3
   seNumber: 1
 --- !u!114 &8785300156944471945
@@ -1204,6 +1191,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b89cf8febb9ff9459936e8f200645c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &468215822
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8785300156944471950}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.009999992, y: 0.035079673, z: 0.015559017}
+  m_Center: {x: -6.99185e-18, y: 0.045670602, z: 0.0015441838}
 --- !u!1 &8785300156969273346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,7 +1246,6 @@ GameObject:
   - component: {fileID: 8785300157005359922}
   - component: {fileID: 8785300157005359923}
   - component: {fileID: 8785300157005359920}
-  - component: {fileID: 8785300157005359921}
   - component: {fileID: 8785300157005359926}
   - component: {fileID: 8785300157005359934}
   - component: {fileID: 8785300157005359927}
@@ -1256,6 +1255,7 @@ GameObject:
   - component: {fileID: 8785300157005359931}
   - component: {fileID: 8785300157005359928}
   - component: {fileID: 8785300157005359929}
+  - component: {fileID: 5296424009766120857}
   m_Layer: 0
   m_Name: Pollux
   m_TagString: BossEnemy
@@ -1314,19 +1314,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!135 &8785300157005359921
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8785300157005359935}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.009
-  m_Center: {x: 0, y: 0.036, z: 0}
 --- !u!136 &8785300157005359926
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1463,9 +1450,22 @@ MonoBehaviour:
   hp: 10
   hitParticl: {fileID: 6120655306622782852, guid: 1555cb10d71cfb14994056d6a237ff51,
     type: 3}
-  dead: 0
+  playerVec: {x: -3, y: 0, z: 0}
   intervalTime: 4.3
   seNumber: 4
+--- !u!65 &5296424009766120857
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8785300157005359935}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.009999992, y: 0.035079673, z: 0.015559017}
+  m_Center: {x: -6.99185e-18, y: 0.045670602, z: 0.0015441838}
 --- !u!1 &8785300157009316342
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,21 +13,15 @@ public class ImageChangeSelects : MonoBehaviour
     //　非同期動作で使用するAsyncOperation
     private AsyncOperation async;
     ////　シーンロード中に表示するUI画面
-    //[SerializeField]
-    //private GameObject loadUI;
-    ////　読み込み率を表示するスライダー
-    //[SerializeField]
-    //private Slider slider;
     [SerializeField]
     private int bgmNumber = 0;
 
-    Active active;
+    //Active active;
 
     // Start is called before the first frame update
     void Start()
     {
         //同じGameObjectについている「Button」スクリプトを取得
-        active = GetComponent<Active>();
 
     }
     private void Update()
@@ -36,7 +30,6 @@ public class ImageChangeSelects : MonoBehaviour
         if (Input.GetButtonDown("AButton") || Input.GetKeyDown(KeyCode.Z))
         {
             //アクティブクラスで登録したもののアクティブをFalseに変える
-            active.ActiveObject(false);
             SoundManager.PlaySE(bgmNumber);
             loadSceneName = ImageSelect.currentStageName;
             NextScene();

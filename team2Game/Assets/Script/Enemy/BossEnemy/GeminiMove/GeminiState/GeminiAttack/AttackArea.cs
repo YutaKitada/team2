@@ -8,7 +8,7 @@ public class AttackArea : MonoBehaviour
     private Vector3 vector3;
     [SerializeField]
     private int bgmNumber = 0;
-    
+
     private void OnTriggerStay(Collider col)
     {
        
