@@ -9,8 +9,6 @@ public class GameOverManager : MonoBehaviour
     private GameObject gameOverImage;
     [SerializeField]
     private GameObject selectObject;
-    [SerializeField]
-    private GameObject ui;
 
     private float timer;
     private Vector3 firstPosition;
@@ -28,11 +26,6 @@ public class GameOverManager : MonoBehaviour
     {
         if (GameManager.isOver)
         {
-            if (ui.activeSelf)
-            {
-                ui.SetActive(false);
-                
-            }
             timer += Time.deltaTime;
 
             if(timer <= 3)

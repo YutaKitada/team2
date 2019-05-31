@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraPosition: {x: 0, y: 7, z: -9}
-  cameraMoveStop: 3
+  cameraMoveStop: 0
   moveSpeedX: 7
   moveSpeedY: 10
 --- !u!1 &54728582 stripped
@@ -20634,6 +20634,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7544194798318474668, guid: 794521008e6b53e40bebcc279aa97a2b,
         type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069370614, guid: 794521008e6b53e40bebcc279aa97a2b, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
