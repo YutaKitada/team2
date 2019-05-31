@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!gravityArea) rigid.AddForce(new Vector3(0, -addGravity));
             else rigid.AddForce(new Vector3(0, addGravity));
-            Gravity();
+            
 
             //ジャンプ処理
             Jump();
@@ -100,6 +100,16 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Squat", true);
             }
             rigid.velocity = Vector3.zero;
+        }
+
+        if(!GameManager.isGameStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !isMoveStop && !PlayerManager.isStop)
+        {
+            rigid.useGravity = true;
+            Gravity();
+        }
+        else
+        {
+            rigid.useGravity = false;
         }
 
 
@@ -429,30 +439,30 @@ public class PlayerController : MonoBehaviour
             //    isMoveStop = true;
             //}
             //ダメージをまだ受けていない場合
-            if (!isDamage)
-            {
-                //ダメージを受けた時の効果音の再生
-                SoundManager.PlaySE(5);
-                //ダメージを受けた
-                isDamage = true;
+            //if (!isDamage)
+            //{
+            //    //ダメージを受けた時の効果音の再生
+            //    SoundManager.PlaySE(5);
+            //    //ダメージを受けた
+            //    isDamage = true;
 
-                //一旦移動量を0に
-                rigid.velocity = Vector3.zero;
+            //    //一旦移動量を0に
+            //    rigid.velocity = Vector3.zero;
 
-                //当たった場所は自身の右か左かを取得
-                Vector3 hitVector = (collision.transform.position - transform.position).normalized;
-                //右であれば
-                if (hitVector.x >= 0)
-                {
-                    rigid.AddForce(new Vector3(-1, 3) * 2, ForceMode.Impulse);
-                }
-                //左であれば
-                else
-                {
-                    rigid.AddForce(new Vector3(1, 3) * 2, ForceMode.Impulse);
-                }
-                damageTimer = 0;
-            }
+            //    //当たった場所は自身の右か左かを取得
+            //    Vector3 hitVector = (collision.transform.position - transform.position).normalized;
+            //    //右であれば
+            //    if (hitVector.x >= 0)
+            //    {
+            //        rigid.AddForce(new Vector3(-1, 3) * 2, ForceMode.Impulse);
+            //    }
+            //    //左であれば
+            //    else
+            //    {
+            //        rigid.AddForce(new Vector3(1, 3) * 2, ForceMode.Impulse);
+            //    }
+            //    damageTimer = 0;
+            //}
         }
 
 

@@ -30,6 +30,8 @@ public class CameraManager : MonoBehaviour
 
     private Vector3 firstPosition;
 
+    private float cameraView;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,8 @@ public class CameraManager : MonoBehaviour
                 break;
         }
         positionChange = false;
+
+        cameraView = GetComponent<Camera>().fieldOfView;
     }
 
     // Update is called once per frame
@@ -240,8 +244,11 @@ public class CameraManager : MonoBehaviour
                         case CameraMoveStop.X:
                             transform.position = new Vector3(0, transform.position.y, transform.position.z);
                             break;
+                        case CameraMoveStop.BOSS:
+                            transform.position = player.transform.position + cameraPosition;
+                            break;
                     }
-                    GetComponent<Camera>().fieldOfView = 90;
+                    GetComponent<Camera>().fieldOfView = cameraView;
                 }
                // transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -9);
                 
