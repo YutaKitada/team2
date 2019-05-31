@@ -14,8 +14,8 @@ public class GoMovieScene : MonoBehaviour
     [SerializeField]
     private string backSceneName = "MovieScene";
 
-    [SerializeField]
-    private Image image;
+    //[SerializeField]
+    //private Image image;
 
     // Start is called before the first frame update
     void Start()
@@ -33,17 +33,17 @@ public class GoMovieScene : MonoBehaviour
         }
         else if (timerStop)
         {
-            image.color = new Color(1, 1, 1, 1);
+            //image.color = new Color(1, 1, 1, 1);
         }
 
         if(timer >= time)
         {
-            image.color -= new Color(0, 0, 0, Time.deltaTime / 2);
+            //image.color -= new Color(0, 0, 0, Time.deltaTime / 2);
             SoundManager.FadeOut();
-            if (image.color.a < 0)
-            {
+            //if (image.color.a < 0)
+            //{
                 SceneManager.LoadScene(backSceneName);
-            }
+            //}
         }
 
         if (Input.GetButtonDown("AButton"))

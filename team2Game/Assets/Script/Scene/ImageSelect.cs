@@ -118,6 +118,7 @@ public class ImageSelect : MonoBehaviour
         //上下
         if (currentStageIndex >= transform.GetChild(0).childCount-1)
         {
+            
             isBottom = true;
         }
         if (currentStageIndex <= 0)

@@ -27,7 +27,7 @@ public class ImageChangeSelects : MonoBehaviour
     private void Update()
     {
         //ボタンがクリックされたときに「シーンを読み込む機能」が呼ばれるように登録
-        if (Input.GetButtonDown("AButton") || Input.GetKeyDown(KeyCode.Z))
+        if ((Input.GetButtonDown("AButton") || Input.GetKeyDown(KeyCode.Z)) && PauseScreen.pausing)
         {
             //アクティブクラスで登録したもののアクティブをFalseに変える
             SoundManager.PlaySE(bgmNumber);
