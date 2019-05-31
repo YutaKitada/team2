@@ -10,5 +10,10 @@ public class NameChange : MonoBehaviour
     {
         
         transform.name = SceneManager.GetActiveScene().name;
+
+        if(transform.name == "GameClear")
+        {
+            transform.name = GameManager.sceneName;
+        }
     }
 }
