@@ -23612,6 +23612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1532169136}
   - component: {fileID: 1532169135}
+  - component: {fileID: 1532169137}
   m_Layer: 0
   m_Name: Directional Light (1)
   m_TagString: Untagged
@@ -23671,6 +23672,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1532169137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532169134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d28b62c14c87742803da63f9762e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wishLightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1536191231 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1217062901, guid: 26852ff1a0a9dec49a2e3905e2f7d7f1,
@@ -32407,6 +32421,7 @@ GameObject:
   - component: {fileID: 2055182974}
   - component: {fileID: 2055182976}
   - component: {fileID: 2055182975}
+  - component: {fileID: 2055182977}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -32470,6 +32485,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2055182973}
   m_CullTransparentMesh: 0
+--- !u!114 &2055182977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055182973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095587fb369c9be4d8a0ad1c4f674207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wishColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
 --- !u!1 &2055691531 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1217062901, guid: 26852ff1a0a9dec49a2e3905e2f7d7f1,
