@@ -58,11 +58,11 @@ public class GameManager : MonoBehaviour
             UIManager.hpGageFillAmount = 100;
         }
 
-        //ゲームオーバーであればシーンをロードする
-        if (isOver &&!debug)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+        ////ゲームオーバーであればシーンをロードする
+        //if (isOver &&!debug)
+        //{
+        //    SceneManager.LoadScene("GameOver");
+        //}
 
         if (isClear)
         {
