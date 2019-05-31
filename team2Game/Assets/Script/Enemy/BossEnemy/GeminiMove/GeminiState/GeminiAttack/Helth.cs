@@ -12,8 +12,21 @@ public class Helth : MonoBehaviour
     [SerializeField]
     private GameObject hitParticl;
     Animator anime;
-
-    public bool dead;
+    [SerializeField]
+    private Vector3 playerVec;
+    
+    private bool dead;
+    public bool Dead
+    {
+        get
+        {
+            return dead;
+        }
+        private set
+        {
+            dead = value;
+        }
+    }
 
     [SerializeField]
     float intervalTime = 1;
@@ -26,7 +39,6 @@ public class Helth : MonoBehaviour
     {
         anime = GetComponent<Animator>();
         dead = false;
-        
     }
 
     // Update is called once per frame
@@ -36,8 +48,12 @@ public class Helth : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
+        if (col.gameObject.tag == "Player")
+        {
+            col.transform.GetComponent<PlayerController>().Damage(playerVec);
+        }
 
-        
+
         if (col.gameObject.tag == "Star")
         {
             Instantiate(hitParticl, col.contacts[0].point, Quaternion.identity);
