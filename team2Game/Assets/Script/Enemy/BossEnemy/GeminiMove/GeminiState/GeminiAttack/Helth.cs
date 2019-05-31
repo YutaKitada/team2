@@ -14,6 +14,10 @@ public class Helth : MonoBehaviour
     Animator anime;
     [SerializeField]
     private Vector3 playerVec;
+    private bool isHit;
+
+    private float maxTime = 2;
+    private float currentTime;
     
     private bool dead;
     public bool Dead
@@ -39,12 +43,24 @@ public class Helth : MonoBehaviour
     {
         anime = GetComponent<Animator>();
         dead = false;
+        isHit = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         Death();
+        if(isHit)
+        {
+            currentTime += Time.deltaTime;
+            if (currentTime >= maxTime)
+            {
+                currentTime = 0;
+                isHit = false;
+            }
+        }
+        
+
     }
     private void OnCollisionEnter(Collision col)
     {
@@ -53,9 +69,10 @@ public class Helth : MonoBehaviour
             col.transform.GetComponent<PlayerController>().Damage(playerVec);
         }
 
-
-        if (col.gameObject.tag == "Star")
+        
+        if (col.gameObject.tag == "Star"&&!isHit)
         {
+            isHit = true;
             Instantiate(hitParticl, col.contacts[0].point, Quaternion.identity);
             
             if(hp <= 0)
