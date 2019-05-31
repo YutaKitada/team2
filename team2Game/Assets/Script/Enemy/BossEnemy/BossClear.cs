@@ -28,6 +28,8 @@ public class BossClear : MonoBehaviour
         bossEnemy = GameObject.FindGameObjectsWithTag("BossEnemy");
         bossEnemyCount = bossEnemy.Length;
 
+        if (panel == null) return;
+
         image = panel.GetComponent<Image>();
         red = image.color.r;
         blue = image.color.b;
