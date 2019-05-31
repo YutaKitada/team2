@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3252298769679844279}
   - component: {fileID: 5767595297954204007}
+  - component: {fileID: 6013193122463235053}
   m_Layer: 0
   m_Name: DeviceManager
   m_TagString: Untagged
@@ -44,3 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minInputValue: 0.2
+--- !u!114 &6013193122463235053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410950116465124391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be913f113a7e1c946b4a8c179ad46ebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadSceneName: Stage0
+  bgmNumber: 0
