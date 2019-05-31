@@ -19,7 +19,7 @@ public class GameOverManager : MonoBehaviour
     void Start()
     {
         gameOverImage.transform.localPosition = new Vector3(gameOverImage.transform.localPosition.x, 360);
-        selectObject.SetActive(false);
+        
         firstPosition = gameOverImage.transform.localPosition;
     }
 
@@ -47,6 +47,10 @@ public class GameOverManager : MonoBehaviour
                 }
                 
             }
+        }
+        else
+        {
+            selectObject.SetActive(false);
         }
     }
 }

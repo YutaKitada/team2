@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
             //アニメーションの処理
             Animation();
         }
-        if (PlayerManager.isWishMode)
+        if (PlayerManager.isWishMode ||GameManager.isOver)
         {
             if (!animator.GetBool("Squat"))
             {
@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Squat", true);
             }
             rigid.velocity = Vector3.zero;
+
         }
 
         if(!GameManager.isGameStop && !WishManager.wishProductionFlag && !PlayerManager.isWishMode && !isMoveStop && !PlayerManager.isStop && !GameManager.isOver)
@@ -110,6 +111,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             rigid.useGravity = false;
+            rigid.velocity = Vector3.zero;
         }
 
 
@@ -119,9 +121,6 @@ public class PlayerController : MonoBehaviour
 
             isDamage = false;
         }
-        
-
-
         UIManager.debugtext = "\n" + "JumpCount:" + jumpCount
              + "\n" + "isJump:" + isJump
              + "\n" + "isIce:" + isIce;

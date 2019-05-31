@@ -180,7 +180,7 @@ public class CameraManager : MonoBehaviour
         }
        
 
-        if (PlayerManager.isWishMode || WishManager.wishProductionFlag)
+        if (PlayerManager.isWishMode || WishManager.wishProductionFlag || GameManager.isOver)
         {
             transform.position = new Vector3(WishManager.player.transform.position.x, WishManager.player.transform.position.y + 1, -14);
             GetComponent<Camera>().fieldOfView = 60;
