@@ -331,7 +331,6 @@ public class Taurus : BossEnemy
             if (hp <= maxHp / 2)
             {
                 rushTurn++;
-                OnRight = !OnRight;
                 audioSource.Stop();
                 isPlaySe = false;
                 if (rushTurn >= 3)
@@ -343,6 +342,7 @@ public class Taurus : BossEnemy
                     mode = Mode.STAN;
                     return;
                 }
+                OnRight = !OnRight;
                 isTurn = true;
             }
             else
