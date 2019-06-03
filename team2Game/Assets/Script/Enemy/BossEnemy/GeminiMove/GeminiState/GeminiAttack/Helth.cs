@@ -6,20 +6,20 @@ public class Helth : MonoBehaviour
 {
 
     [SerializeField]
-    private int hp =10;
+    private int hp =10;　　　     　　　　//体力
 
 
     [SerializeField]
-    private GameObject hitParticl;
+    private GameObject hitParticl;　　　　//当たり位置のパーティクル
     Animator anime;
     [SerializeField]
-    private Vector3 playerVec;
+    private Vector3 playerVec;　　　　　　//プレイヤーのノックバックベクトル
     private bool isHit;
 
-    private float maxTime = 2;
-    private float currentTime;
+    private float maxTime = 2;　　　　　　//最大待機時間
+    private float currentTime;            //現在の時間
     
-    private bool dead;
+    private bool dead;                    //死亡判定
     public bool Dead
     {
         get
@@ -33,7 +33,7 @@ public class Helth : MonoBehaviour
     }
 
     [SerializeField]
-    float intervalTime = 1;
+    float intervalTime = 1;               //アニメーションを待つ時間
     float elapsedTime;
     [SerializeField]
     private int seNumber = 0;
@@ -50,6 +50,7 @@ public class Helth : MonoBehaviour
     void Update()
     {
         Death();
+        //一回ずつ当たったら数秒無敵時間
         if(isHit)
         {
             currentTime += Time.deltaTime;
@@ -64,12 +65,12 @@ public class Helth : MonoBehaviour
     }
     private void OnCollisionEnter(Collision col)
     {
+        //プレイヤーに当たったらプレイヤーにダメージを与える
         if (col.gameObject.tag == "Player")
         {
             col.transform.GetComponent<PlayerController>().Damage(playerVec);
         }
-
-        
+        //星に当たったら自分のhpを減らす。
         if (col.gameObject.tag == "Star"&&!isHit)
         {
             isHit = true;
@@ -87,11 +88,11 @@ public class Helth : MonoBehaviour
                 SoundManager.PlaySE(seNumber);
             }
         }
-
     }
     
     public void Death()
     {
+        //死んだらアニメーションが終わるのを待つ
         if(dead)
         {
             elapsedTime += Time.deltaTime;
