@@ -9,7 +9,7 @@ public class StateManager : MonoBehaviour
     //現在のモーション
     private IMove currentMove = null;
 
-    Helth helth;
+    Helth helth;　　　　　　　　　//生存確認
 
     private void Awake()
     {
@@ -28,7 +28,6 @@ public class StateManager : MonoBehaviour
             return;
         }
         states.Add(name, move);
-
     }
 
     public void Change(Move name)

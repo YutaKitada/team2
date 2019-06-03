@@ -6,17 +6,17 @@ public class GeminiMoveManager : MonoBehaviour
 {
     
     [SerializeField]
-    private StateManager polStateManager;           //カストルのモーション管理場
+    private StateManager polStateManager;           //ポルックスのモーション管理場
     [SerializeField]
-    private StateManager casStateManager;　　　　　 //ポルックスのモーション管理場
+    private StateManager casStateManager;　　　　　 //カストルのモーション管理場
 
-    private NoneState polNoneState;                 //NoneState判断用
-    private NoneState casnoneState;
+    private NoneState polNoneState;                 //ポルックスNoneState判断用
+    private NoneState casnoneState;　　　　　　　　 //カストルNoneState判断用
 
     [SerializeField]
-    private float maxTime = 5;                 //最大効果時間
-    private float currrentTime;            //経過時間
-    private int num;                       //ランダムの値を代入
+    private float maxTime = 5;                      //最大効果時間
+    private float currrentTime;                     //経過時間
+    private int num;                                //ランダムの値を代入
 
     // Start is called before the first frame update
     void Start()
@@ -33,13 +33,17 @@ public class GeminiMoveManager : MonoBehaviour
         OneAttack();
     }
 
+    /// <summary>
+    /// ふたご座のそれぞれの状態を管理
+    /// </summary>
     void GeminiState()
     {
+        //二人ともNone状態の時経過時間を＋＋する
         if (polNoneState.IsEnd() == false &&
             casnoneState.IsEnd() == false)
         {
             currrentTime += Time.deltaTime;
-
+            //４つの攻撃方法の中からランダムに選択
             if (currrentTime >= maxTime)
             {
                 num = Random.Range(0, 4);
@@ -60,6 +64,9 @@ public class GeminiMoveManager : MonoBehaviour
         }
         
     }
+    /// <summary>
+    /// どちらかが倒れたらmaxtimeを1にして攻撃回転を速める
+    /// </summary>
     void OneDeath()
     {
         if(casStateManager ==null|| polStateManager ==null)
@@ -67,6 +74,8 @@ public class GeminiMoveManager : MonoBehaviour
             maxTime = 1;
         }
     }
+
+    //一人が死んだ時の処理
     void OneAttack()
     {
         if (polStateManager == null)

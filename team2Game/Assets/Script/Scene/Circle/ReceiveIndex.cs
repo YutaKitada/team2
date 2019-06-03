@@ -28,6 +28,7 @@ public class ReceiveIndex : MonoBehaviour
 
     void ReceiveImage()
     {
+        //現在選択中の物と関連した絵を指定する
         spriteRenderer.sprite = sprites[roulette.CurrentNum()-1];
     }
 }

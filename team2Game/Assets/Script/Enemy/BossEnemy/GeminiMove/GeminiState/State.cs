@@ -20,6 +20,6 @@ public interface IMove
 {
     void Initialize();   //初期化
     void Update();       //更新
-    bool IsEnd();
+    bool IsEnd();　　　　//状態の終了
     Move Next();         //次のモーション
 }

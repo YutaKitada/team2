@@ -90,7 +90,7 @@ public class ImageSelect : MonoBehaviour
         }
     }
 
-    //全てのステージの色を白にする
+    //全てのステージのスケールを0にする
     private void TestFunc1()
     {
         foreach (var group in stageList)
@@ -103,7 +103,7 @@ public class ImageSelect : MonoBehaviour
         }
     }
 
-    //現在選択中のステージの色を変える
+    //現在選択中のステージのスケールを1に変える
     private void TestFunc2()
     {
         Image image = stageList[currentGroupIndex][currentStageIndex].GetComponent<Image>();

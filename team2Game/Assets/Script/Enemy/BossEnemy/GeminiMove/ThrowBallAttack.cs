@@ -10,7 +10,7 @@ public class ThrowBallAttack : MonoBehaviour
     private Vector3 offset;　　　　　　 //自分の位置
     private Vector3 sabunVec;　　　　　 //プレイヤーがいる方向を取得
     [SerializeField]
-    private int bgmNumber = 0;
+    private int bgmNumber = 0;　　　　　//音番号
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +52,7 @@ public class ThrowBallAttack : MonoBehaviour
     IEnumerator ThrowBall()
     {
         float b = Mathf.Tan(angle * Mathf.Deg2Rad);
-        
+        //プレイヤーが右にいた時
         if (sabunVec.x >= 0)
         {
             float a = (playerPos.y - b * playerPos.x) / (playerPos.x * playerPos.x);
@@ -63,6 +63,7 @@ public class ThrowBallAttack : MonoBehaviour
                 yield return null;
             }
         }
+        //プレイヤーが左にいた時
         else
         {
             float a = (playerPos.y + b * playerPos.x) / (playerPos.x * playerPos.x);
