@@ -18,7 +18,7 @@ public class RollBallAttack : MonoBehaviour　, IMove
     [SerializeField]
     private float maxTime = 0.6f;
     [SerializeField]
-    private int seNumber = 0;
+    private int seNumber = 0;　　　　　　//音番号
 
     public void Initialize()
     {
@@ -48,7 +48,7 @@ public class RollBallAttack : MonoBehaviour　, IMove
     {
         anime.SetBool("Korogari",true);
         currentTime += Time.deltaTime;
-        
+        //岩プレハブを生成
         if (currentTime >=maxTime)
         {
             SoundManager.PlaySE(seNumber);

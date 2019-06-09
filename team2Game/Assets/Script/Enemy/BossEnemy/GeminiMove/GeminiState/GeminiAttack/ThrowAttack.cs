@@ -4,29 +4,29 @@ using UnityEngine;
 public class ThrowAttack : MonoBehaviour, IMove
 {
     [SerializeField]
-    private GameObject snowBall;   //雪玉プレハブ
+    private GameObject snowBall;   　　//雪玉プレハブ
     [SerializeField]
     private float interval = 3;　　　　//インターバルカウント　変更可
-    private float currntInterval;　//現在のインターバル時間
+    private float currntInterval;　　　//現在のインターバル時間
     [SerializeField]
     private int throwCountMax = 3;　　 //投げる回数
-    private int currentThrowCount; //現在の投げた回数
+    private int currentThrowCount; 　　//現在の投げた回数
 
 
     [SerializeField]
-    private float maxTime =0.8f;    //アニメーションに合わせて投げる
+    private float maxTime =0.8f;    　 //アニメーションに合わせて投げる
     private float saveTime;
 
     [SerializeField]
-    private GameObject playerPos;　　　　//プレイヤーの位置
-    private Vector3 sabunPos;　　　　　　//差分計算用
-    private Vector3 sabunVec;      //プレイヤーがいる方向を取得
+    private GameObject playerPos;　　　//プレイヤーの位置
+    private Vector3 sabunPos;　　　　　//差分計算用
+    private Vector3 sabunVec;          //プレイヤーがいる方向を取得
 
-    private bool isEndFlag;　　　　//モーション終了判断
+    private bool isEndFlag;　　　　    //モーション終了判断
 
     private Animator anime;
     [SerializeField]
-    private int seNumber = 0;
+    private int seNumber = 0;          //音番号
     public void Initialize()
     {
         isEndFlag = false;
@@ -57,7 +57,6 @@ public class ThrowAttack : MonoBehaviour, IMove
             isEndFlag = true;
             return;
         }
-
         currntInterval += Time.deltaTime;
         if(currntInterval >= interval)
         {
@@ -76,6 +75,7 @@ public class ThrowAttack : MonoBehaviour, IMove
         saveTime += Time.deltaTime;
         if(saveTime >= maxTime)
         {
+            //雪玉を生成
             SoundManager.PlaySE(seNumber);
             Instantiate(snowBall,
                     transform.position + new Vector3(4 * sabunVec.x, 9, 0),

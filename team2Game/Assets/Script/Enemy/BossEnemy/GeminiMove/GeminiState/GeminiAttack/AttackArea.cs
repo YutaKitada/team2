@@ -11,7 +11,7 @@ public class AttackArea : MonoBehaviour
 
     private void OnTriggerStay(Collider col)
     {
-       
+        //生成時プレイヤーがオブジェクトの中にいたら、プレイヤーにダメージを与える
         if (col.transform.tag == "Player")
         {
             col.transform.GetComponent<PlayerController>().Damage(vector3);

@@ -30,7 +30,7 @@ public class Wind : MonoBehaviour
         currentTime += Time.deltaTime;
         if(currentTime >=maxTime)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }
