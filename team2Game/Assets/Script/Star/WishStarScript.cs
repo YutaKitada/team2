@@ -24,6 +24,11 @@ public class WishStarScript : MonoBehaviour
             {
                 collision.transform.GetComponent<Enemy>().Damage();
             }
+
+            if(collision.transform.tag=="BossEnemy")
+            {
+                collision.transform.GetComponent<BossEnemy>().Damage(1);
+            }
             
             SoundManager.PlaySE(5);
             UIManager.hpGageFillAmount += 10;

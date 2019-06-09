@@ -366,7 +366,7 @@ public class Taurus : BossEnemy
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag.Contains("Star"))
+        if (collision.gameObject.name.Contains("star"))
         {
             isHit = true;
         }
